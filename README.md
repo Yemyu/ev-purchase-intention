@@ -56,8 +56,8 @@ ev-purchase-intention/
 
 **Option A — Run locally:**
 ```bash
-git clone https://github.com/<your-username>/ev_purchase_intention.git
-cd ev_purchase_intention
+git clone https://github.com/Yemyu/ev-purchase-intention.git
+cd ev-purchase-intention
 pip install -r requirements.txt
 
 # Download data and place in data/raw/
