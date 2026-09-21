@@ -38,7 +38,7 @@
     └─ 5 折折外预测 + SHAP                       ← 计算补充
 ```
 
-主分析不从 p 值或模型得分反向挑选题目。所有题号、变量定义、控制变量和缺失规则都集中写在 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py) 中。
+当前代码不自动按 p 值或得分筛题。题项选择有历史探索背景，本版本属于探索性修订；固定代码规格不等于预注册，也不能消除已有数据上的选择影响。所有题号、变量定义、控制变量和缺失规则都集中写在 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py) 中。
 
 ## 数据与变量
 

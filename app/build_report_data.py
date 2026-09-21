@@ -47,7 +47,7 @@ def json_safe(value):
     if isinstance(value, (list, tuple)):
         return [json_safe(v) for v in value]
     if isinstance(value, (np.integer, np.floating)):
-        return value.item()
+        return json_safe(value.item())
     if isinstance(value, float) and (np.isnan(value) or np.isinf(value)):
         return None
     return value
@@ -55,7 +55,8 @@ def json_safe(value):
 
 def choose_run(run_id: str | None) -> Path:
     if run_id:
-        path = RUN_ROOT / run_id
+        candidate = Path(run_id)
+        path = candidate if candidate.is_absolute() else (ROOT / candidate if len(candidate.parts) > 1 else RUN_ROOT / candidate)
         if not path.is_dir():
             raise FileNotFoundError(path)
         return path
@@ -70,6 +71,9 @@ def choose_run(run_id: str | None) -> Path:
 
 
 def build(run_dir: Path) -> dict:
+    missing = REQUIRED - {p.name for p in run_dir.iterdir()}
+    if missing:
+        raise ValueError(f"Incomplete run: {sorted(missing)}")
     metadata = json.loads((run_dir / "run_metadata.json").read_text(encoding="utf-8"))
     audit = json.loads((run_dir / "audit.json").read_text(encoding="utf-8"))
     coefficients = pd.read_csv(run_dir / "ordered_logit_coefficients.csv")
@@ -235,7 +239,7 @@ def main() -> None:
     payload = build(run_dir)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    output.write_text(json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
     print(f"Wrote aggregate report: {output}")
     print(f"Source run: {run_dir}")
 

@@ -34,7 +34,7 @@ Raw questionnaire CSV
     └─ five-fold out-of-fold prediction + SHAP          ← computational complement
 ```
 
-Question numbers, variable definitions, controls, and missing-data rules are centralized in [`src/config.py`](src/config.py) and [`src/data_schema.py`](src/data_schema.py). The primary specification is fixed before model fitting; it is not selected from p-values or model scores.
+Question numbers, variable definitions, controls, and missing-data rules are centralized in [`src/config.py`](src/config.py) and [`src/data_schema.py`](src/data_schema.py). The current code does not automatically select items by p-values or scores. Item selection has a history of exploration on these data; fixed code specifications do not constitute preregistration or remove prior selection effects.
 
 ## Data and measurements
 
