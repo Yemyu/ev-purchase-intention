@@ -57,3 +57,5 @@ Training is centralized in `main.py` and `src/`. The notebook is a readable resu
 **How does the report page differ from a dashboard?**
 
 This is a one-time survey study rather than a continuously refreshed operational product. The repository now provides a read-only [GitHub Pages report](https://yemyu.github.io/ev-purchase-intention/) with aggregate audit, model, and prediction metrics. It does not load row-level responses or require continuous refresh, so an operational dashboard is still outside the current acceptance scope.
+
+Both committed notebooks include executed tables and images, pinned to `run-20260921-190434`, and can be previewed on GitHub. Re-execution requires local run artifacts; the web aggregate JSON is committed.
