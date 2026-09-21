@@ -107,7 +107,7 @@ def _fit(y: pd.Series, x: pd.DataFrame):
     }
 
 
-def _result_rows(result: Any, model_name: str, specification: str, n_obs: int) -> list[dict[str, Any]]:
+def _result_rows(result: Any, model_name: str, specification: str, n_obs: int, predictors: list[str]) -> list[dict[str, Any]]:
     names = list(getattr(result.model, "exog_names", []))
     params = np.asarray(result.params, dtype=float)
     pvalues = np.asarray(result.pvalues, dtype=float)
@@ -130,7 +130,7 @@ def _result_rows(result: Any, model_name: str, specification: str, n_obs: int) -
                 "ci_low": float(conf[i, 0]),
                 "ci_high": float(conf[i, 1]),
                 "n_obs": n_obs,
-                "term_type": "predictor" if term in {"T", "V"} or term.startswith(CONTROL_PREFIX) else "threshold",
+                "term_type": "predictor" if term in predictors else "threshold",
             }
         )
     return rows
@@ -148,7 +148,7 @@ def fit_specification(frame: pd.DataFrame, specification: str) -> dict[str, Any]
         output["models"][model_name] = {
             "result": result,
             "diagnostics": diagnostics,
-            "rows": _result_rows(result, model_name, specification, len(work)),
+            "rows": _result_rows(result, model_name, specification, len(work), predictors),
             "predictors": predictors,
         }
         if model_name == "controlled":
