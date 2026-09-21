@@ -5,18 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="新能源汽车智能驾驶购买意愿研究报告：有序Logit、Bootstrap路径、异质性与机器学习补充验证。">
   <title>智能驾驶购买意愿 · 研究报告</title>
-  <link rel="stylesheet" href="static/css/style.css?v=20260921-3">
+  <link rel="stylesheet" href="static/css/style.css?v=20260921-clarity">
 </head>
 <body class="lang-zh">
   <header class="topbar">
     <div class="brand"><span class="brand-name"><span data-lang="zh">EV Purchase Intention</span><span data-lang="en">EV Purchase Intention</span></span><span class="brand-sub"><span data-lang="zh">研究档案</span><span data-lang="en">RESEARCH NOTEBOOK</span></span></div>
     <div class="top-actions">
-      <nav class="nav-links" aria-label="Report navigation">
-        <a href="#audit"><span data-lang="zh">数据</span><span data-lang="en">Data</span></a>
-        <a href="#direct"><span data-lang="zh">直接关联</span><span data-lang="en">Associations</span></a>
-        <a href="#mediation"><span data-lang="zh">路径</span><span data-lang="en">Paths</span></a>
-        <a href="#ml"><span data-lang="zh">机器学习</span><span data-lang="en">ML</span></a>
-      </nav>
+      <nav class="nav-links" aria-label="Report navigation"><a href="#audit"><b>01</b> <span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></a><a href="#direct"><b>02</b> <span data-lang="zh">直接关联</span><span data-lang="en">Direct associations</span></a><a href="#mediation"><b>03</b> <span data-lang="zh">间接路径</span><span data-lang="en">Indirect paths</span></a><a href="#heterogeneity"><b>04</b> <span data-lang="zh">人群差异</span><span data-lang="en">Group differences</span></a><a href="#ml"><b>05</b> <span data-lang="zh">预测与 SHAP</span><span data-lang="en">Prediction and SHAP</span></a><a href="#methods"><b>06</b> <span data-lang="zh">方法与来源</span><span data-lang="en">Methods and sources</span></a></nav>
       <button id="langSwitch" class="lang-btn" type="button">English</button>
     </div>
   </header>
@@ -55,14 +50,14 @@
             <p class="book-series">EV PURCHASE INTENTION / 2026</p>
             <h3><span data-lang="zh">智能驾驶功能<br>与购买溢价意愿</span><span data-lang="en">Driver-assistance features<br>and willingness to pay more</span></h3>
             <p class="book-cover-note"><span data-lang="zh">消费者问卷 · 研究报告</span><span data-lang="en">Consumer survey · Results report</span></p>
-            <span class="book-page-number">01</span>
+            <a class="book-detail" href="#audit"><span data-lang="zh">01 样本与变量 →</span><span data-lang="en">01 Sample and variables →</span></a><span class="book-page-number">p. 01</span>
           </article>
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">样本</span><span data-lang="en">SAMPLE</span></span>
             <h3><span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></h3>
             <p><span data-lang="zh">结果变量是 Q21 的支付溢价意愿。技术认知使用 Q15、Q16，功能价值使用 Q22–Q25；三个指标均保留原问卷的 1–5 分尺度。</span><span data-lang="en">The outcome is willingness to pay a premium in Q21. Technology recognition uses Q15–Q16 and feature value uses Q22–Q25; all three measures retain the original 1–5 scale.</span></p>
             <div class="book-facts"><b>622</b><span><span data-lang="zh">份有效问卷</span><span data-lang="en">survey responses</span></span><b>4</b><span><span data-lang="zh">个结果模块</span><span data-lang="en">result modules</span></span></div>
-            <span class="book-page-number">02</span>
+            <a class="book-detail" href="#audit"><span data-lang="zh">01 样本与变量 →</span><span data-lang="en">01 Sample and variables →</span></a><span class="book-page-number">p. 02</span>
           </article>
         </div>
         <div class="book-spread">
@@ -72,14 +67,14 @@
             <div class="book-result"><b>2.08</b><span><span data-lang="zh">技术认知 T · OR</span><span data-lang="en">Technology recognition T · OR</span></span></div>
             <div class="book-result"><b>3.83</b><span><span data-lang="zh">功能价值 V · OR</span><span data-lang="en">Function value V · OR</span></span></div>
             <p class="book-footnote"><span data-lang="zh">主规格控制性别、年龄、学历、收入、驾龄和驾驶频率；这是横截面关联。</span><span data-lang="en">The primary specification controls for demographics and driving history; this is a cross-sectional association.</span></p>
-            <span class="book-page-number">03</span>
+            <a class="book-detail" href="#direct"><span data-lang="zh">02 直接关联 →</span><span data-lang="en">02 Direct associations →</span></a><span class="book-page-number">p. 03</span>
           </article>
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">探索性路径</span><span data-lang="en">INDIRECT PATHS</span></span>
             <h3><span data-lang="zh">驾驶乐趣与出行效率</span><span data-lang="en">Driving pleasure and travel efficiency</span></h3>
             <p><span data-lang="zh">分析包括经驾驶乐趣、出行效率以及功能价值的五条间接路径，采用 5,000 次 Bootstrap 估计区间。横截面数据无法确定这些关系的因果顺序。</span><span data-lang="en">Five indirect paths through driving pleasure, travel efficiency and feature value are estimated with 5,000 bootstrap draws. Cross-sectional data cannot establish the causal ordering of these relationships.</span></p>
             <div class="book-stamp"><span data-lang="zh">探索性</span><span data-lang="en">EXPLORATORY</span></div>
-            <span class="book-page-number">04</span>
+            <a class="book-detail" href="#mediation"><span data-lang="zh">03 间接路径 →</span><span data-lang="en">03 Indirect paths →</span></a><span class="book-page-number">p. 04</span>
           </article>
         </div>
         <div class="book-spread">
@@ -89,7 +84,7 @@
             <div class="book-result"><b>0.685</b><span><span data-lang="zh">扩展有序 Logit · QWK</span><span data-lang="en">Extended ordered logit · QWK</span></span></div>
             <div class="book-result"><b>0.619</b><span><span data-lang="zh">随机森林 · QWK</span><span data-lang="en">Random forest · QWK</span></span></div>
             <p class="book-footnote"><span data-lang="zh">每折测试样本都没有参与该折训练。SHAP 展示特征贡献的大小，不代表因果方向。</span><span data-lang="en">Each test fold was kept outside training. SHAP shows contribution magnitude, not causal direction.</span></p>
-            <span class="book-page-number">05</span>
+            <a class="book-detail" href="#ml"><span data-lang="zh">05 预测与 SHAP →</span><span data-lang="en">05 Prediction and SHAP →</span></a><span class="book-page-number">p. 05</span>
           </article>
           <article class="book-page book-end">
             <span class="book-page-label"><span data-lang="zh">研究局限</span><span data-lang="en">LIMITATIONS</span></span>
@@ -99,26 +94,14 @@
               <li><span data-lang="zh">题项经过历史探索，当前验证不能消除这一影响。</span><span data-lang="en">Historical item exploration still matters.</span></li>
               <li><span data-lang="zh">比例优势假设尚未专项检验。</span><span data-lang="en">The proportional-odds assumption needs a dedicated check.</span></li>
             </ul>
-            <a class="book-continue" href="#audit"><span data-lang="zh">样本详情 →</span><span data-lang="en">Sample details →</span></a>
-            <span class="book-page-number">06</span>
+            <a class="book-detail" href="#methods"><span data-lang="zh">06 方法与来源 →</span><span data-lang="en">06 Methods and sources →</span></a><span class="book-page-number">p. 06</span>
           </article>
         </div>
       </div>
-      <div class="book-index" aria-label="Book page index">
-        <a href="#audit"><b>01</b><span data-lang="zh">数据</span><span data-lang="en">Data</span></a>
-        <a href="#direct"><b>02</b><span data-lang="zh">关联</span><span data-lang="en">Associations</span></a>
-        <a href="#mediation"><b>03</b><span data-lang="zh">路径</span><span data-lang="en">Paths</span></a>
-        <a href="#ml"><b>04</b><span data-lang="zh">预测</span><span data-lang="en">Prediction</span></a>
-      </div>
+      <div class="book-index" aria-label="Report chapters"><a href="#audit"><b>01</b> <span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></a><a href="#direct"><b>02</b> <span data-lang="zh">直接关联</span><span data-lang="en">Direct associations</span></a><a href="#mediation"><b>03</b> <span data-lang="zh">间接路径</span><span data-lang="en">Indirect paths</span></a><a href="#heterogeneity"><b>04</b> <span data-lang="zh">人群差异</span><span data-lang="en">Group differences</span></a><a href="#ml"><b>05</b> <span data-lang="zh">预测与 SHAP</span><span data-lang="en">Prediction and SHAP</span></a><a href="#methods"><b>06</b> <span data-lang="zh">方法与来源</span><span data-lang="en">Methods and sources</span></a></div>
     </section>
 
-    <nav class="toc" aria-label="Report sections">
-      <a href="#audit"><b>01</b><span data-lang="zh">数据审计</span><span data-lang="en">Data audit</span></a>
-      <a href="#direct"><b>02</b><span data-lang="zh">直接关联</span><span data-lang="en">Associations</span></a>
-      <a href="#mediation"><b>03</b><span data-lang="zh">探索性路径</span><span data-lang="en">Indirect paths</span></a>
-      <a href="#heterogeneity"><b>04</b><span data-lang="zh">异质性</span><span data-lang="en">Heterogeneity</span></a>
-      <a href="#ml"><b>05</b><span data-lang="zh">机器学习</span><span data-lang="en">Machine learning</span></a>
-    </nav>
+    <nav class="toc" aria-label="Report sections"><a href="#audit"><b>01</b> <span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></a><a href="#direct"><b>02</b> <span data-lang="zh">直接关联</span><span data-lang="en">Direct associations</span></a><a href="#mediation"><b>03</b> <span data-lang="zh">间接路径</span><span data-lang="en">Indirect paths</span></a><a href="#heterogeneity"><b>04</b> <span data-lang="zh">人群差异</span><span data-lang="en">Group differences</span></a><a href="#ml"><b>05</b> <span data-lang="zh">预测与 SHAP</span><span data-lang="en">Prediction and SHAP</span></a><a href="#methods"><b>06</b> <span data-lang="zh">方法与来源</span><span data-lang="en">Methods and sources</span></a></nav>
 
     <section id="audit" class="section">
       <div class="section-head"><span class="section-no">01</span><div><h2><span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></h2><p class="section-lead"><span data-lang="zh">样本包含 622 份问卷。结果变量为支付溢价意愿，技术认知取 Q15、Q16 的平均值，功能价值取 Q22–Q25 的平均值。</span><span data-lang="en">The sample contains 622 survey responses. The outcome is willingness to pay a premium. Technology recognition is the mean of Q15 and Q16; feature value is the mean of Q22–Q25. </span></p></div></div>
@@ -134,60 +117,69 @@
         <article class="panel"><h3><span data-lang="zh">T · 技术认知</span><span data-lang="en">T · Technology proxy</span></h3><p><span data-lang="zh">主规格为 Q15、Q16 的完整回答均值，代表重要性和安全性认知。</span><span data-lang="en">The primary proxy is the complete-row mean of Q15 and Q16, representing importance and safety recognition.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">V · 功能价值</span><span data-lang="en">V · Function-value proxy</span></h3><p><span data-lang="zh">主规格为 Q22–Q25 的完整回答均值，代表具体辅助驾驶功能的价值认知。</span><span data-lang="en">The primary proxy is the complete-row mean of Q22–Q25, representing value recognition for concrete assisted-driving functions.</span></p></article>
       </div>
-    </section>
+    <div class="analysis-explanation"><article><h3><span data-lang="zh">变量构造</span><span data-lang="en">Variable construction</span></h3><p><span data-lang="zh">Y 为 Q21 的支付溢价意愿，保留 1–5 分等级。T 由 Q15“功能重要性”和 Q16“提高安全性”取均值；V 由 Q22–Q25 的自适应巡航、车道保持、自动泊车和拥堵辅助四项取均值。它们分别概括一般技术评价和具体功能评价。M1 为 Q18 的驾驶乐趣评价，M2 为 Q19 的出行效率评价，均为单题指标。</span><span data-lang="en">Y is the ordered 1–5 response to Q21 on willingness to pay a premium. T averages Q15 (importance) and Q16 (safety). V averages Q22–Q25 on adaptive cruise control, lane keeping, parking assistance and traffic-jam assistance. M1 is Q18 (driving pleasure); M2 is Q19 (travel efficiency), both single-item measures.</span></p></article><article><h3><span data-lang="zh">样本处理与测量含义</span><span data-lang="en">Sample preparation and measurement</span></h3><p><span data-lang="zh">从原始题项读取数据，不使用文件里历史生成的处理列。组合指标要求所用题项回答完整；各分析按所需变量的完整记录估计。性别、年龄、学历、收入、驾龄和驾驶频率按类别编码。T 和 V 的 Cronbach α 分别为 0.858、0.871，反映题项内部一致性，但不能单独证明测量效度。V 的原题涉及功能对购买意愿的影响，因此与 Y 的含义有接近之处。</span><span data-lang="en">The pipeline reads original items rather than historical processed columns. Composites require complete item responses, and each analysis uses complete records for its required variables. Six demographic and driving controls are category-coded. Cronbach’s alpha is 0.858 for T and 0.871 for V; these assess internal consistency, not construct validity. V’s questions already refer to purchase intention, so its meaning overlaps with Y.</span></p></article></div>
+</section>
 
     <section id="direct" class="section">
-      <div class="section-head"><span class="section-no">02</span><div><h2><span data-lang="zh">技术认知、功能价值与支付意愿</span><span data-lang="en">Technology perceptions, feature value and willingness to pay</span></h2><p class="section-lead"><span data-lang="zh">主模型使用有序 Logit，并控制性别、年龄、学历、收入、驾龄和驾驶频率。OR 大于 1 表示更高的 T/V 与更高购买溢价意愿的排序相关。</span><span data-lang="en">The primary ordered-logit model controls for gender, age, education, income, driving experience, and driving frequency. An OR above 1 indicates an association with a higher willingness-to-pay category.</span></p></div></div>
+      <div class="section-head"><span class="section-no">02</span><div><h2><span data-lang="zh">直接关联</span><span data-lang="en">Direct associations</span></h2><p class="section-lead"><span data-lang="zh">主模型使用有序 Logit，并控制性别、年龄、学历、收入、驾龄和驾驶频率。OR 大于 1 表示更高的 T/V 与更高购买溢价意愿的排序相关。</span><span data-lang="en">The primary ordered-logit model controls for gender, age, education, income, driving experience, and driving frequency. An OR above 1 indicates an association with a higher willingness-to-pay category.</span></p></div></div>
+      <div class="analysis-explanation analysis-method"><article><h3><span data-lang="zh">模型设定</span><span data-lang="en">Model specification</span></h3><p><span data-lang="zh">研究问题是：在控制人口特征与驾驶经历后，技术认知和功能价值是否仍与支付溢价意愿有关？Y 有五个有序等级，因此使用有序 Logit，同时纳入 T、V 和六类控制变量。T、V 保持原来的 1–5 分尺度，不做标准化；表中优势比对应指标增加 1 分。</span><span data-lang="en">The question is whether T and V remain associated with willingness to pay after accounting for demographics and driving history. Ordered logit models the five ordered Y categories using T, V and six categorical controls. T and V remain on their original 1–5 scales; odds ratios refer to a one-point increase.</span></p></article></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">主规格优势比</span><span data-lang="en">Primary odds ratios</span></h3><div id="directChart" class="chart" role="img" aria-label="Primary ordered logit odds ratios"></div><p class="chart-caption"><span data-lang="zh">点估计来自 primary / controlled；虚线为 OR=1。置信区间见下表。</span><span data-lang="en">Estimates are from primary / controlled; the dashed line is OR=1. Confidence intervals are shown below.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">主模型估计</span><span data-lang="en">Primary model estimates</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">变量</span><span data-lang="en">Variable</span></th><th>OR</th><th>95% CI</th><th>p</th><th>N</th></tr></thead><tbody id="directTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">优势比表示控制其他变量后的关联，因果方向无法由本次问卷确定。</span><span data-lang="en">The odds ratios describe adjusted associations. The survey does not establish their causal direction.</span></p></article>
       </div>
-      <div class="panel" style="margin-top:18px"><h3><span data-lang="zh">三套变量定义的结果比较</span><span data-lang="en">Results under three variable definitions</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">规格</span><span data-lang="en">Specification</span></th><th>T OR</th><th>V OR</th><th><span data-lang="zh">收敛</span><span data-lang="en">Converged</span></th></tr></thead><tbody id="specTable"></tbody></table></div></div>
-    </section>
+
+    <div class="analysis-explanation"><article><h3><span data-lang="zh">估计结果</span><span data-lang="en">Estimated associations</span></h3><p><span data-lang="zh">在 622 份记录中，T 的 OR 为 2.08（95% CI：1.62–2.68），V 为 3.83（2.84–5.16），两项 p 值均小于 0.001。按模型的比例优势假设，其他变量不变时，T 增加 1 分对应跨越任一 Y 等级阈值的优势乘以约 2.08。OR 不是概率倍数，也不是支付金额的增幅。V 的点估计更大，但其题项与 Y 更接近，不能仅凭 OR 排定真实影响大小。</span><span data-lang="en">Across 622 records, T has OR 2.08 (95% CI 1.62–2.68) and V has OR 3.83 (2.84–5.16), both p&lt;0.001. Under proportional odds, a one-point increase in T multiplies the odds of exceeding any Y threshold by about 2.08, holding other variables fixed. This is neither a probability ratio nor a change in payment amount. V’s larger estimate must also be read in light of its conceptual overlap with Y.</span></p></article></div>
+</section>
 
     <section id="mediation" class="section">
-      <div class="section-head"><span class="section-no">03</span><div><h2><span data-lang="zh">间接路径分析</span><span data-lang="en">Indirect associations</span></h2><p class="section-lead"><span data-lang="zh">五条间接路径均使用 5,000 次 Bootstrap 估计 95% 置信区间。结果反映本样本中的间接关联；因果中介关系需要额外的研究设计和假设支持。</span><span data-lang="en">The five indirect paths use 5,000 bootstrap draws to estimate 95% confidence intervals. The estimates describe indirect associations; causal mediation would require additional design and identification assumptions.</span></p></div></div>
+      <div class="section-head"><span class="section-no">03</span><div><h2><span data-lang="zh">间接路径</span><span data-lang="en">Indirect paths</span></h2><p class="section-lead"><span data-lang="zh">五条间接路径均使用 5,000 次 Bootstrap 估计 95% 置信区间。结果反映本样本中的间接关联；因果中介关系需要额外的研究设计和假设支持。</span><span data-lang="en">The five indirect paths use 5,000 bootstrap draws to estimate 95% confidence intervals. The estimates describe indirect associations; causal mediation would require additional design and identification assumptions.</span></p></div></div>
+      <div class="analysis-explanation analysis-method"><article><h3><span data-lang="zh">路径与计算方法</span><span data-lang="en">Paths and estimation</span></h3><p><span data-lang="zh">分别估计 T→M1→Y、T→M2→Y、V→M1→Y、V→M2→Y 和 T→V→Y。每条路径单独拟合：先用 X 和控制变量解释中间变量 M，得到 a；再用 X、M 和控制变量解释 Y，得到 b；间接关联取 a×b。两个方程均为含截距的 OLS，把评分作为连续变量近似。按受访者有放回抽样 5,000 次，使用乘积估计分布的 2.5% 和 97.5% 分位数构造区间。</span><span data-lang="en">Five paths are fitted separately: T→M1→Y, T→M2→Y, V→M1→Y, V→M2→Y and T→V→Y. For each, OLS regresses M on X and controls to estimate a, and Y on X, M and controls to estimate b. Both equations include intercepts and approximate ratings as continuous. The product a×b is bootstrapped by resampling respondents with replacement 5,000 times; percentile intervals use the 2.5th and 97.5th percentiles.</span></p></article></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">间接关联与区间</span><span data-lang="en">Indirect associations and intervals</span></h3><div id="mediationChart" class="chart-tall" role="img" aria-label="Bootstrap indirect paths"></div><p class="chart-caption"><span data-lang="zh">点为间接关联估计，横线为 95% Bootstrap 区间；每条完整路径均以 Y 为终点。</span><span data-lang="en">Points show indirect estimates; horizontal lines show 95% bootstrap intervals. Every full path ends at Y.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">Bootstrap 路径表</span><span data-lang="en">Bootstrap path table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">路径</span><span data-lang="en">Path</span></th><th>ab</th><th>95% CI</th><th><span data-lang="zh">有效/总数</span><span data-lang="en">Valid / total</span></th></tr></thead><tbody id="mediationTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">中介方程是探索性的 OLS 近似，不能与有序 Logit 系数直接相乘。</span><span data-lang="en">Mediator equations are exploratory OLS approximations and are not multiplied by ordered-logit coefficients.</span></p></article>
       </div>
-    </section>
+    <div class="analysis-explanation"><article><h3><span data-lang="zh">路径结果</span><span data-lang="en">Path estimates</span></h3><p><span data-lang="zh">五条路径的区间均高于 0。经驾驶乐趣的估计分别为 0.256 和 0.257，经出行效率为 0.180 和 0.163；T→V→Y 为 0.351。每条路径均得到 5,000 次有效估计。这些数值属于独立的线性路径模型，不与前节的 OR 相加或相乘，也不能加总为“解释比例”。同一时点的问卷无法确认变量发生顺序，因此这里报告探索性间接关联。</span><span data-lang="en">All five intervals lie above zero. Products through driving pleasure are 0.256 and 0.257, through travel efficiency 0.180 and 0.163, and through T→V→Y 0.351. Each path has 5,000 valid bootstrap estimates. These are separate linear path models; their estimates cannot be combined with the ordered-logit ORs or summed into an explained proportion. The cross-sectional survey cannot establish temporal ordering.</span></p></article></div>
+</section>
 
     <section id="heterogeneity" class="section">
-      <div class="section-head"><span class="section-no">04</span><div><h2><span data-lang="zh">不同人群的结果比较</span><span data-lang="en">Comparisons across demographic groups</span></h2><p class="section-lead"><span data-lang="zh">性别、年龄、收入、驾龄和驾驶频率分别进行嵌套有序 Logit LR 检验。五项检验的 p 值使用 Holm 方法进行多重比较校正。</span><span data-lang="en">Gender, age, income, driving experience, and driving frequency are tested with nested ordered-logit LR comparisons. The five p-values are adjusted for multiple comparisons using the Holm method.</span></p></div></div>
+      <div class="section-head"><span class="section-no">04</span><div><h2><span data-lang="zh">人群差异</span><span data-lang="en">Group differences</span></h2><p class="section-lead"><span data-lang="zh">性别、年龄、收入、驾龄和驾驶频率分别进行嵌套有序 Logit LR 检验。五项检验的 p 值使用 Holm 方法进行多重比较校正。</span><span data-lang="en">Gender, age, income, driving experience, and driving frequency are tested with nested ordered-logit LR comparisons. The five p-values are adjusted for multiple comparisons using the Holm method.</span></p></div></div>
+      <div class="analysis-explanation analysis-method"><article><h3><span data-lang="zh">分组检验</span><span data-lang="en">Group comparisons</span></h3><p><span data-lang="zh">检验技术认知、功能价值与 Y 的关系是否随性别、年龄、收入、驾龄或驾驶频率而变化。每次比较一个含分组主项的有序 Logit 与加入 T×分组、V×分组交互项的模型，使用似然比（LR）检验联合判断斜率差异。五个分组分别检验，再用 Holm 方法校正多重比较。表中 k 为该次分析的组数。</span><span data-lang="en">For each grouping, a restricted ordered logit containing group main effects is compared with a model adding T-by-group and V-by-group interactions. The likelihood-ratio test jointly assesses slope differences. Five grouping tests are adjusted using Holm’s method. The table’s k is the number of groups.</span></p></article></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">Holm 校正后的 p 值</span><span data-lang="en">Holm-adjusted p-values</span></h3><div id="heteroChart" class="chart" role="img" aria-label="Holm adjusted heterogeneity p values"></div><p class="chart-caption"><span data-lang="zh">虚线为 0.05 判断线。本次五项比较校正后均未低于该线。</span><span data-lang="en">The dashed line marks 0.05. None of the five adjusted comparisons falls below it.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">异质性检验表</span><span data-lang="en">Heterogeneity table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">分组</span><span data-lang="en">Grouping</span></th><th>k</th><th>LR</th><th>p</th><th>Holm p</th></tr></thead><tbody id="heteroTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">五项检验经 Holm 校正后均未达到 0.05 显著性水平。</span><span data-lang="en">None of the five tests meets the 0.05 significance threshold after Holm adjustment.</span></p></article>
       </div>
-    </section>
+    <div class="analysis-explanation"><article><h3><span data-lang="zh">分组结果</span><span data-lang="en">Group results</span></h3><p><span data-lang="zh">性别和年龄的原始 p 值分别为 0.013、0.042，校正后为 0.063、0.170；其余分组的校正值也高于 0.05。因此，本次分析没有得到经多重比较校正后仍显著的人群差异证据。这不等于证明各组完全相同，也不支持依据个别未校正结果给出针对某个人群的结论。</span><span data-lang="en">Raw p-values for gender and age are 0.013 and 0.042, increasing to 0.063 and 0.170 after adjustment. All other adjusted values also exceed 0.05. The analysis therefore finds no group differences meeting the adjusted significance threshold. This does not establish that groups are identical.</span></p></article></div>
+</section>
 
     <section id="ml" class="section">
-      <div class="section-head"><span class="section-no">05</span><div><h2><span data-lang="zh">预测表现与特征重要性</span><span data-lang="en">Predictive performance and feature importance</span></h2><p class="section-lead"><span data-lang="zh">五折折外评估显示，加入 T、V、M1、M2 后模型明显超过多数类基线；在本次运行中，有序 Logit 的 QWK 高于随机森林。</span><span data-lang="en">Five-fold held-out evaluation shows a clear improvement over the majority baseline after adding T, V, M1, and M2. In this run, ordered logit has a higher QWK than the random forest.</span></p></div></div>
+      <div class="section-head"><span class="section-no">05</span><div><h2><span data-lang="zh">预测与 SHAP</span><span data-lang="en">Prediction and SHAP</span></h2><p class="section-lead"><span data-lang="zh">五折折外评估显示，加入 T、V、M1、M2 后模型明显超过多数类基线；在本次运行中，有序 Logit 的 QWK 高于随机森林。</span><span data-lang="en">Five-fold held-out evaluation shows a clear improvement over the majority baseline after adding T, V, M1, and M2. In this run, ordered logit has a higher QWK than the random forest.</span></p></div></div>
+      <div class="analysis-explanation analysis-method"><article><h3><span data-lang="zh">预测实验</span><span data-lang="en">Prediction experiment</span></h3><p><span data-lang="zh">预测目标仍为 Y 的五个等级。比较三组输入：仅控制变量、控制变量＋T/V、控制变量＋T/V/M1/M2；每组均比较多数类基线、有序 Logit 和随机森林。使用随机种子 42 的五折分层交叉验证，每折约四份数据训练、一份评价。随机森林固定为 200 棵树、最大深度 6；表中报告五折指标的平均值。</span><span data-lang="en">The target remains the five Y categories. Three feature sets—controls, controls plus T/V, and controls plus T/V/M1/M2—are evaluated with a majority baseline, ordered logit and random forest. Five-fold stratified cross-validation uses seed 42, training on four folds and evaluating on the remaining fold. Random forests use 200 trees and maximum depth 6. The table reports fold means.</span></p></article></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">折外 QWK</span><span data-lang="en">Held-out QWK</span></h3><div id="mlChart" class="chart" role="img" aria-label="Out of fold QWK comparison"></div><p class="chart-caption"><span data-lang="zh">多数类基线 QWK 为 0；扩展有序 Logit 约为 0.685。</span><span data-lang="en">The majority baseline has QWK 0; extended ordered logit is about 0.685.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">模型比较</span><span data-lang="en">Model comparison</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">特征集</span><span data-lang="en">Feature set</span></th><th><span data-lang="zh">模型</span><span data-lang="en">Model</span></th><th>Acc.</th><th>F1</th><th>QWK</th><th>MAE</th></tr></thead><tbody id="mlTable"></tbody></table></div></article>
       </div>
       <article class="panel shap-panel" style="margin-top:18px"><h3><span data-lang="zh">SHAP 特征排序</span><span data-lang="en">SHAP feature ranking</span></h3><div id="shapChart" class="chart shap-chart" role="img" aria-label="Mean absolute SHAP feature ranking"></div><p class="panel-note"><span data-lang="zh">图中展示扩展随机森林对 P(Y≥4) 的全部 23 个输入特征，按平均绝对 SHAP 排序。数值表示贡献大小，不表示作用方向或因果关系。</span><span data-lang="en">The chart shows all 23 inputs used by the extended forest for P(Y≥4), ranked by mean absolute SHAP. Magnitude does not indicate direction or causality.</span></p></article>
       <div class="cv-note"><strong><span data-lang="zh">交叉验证：</span><span data-lang="en">Cross-validation:</span></strong> <span data-lang="zh">加入全部研究变量后，有序 Logit 的平均准确率为 54.5%，随机森林为 53.5%；平均 QWK 分别为 0.685 和 0.619。每一折测试样本都没有参与该折训练。</span><span data-lang="en">With all study variables included, mean accuracy is 54.5% for ordered logit and 53.5% for random forest; mean QWK is 0.685 and 0.619. Each test fold was kept outside training.</span></div>
-    </section>
+    <div class="analysis-explanation"><article><h3><span data-lang="zh">指标与结果</span><span data-lang="en">Metrics and results</span></h3><p><span data-lang="zh">Accuracy 统计等级完全预测正确的比例；F1 为各等级 F1 的宏平均；QWK 为二次加权 Kappa，考虑等级误差并校正随机一致性；MAE 为平均相差几个等级。仅控制变量的预测接近基线。加入 T/V 后，有序 Logit 的 QWK 为 0.650；再加入 M1/M2 后为 0.685，准确率为 54.5%。同样扩展输入下，随机森林为 0.619 和 53.5%，本次结果没有显示它优于有序 Logit。</span><span data-lang="en">Accuracy measures exact category matches; F1 is macro-averaged across categories; QWK is quadratic-weighted kappa; MAE is the mean absolute category error. Controls alone perform near the baseline. Ordered-logit QWK reaches 0.650 with T/V and 0.685 with M1/M2 added, with accuracy 54.5%. The extended random forest scores 0.619 and 53.5%, so it does not outperform ordered logit in this run.</span></p></article><article><h3><span data-lang="zh">SHAP 的解释对象</span><span data-lang="en">What SHAP explains</span></h3><p><span data-lang="zh">对扩展随机森林预测“Y≥4”的概率计算 SHAP，在每折未参与训练的样本上解释，再按平均绝对值汇总排序。功能价值、技术认知、驾驶乐趣和出行效率排在前四。图中也列出分类控制变量编码后的各项，所以共有 23 个输入特征。排序反映模型预测依赖程度，不表示因果效应；交叉验证隔离了当折训练与测试，但没有消除之前探索问卷题项造成的选择影响。</span><span data-lang="en">SHAP explains the extended forest’s predicted probability of Y≥4 on each held-out fold. Features are ranked by mean absolute attribution, with V, T, M1 and M2 first. Category-coded controls bring the total to 23 inputs. The ranking describes predictive attribution, not causal effects. Fold separation does not undo historical exploration of questionnaire items.</span></p></article></div>
+</section>
 
-    <section class="section">
-      <div class="section-head"><span class="section-no">06</span><div><h2><span data-lang="zh">方法与数据来源</span><span data-lang="en">Methods and data sources</span></h2><p class="section-lead"><span data-lang="zh">数据来自 622 份消费者问卷。完整分析代码、双语 Notebook 和运行记录见项目仓库。</span><span data-lang="en">The study uses 622 consumer survey responses. Analysis code, bilingual notebooks and run records are available in the repository.</span></p></div></div>
+    <section id="methods" class="section">
+      <div class="section-head"><span class="section-no">06</span><div><h2><span data-lang="zh">方法与来源</span><span data-lang="en">Methods and sources</span></h2><p class="section-lead"><span data-lang="zh">数据来自 622 份消费者问卷。完整分析代码、双语 Notebook 和运行记录见项目仓库。</span><span data-lang="en">The study uses 622 consumer survey responses. Analysis code, bilingual notebooks and run records are available in the repository.</span></p></div></div>
       <div class="method-list">
         <article class="method"><span class="method-no">01</span><h3><span data-lang="zh">变量定义</span><span data-lang="en">Variable definitions</span></h3><p><span data-lang="zh">题项、组合变量、控制变量和缺失值处理规则见 src/data_schema.py 与 src/config.py。</span><span data-lang="en">Item mappings, composites, controls and missing-value rules are defined in src/data_schema.py and src/config.py.</span></p></article>
-        <article class="method"><span class="method-no">02</span><h3><span data-lang="zh">主规格</span><span data-lang="en">Primary model</span></h3><p><span data-lang="zh">比较主规格、敏感性规格和历史规格。题项选择经过探索，未进行独立预注册。</span><span data-lang="en">The analysis compares primary, sensitivity and legacy specifications. Item selection was exploratory and was not independently preregistered.</span></p></article>
+        <article class="method"><span class="method-no">02</span><h3><span data-lang="zh">主规格</span><span data-lang="en">Primary model</span></h3><p><span data-lang="zh">正文统一使用当前主规格。题项选择经过探索；备选定义和旧版口径见下方版本记录。</span><span data-lang="en">The report uses the current primary specification. Item selection was exploratory; alternative definitions and the original specification are documented below.</span></p></article>
         <article class="method"><span class="method-no">03</span><h3><span data-lang="zh">折外验证</span><span data-lang="en">Held-out checks</span></h3><p><span data-lang="zh">有序 Logit、随机森林和多数类基线使用同一组分层折。</span><span data-lang="en">Ordered logit, random forest, and the majority baseline share the same stratified folds.</span></p></article>
         <article class="method"><span class="method-no">04</span><h3><span data-lang="zh">研究范围</span><span data-lang="en">Study scope</span></h3><p><span data-lang="zh">结果反映这份横截面问卷中的关联和预测表现，不能确定因果关系。</span><span data-lang="en">Results describe associations and predictive performance in this cross-sectional survey. They do not establish causality.</span></p></article>
       </div>
       <div class="note"><strong><span data-lang="zh">数据版本：</span><span data-lang="en">Data version:</span></strong> <span data-lang="zh">本页由一次完整运行生成，随机种子 42，Bootstrap 5,000 次。原始数据不作为网页资产加载。</span><span data-lang="en">This page was generated from one complete run with seed 42 and 5,000 bootstrap draws. The raw survey is not loaded as a page asset.</span></div>
-    </section>
+    <details class="definition-record"><summary><span data-lang="zh">变量定义与版本记录（补充）</span><span data-lang="en">Variable definitions and version history (supplement)</span></summary><p><span data-lang="zh">正文采用 primary：T=Q15/Q16 均值、V=Q22–Q25 均值，控制变量按类别编码。sensitivity 仅在 T 中加入 Q17（减轻疲劳）。legacy 为旧项目口径，V 仅用 Q22，控制变量按有序数值处理。下表用于核对项目修订，不是三个独立研究问题；legacy 同时改变测量与编码，不能将差异归因于单个题项。</span><span data-lang="en">The report uses primary: T averages Q15/Q16, V averages Q22–Q25, with category-coded controls. Sensitivity adds Q17 (fatigue relief) to T. Legacy uses Q22 alone for V and ordinal-coded controls. These are revision records, not three separate research questions; legacy changes both measurement and encoding.</span></p>      <div class="panel" style="margin-top:18px"><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">规格</span><span data-lang="en">Specification</span></th><th>T OR</th><th>V OR</th><th><span data-lang="zh">收敛</span><span data-lang="en">Converged</span></th></tr></thead><tbody id="specTable"></tbody></table></div></div></details></section>
 
     <div class="note"><span data-lang="zh">研究范围：Y 测量的是支付溢价意愿，不是实际购车行为。Q22–Q25 本身涉及功能对购买意愿的影响，与 Y 有概念接近性。题项曾经过历史探索，当前交叉验证不消除先前选题影响。比例优势假设尚未专项检验，OR 依赖该模型假设。</span><span data-lang="en">Scope: Y measures willingness to pay a premium, not actual purchases. Q22–Q25 already concern functions and purchase intention and are conceptually close to Y. Historical item exploration is not undone by the current cross-validation. The proportional-odds assumption has not been specifically tested; OR interpretation remains conditional on it.</span></div>
     <pre id="provenance" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px"></pre>
     <footer class="footer"><span><span data-lang="zh">EV Purchase Intention · Research Notebook</span><span data-lang="en">EV Purchase Intention · Research Notebook</span></span><span class="footer-links"><a href="https://github.com/Yemyu/ev-purchase-intention" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_zh.ipynb" target="_blank" rel="noreferrer"><span data-lang="zh">中文 Notebook</span><span data-lang="en">Chinese Notebook</span></a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_en.ipynb" target="_blank" rel="noreferrer">English Notebook</a></span></footer>
   </main>
   <script src="static/js/lib/echarts.min.js"></script>
-  <script src="static/js/theme.js?v=20260921-3"></script>
-  <script src="static/js/report.js?v=20260921-3"></script>
+  <script src="static/js/theme.js?v=20260921-clarity"></script>
+  <script src="static/js/report.js?v=20260921-clarity"></script>
 </body>
 </html>
