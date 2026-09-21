@@ -9,16 +9,6 @@
     '技术认知': 'Technology recognition', '功能价值': 'Function value',
     '驾驶乐趣 M1': 'Driving pleasure M1', '出行效率 M2': 'Travel efficiency M2', '控制变量': 'Controls',
     '驾驶乐趣': 'Driving pleasure', '出行效率': 'Travel efficiency',
-    '性别：类别 2': 'Gender: category 2', '驾驶频率：类别 2': 'Driving frequency: category 2',
-    '驾驶频率：类别 3': 'Driving frequency: category 3', '驾驶频率：类别 4': 'Driving frequency: category 4',
-    '驾驶频率：类别 5': 'Driving frequency: category 5', '学历：类别 2': 'Education: category 2',
-    '学历：类别 3': 'Education: category 3', '学历：类别 4': 'Education: category 4',
-    '驾龄：类别 2': 'Driving experience: category 2', '驾龄：类别 3': 'Driving experience: category 3',
-    '驾龄：类别 4': 'Driving experience: category 4', '驾龄：类别 5': 'Driving experience: category 5',
-    '年龄：类别 2': 'Age: category 2', '年龄：类别 3': 'Age: category 3',
-    '年龄：类别 4': 'Age: category 4', '年龄：类别 5': 'Age: category 5',
-    '收入：类别 2': 'Income: category 2', '收入：类别 3': 'Income: category 3',
-    '收入：类别 4': 'Income: category 4',
     '间接关联': 'Indirect association',
     '性别': 'Gender', '年龄': 'Age', '月收入': 'Monthly income', '驾龄': 'Driving experience', '驾驶频率': 'Driving frequency',
     '控制变量 + T/V': 'Controls + T/V', '扩展变量 + M1/M2': 'Extended + M1/M2',
@@ -30,12 +20,6 @@
   function fmt(value, digits) { return Number(value).toFixed(digits == null ? 2 : digits); }
   function pct(value, digits) { return (Number(value) * 100).toFixed(digits == null ? 1 : digits) + '%'; }
   function pval(value) { return Number(value) < .001 ? '<0.001' : Number(value).toFixed(3); }
-  function shapLabel(row) {
-    var match = /^control_(gender|age|education|income|driving_exp|driving_freq)_(\d+)$/.exec(row.feature || '');
-    if (!match) return tr(row.label);
-    var names = { gender: '性别', age: '年龄', education: '学历', income: '收入', driving_exp: '驾龄', driving_freq: '驾驶频率' };
-    return tr(names[match[1]] + '：类别 ' + match[2]);
-  }
   function setLang(lang) {
     state.lang = lang; localStorage.setItem('ev-report-lang', lang);
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -127,23 +111,7 @@
       yAxis: { type: 'value', min: -.05, max: .8, name: 'QWK', splitLine: { lineStyle: { color: T.grid } }, axisLabel: { color: T.muted } },
       series: ['ordered_logit', 'random_forest'].map(function (model, i) { return { name: tr(i === 0 ? '有序 Logit' : '随机森林'), type: 'bar', barMaxWidth: 30, data: ['controls', 'core', 'extended'].map(function (feature) { var row = d.ml.find(function (x) { return x.feature_set === feature && x.model === model; }); return row.qwk; }), itemStyle: { color: i === 0 ? T.primary : T.secondary, borderRadius: [4,4,0,0] }, label: { show: true, position: 'top', color: T.ink, formatter: function (p) { return p.value.toFixed(3); } } }; })
     }));
-    var shapRows = d.shap || [];
-    var shapNode = document.getElementById('shapChart');
-    if (shapNode) {
-      shapNode.style.height = Math.max(430, shapRows.length * 28) + 'px';
-      var core = { V: T.primary, T: T.secondary, M1: T.earth, M2: T.red };
-      var labels = shapRows.map(shapLabel).reverse();
-      var values = shapRows.map(function (row) {
-        return { value: row.importance, itemStyle: { color: core[row.feature] || T.faint, borderRadius: [0, 4, 4, 0] } };
-      }).reverse();
-      makeChart('shapChart', Object.assign(baseOption(), {
-        grid: { left: 22, right: 64, top: 22, bottom: 30, containLabel: true },
-        yAxis: { type: 'category', data: labels, axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted, fontSize: 11 } },
-        xAxis: { type: 'value', name: 'mean |SHAP|', nameLocation: 'middle', nameGap: 26, nameTextStyle: { color: T.muted }, splitLine: { lineStyle: { color: T.grid } }, axisLabel: { color: T.muted, formatter: function (value) { return Number(value).toFixed(3); } } },
-        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: function (items) { var item = items[0]; return item.name + '<br>mean |SHAP|: ' + Number(item.value).toFixed(4); } },
-        series: [{ type: 'bar', data: values, barMaxWidth: 18, label: { show: true, position: 'right', color: T.ink, fontSize: 10, formatter: function (p) { return Number(p.value).toFixed(3); } } }]
-      }));
-    }
+    qs('#shapTable').innerHTML = d.shap.slice(0, 4).map(function (row) { return '<tr><td>' + tr(row.label) + '</td><td>' + fmt(row.importance, 3) + '</td></tr>'; }).join('');
   }
   function renderAudit(d) {
     var audit = d.audit || {};

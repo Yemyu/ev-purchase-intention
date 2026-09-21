@@ -161,7 +161,9 @@ Notebook 现在按语言和分析职责分开：
 
 本项目的交付物是可复现的研究分析，不是面向运营人员的持续监控产品。样本是一次性问卷，主要输出是模型表、置信区间和方法说明，因此当前版本提供一个只读静态报告页，集中展示审计、OR、Bootstrap 区间和 ML 指标；不额外制作需要持续刷新数据的运营看板。
 
-报告页地址：<https://yemyu.github.io/ev-purchase-intention/>。它由 `app/` 目录和 GitHub Pages 工作流发布，Notebook 与完整分析代码仍保留在仓库中。
+报告页地址：<https://yemyu.github.io/ev-purchase-intention/>。当前入口在报告开头提供横向书页摘要，向下仍是完整的纵向研究报告；机器学习部分用完整 SHAP 排序图展示 23 个输入特征，交叉验证说明放在图下方。它由 `app/` 目录和 GitHub Pages 工作流发布，Notebook 与完整分析代码仍保留在仓库中。
+
+为了便于比较，`app/classic.html` 保留了书页预览前的传统报告布局；`report-dashboard-v1` Git 标签也固定了这一版的回退点。
 
 ## 项目结构
 

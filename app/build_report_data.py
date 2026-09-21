@@ -164,15 +164,15 @@ def build(run_dir: Path) -> dict:
             "mae": row["ordinal_mae_mean"],
         })
 
-    top_shap = []
-    for _, row in shap.sort_values("mean_abs_shap", ascending=False).head(6).iterrows():
+    shap_rows = []
+    for _, row in shap.sort_values("mean_abs_shap", ascending=False).iterrows():
         label = {
             "T": "技术认知 T",
             "V": "功能价值 V",
             "M1": "驾驶乐趣 M1",
             "M2": "出行效率 M2",
         }.get(row["feature"], row["feature"])
-        top_shap.append({"feature": row["feature"], "label": label, "importance": row["mean_abs_shap"]})
+        shap_rows.append({"feature": row["feature"], "label": label, "importance": row["mean_abs_shap"]})
 
     primary = [x for x in direct if x["specification"] == "primary"]
     extended_logit = next(x for x in ml_rows if x["feature_set"] == "extended" and x["model"] == "ordered_logit")
@@ -219,7 +219,7 @@ def build(run_dir: Path) -> dict:
         "heterogeneity": hetero_rows,
         "ml": ml_rows,
         "ml_meta": {"folds": ml_meta.get("folds"), "shap": ml_meta.get("shap", {})},
-        "shap": top_shap,
+        "shap": shap_rows,
         "limits": {
             "association": "有序 Logit 结果是横截面条件关联，不是因果效果。",
             "mediation": "Bootstrap 路径是探索性间接关联，不能解释为因果中介。",

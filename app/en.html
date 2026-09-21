@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="新能源汽车智能驾驶购买意愿研究报告：有序Logit、Bootstrap路径、异质性与机器学习补充验证。">
   <title>EV Purchase Intention · Research Report</title>
-  <link rel="stylesheet" href="static/css/style.css?v=20260921-1">
+  <link rel="stylesheet" href="static/css/style.css?v=20260921-2">
 </head>
 <body class="lang-en">
   <header class="topbar">
@@ -35,6 +35,80 @@
         <div class="metric"><span class="metric-label"><span data-lang="zh">技术认知 OR</span><span data-lang="en">Technology OR</span></span><strong id="metric-t" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">主规格 · 控制后</span><span data-lang="en">primary · controlled</span></span></div>
         <div class="metric"><span class="metric-label"><span data-lang="zh">功能价值 OR</span><span data-lang="en">Function-value OR</span></span><strong id="metric-v" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">主规格 · 控制后</span><span data-lang="en">primary · controlled</span></span></div>
         <div class="metric"><span class="metric-label"><span data-lang="zh">扩展 QWK</span><span data-lang="en">Extended QWK</span></span><strong id="metric-qwk" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">5 折折外预测</span><span data-lang="en">5-fold held-out prediction</span></span></div>
+      </div>
+    </section>
+
+    <section id="book" class="book-intro" aria-labelledby="book-title">
+      <div class="book-heading">
+        <span class="section-no">BOOK</span>
+        <div>
+          <p class="kicker"><span data-lang="zh">研究预览 · 横向翻页</span><span data-lang="en">RESEARCH PREVIEW · HORIZONTAL PAGES</span></p>
+          <h2 id="book-title"><span data-lang="zh">把一条分析链装进几页纸</span><span data-lang="en">The analysis, arranged as a short book</span></h2>
+          <p class="book-lead"><span data-lang="zh">左右拖动看摘要，继续向下看完整结果。每一页对应一个研究环节，数据、模型和限制沿同一条线展开。</span><span data-lang="en">Drag sideways for the short version, then keep scrolling for the full report. Each page covers one part of the study, with data, models and limits kept in the same sequence.</span></p>
+        </div>
+        <span class="book-hint"><span data-lang="zh">← → 横向翻页 · ↓ 继续阅读</span><span data-lang="en">← → turn pages · ↓ keep reading</span></span>
+      </div>
+      <div class="book-viewport" aria-label="Research summary pages">
+        <div class="book-spread">
+          <article class="book-page book-cover">
+            <span class="book-ribbon"><span data-lang="zh">研究档案</span><span data-lang="en">RESEARCH NOTEBOOK</span></span>
+            <p class="book-series">EV PURCHASE INTENTION / 2026</p>
+            <h3><span data-lang="zh">智能驾驶功能<br>与购买溢价意愿</span><span data-lang="en">Driver-assistance features<br>and willingness to pay more</span></h3>
+            <p class="book-cover-note"><span data-lang="zh">一份基于 622 份问卷的结果记录</span><span data-lang="en">A results record based on 622 survey responses</span></p>
+            <span class="book-page-number">01</span>
+          </article>
+          <article class="book-page">
+            <span class="book-page-label"><span data-lang="zh">样本</span><span data-lang="en">SAMPLE</span></span>
+            <h3><span data-lang="zh">先把问题说清楚</span><span data-lang="en">Start with a clear question</span></h3>
+            <p><span data-lang="zh">结果变量是 Q21 的支付溢价意愿。技术认知使用 Q15、Q16，功能价值使用 Q22–Q25；同一套定义贯穿直接关联、路径和预测。</span><span data-lang="en">The outcome is willingness to pay a premium in Q21. Technology recognition uses Q15–Q16 and feature value uses Q22–Q25; the same definitions run through associations, paths and prediction.</span></p>
+            <div class="book-facts"><b>622</b><span><span data-lang="zh">份有效问卷</span><span data-lang="en">survey responses</span></span><b>5</b><span><span data-lang="zh">个分析环节</span><span data-lang="en">analysis modules</span></span></div>
+            <span class="book-page-number">02</span>
+          </article>
+        </div>
+        <div class="book-spread">
+          <article class="book-page">
+            <span class="book-page-label"><span data-lang="zh">直接关联</span><span data-lang="en">ASSOCIATIONS</span></span>
+            <h3><span data-lang="zh">技术认知和功能价值都与更高溢价意愿同向</span><span data-lang="en">Both perceptions track a higher willingness to pay</span></h3>
+            <div class="book-result"><b>2.08</b><span><span data-lang="zh">技术认知 T · OR</span><span data-lang="en">Technology recognition T · OR</span></span></div>
+            <div class="book-result"><b>3.83</b><span><span data-lang="zh">功能价值 V · OR</span><span data-lang="en">Function value V · OR</span></span></div>
+            <p class="book-footnote"><span data-lang="zh">主规格控制性别、年龄、学历、收入、驾龄和驾驶频率；这是横截面关联。</span><span data-lang="en">The primary specification controls for demographics and driving history; this is a cross-sectional association.</span></p>
+            <span class="book-page-number">03</span>
+          </article>
+          <article class="book-page">
+            <span class="book-page-label"><span data-lang="zh">探索性路径</span><span data-lang="en">INDIRECT PATHS</span></span>
+            <h3><span data-lang="zh">路径结果放在主结果之后</span><span data-lang="en">Paths follow the main result</span></h3>
+            <p><span data-lang="zh">5 条路径使用 5,000 次 Bootstrap。区间不跨 0 时，只说明本样本里存在间接关联，不能把它写成因果中介。</span><span data-lang="en">Five paths use 5,000 bootstrap draws. An interval excluding zero supports an indirect association in this sample; it does not establish causal mediation.</span></p>
+            <div class="book-stamp"><span data-lang="zh">探索性</span><span data-lang="en">EXPLORATORY</span></div>
+            <span class="book-page-number">04</span>
+          </article>
+        </div>
+        <div class="book-spread">
+          <article class="book-page">
+            <span class="book-page-label"><span data-lang="zh">机器学习</span><span data-lang="en">MACHINE LEARNING</span></span>
+            <h3><span data-lang="zh">用折外预测补充模型比较</span><span data-lang="en">Use held-out prediction as a check</span></h3>
+            <div class="book-result"><b>0.685</b><span><span data-lang="zh">扩展有序 Logit · QWK</span><span data-lang="en">Extended ordered logit · QWK</span></span></div>
+            <div class="book-result"><b>0.619</b><span><span data-lang="zh">随机森林 · QWK</span><span data-lang="en">Random forest · QWK</span></span></div>
+            <p class="book-footnote"><span data-lang="zh">每折测试样本都没有参与该折训练。SHAP 展示特征贡献的大小，不代表因果方向。</span><span data-lang="en">Each test fold was kept outside training. SHAP shows contribution magnitude, not causal direction.</span></p>
+            <span class="book-page-number">05</span>
+          </article>
+          <article class="book-page book-end">
+            <span class="book-page-label"><span data-lang="zh">阅读边界</span><span data-lang="en">READING LIMITS</span></span>
+            <h3><span data-lang="zh">结果可以复核，也有明确边界</span><span data-lang="en">The results are traceable, with clear limits</span></h3>
+            <ul class="book-list">
+              <li><span data-lang="zh">横截面问卷，不能确定因果。</span><span data-lang="en">Cross-sectional survey; no causal claim.</span></li>
+              <li><span data-lang="zh">题项经过历史探索，当前验证不能消除这一影响。</span><span data-lang="en">Historical item exploration still matters.</span></li>
+              <li><span data-lang="zh">比例优势假设尚未专项检验。</span><span data-lang="en">The proportional-odds assumption needs a dedicated check.</span></li>
+            </ul>
+            <a class="book-continue" href="#audit"><span data-lang="zh">从数据审计开始 →</span><span data-lang="en">Start with the data audit →</span></a>
+            <span class="book-page-number">06</span>
+          </article>
+        </div>
+      </div>
+      <div class="book-index" aria-label="Book page index">
+        <a href="#audit"><b>01</b><span data-lang="zh">数据</span><span data-lang="en">Data</span></a>
+        <a href="#direct"><b>02</b><span data-lang="zh">关联</span><span data-lang="en">Associations</span></a>
+        <a href="#mediation"><b>03</b><span data-lang="zh">路径</span><span data-lang="en">Paths</span></a>
+        <a href="#ml"><b>04</b><span data-lang="zh">预测</span><span data-lang="en">Prediction</span></a>
       </div>
     </section>
 
@@ -93,10 +167,8 @@
         <article class="panel chart-panel"><h3><span data-lang="zh">折外 QWK</span><span data-lang="en">Held-out QWK</span></h3><div id="mlChart" class="chart" role="img" aria-label="Out of fold QWK comparison"></div><p class="chart-caption"><span data-lang="zh">多数类基线 QWK 为 0；扩展有序 Logit 约为 0.685。</span><span data-lang="en">The majority baseline has QWK 0; extended ordered logit is about 0.685.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">模型比较</span><span data-lang="en">Model comparison</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">特征集</span><span data-lang="en">Feature set</span></th><th><span data-lang="zh">模型</span><span data-lang="en">Model</span></th><th>Acc.</th><th>F1</th><th>QWK</th><th>MAE</th></tr></thead><tbody id="mlTable"></tbody></table></div></article>
       </div>
-      <div class="grid-2" style="margin-top:18px">
-        <article class="panel"><h3><span data-lang="zh">SHAP 前四项</span><span data-lang="en">Top four SHAP features</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">特征</span><span data-lang="en">Feature</span></th><th><span data-lang="zh">平均绝对 SHAP</span><span data-lang="en">Mean |SHAP|</span></th></tr></thead><tbody id="shapTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">SHAP 解释扩展随机森林的 P(Y≥4)，本次五折均使用概率输出；表中列出前四项平均绝对值，不表示作用方向。</span><span data-lang="en">SHAP explains P(Y≥4) for the extended forest using probability output in all five folds. The top four mean absolute values show magnitude, not direction or causality.</span></p></article>
-        <article class="panel"><h3><span data-lang="zh">交叉验证结果</span><span data-lang="en">Cross-validation results</span></h3><p><span data-lang="zh">加入全部研究变量后，有序 Logit 的平均准确率为 54.5%，随机森林为 53.5%；平均 QWK 分别为 0.685 和 0.619。每一折的测试样本均未参与该折模型训练。表中指标为五折平均值。</span><span data-lang="en">With all study variables included, mean accuracy is 54.5% for ordered logit and 53.5% for random forest; mean QWK is 0.685 and 0.619, respectively. Each fold is evaluated on respondents excluded from its training set. The table reports averages across five folds.</span></p></article>
-      </div>
+      <article class="panel shap-panel" style="margin-top:18px"><h3><span data-lang="zh">SHAP 特征排序</span><span data-lang="en">SHAP feature ranking</span></h3><div id="shapChart" class="chart shap-chart" role="img" aria-label="Mean absolute SHAP feature ranking"></div><p class="panel-note"><span data-lang="zh">图中展示扩展随机森林对 P(Y≥4) 的全部 23 个输入特征，按平均绝对 SHAP 排序。数值表示贡献大小，不表示作用方向或因果关系。</span><span data-lang="en">The chart shows all 23 inputs used by the extended forest for P(Y≥4), ranked by mean absolute SHAP. Magnitude does not indicate direction or causality.</span></p></article>
+      <div class="cv-note"><strong><span data-lang="zh">交叉验证：</span><span data-lang="en">Cross-validation:</span></strong> <span data-lang="zh">加入全部研究变量后，有序 Logit 的平均准确率为 54.5%，随机森林为 53.5%；平均 QWK 分别为 0.685 和 0.619。每一折测试样本都没有参与该折训练。</span><span data-lang="en">With all study variables included, mean accuracy is 54.5% for ordered logit and 53.5% for random forest; mean QWK is 0.685 and 0.619. Each test fold was kept outside training.</span></div>
     </section>
 
     <section class="section">
