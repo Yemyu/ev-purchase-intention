@@ -68,6 +68,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.venv/
 
 # IDEs
 .idea/
@@ -89,3 +90,7 @@ model_save/
 
 # Logs
 *.log
+
+# Reproducible run outputs and local working files
+figures/runs/
+.work/

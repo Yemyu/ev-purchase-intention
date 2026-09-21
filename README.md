@@ -1,114 +1,148 @@
 # EV Purchase Intention
 
-Investigating how autonomous driving features influence consumers' purchase intention for New Energy Vehicles (NEVs) through survey-based econometric analysis.
+This project studies how recognition of intelligent-driving functions relates
+to consumers' willingness to pay a premium for new-energy vehicles. It keeps a
+two-part design: an ordered-logit analysis for the economic research question,
+followed by out-of-fold machine-learning prediction and SHAP explanation as a
+computational complement.
 
-## Overview
+The current implementation is a reproducible project revision. It does not
+change the thesis document, and it keeps the old analysis outputs in `figures/`
+for traceability. New runs are written to a timestamped directory under
+`figures/runs/` and are ignored by Git.
 
-Based on 622 survey responses collected in China (2024–2025), this project applies **ordered logit regression**, **bootstrap mediation analysis**, **heterogeneity testing**, and **ML + SHAP interpretability** to understand the key drivers behind NEV purchase decisions.
+## Data and fixed measurements
 
-## Key Findings
+The raw survey contains 622 respondents and 67 columns. The CSV includes both
+original questionnaire columns and historical dummy or exception-handling
+columns. Only the explicit raw questionnaire columns are used by the new
+pipeline.
 
-| Hypothesis | Path | Estimate | Result |
-|------------|------|----------|--------|
-| H1 | Tech Trust → Purchase Intention | OR=2.77, p<0.001 | Significant |
-| H2 | Perceived Value → Purchase Intention | OR=2.20, p<0.001 | Significant |
-| H3 | Tech Trust → Enjoyment → Intention | 35% mediation | Partial mediation |
-| H4 | Value → Efficiency → Intention | Significant | Partial mediation |
+The shared schema in `src/config.py` and `src/data_schema.py` defines three
+fixed specifications:
 
-Both technology trust and perceived value are significant predictors of purchase intention, with indirect effects operating through driving enjoyment and travel efficiency.
+| Specification | Technology proxy | Function-value proxy | Controls |
+|---|---|---|---|
+| `legacy` | mean(Q15, Q16) | Q22 | original ordinal codes |
+| `primary` | mean(Q15, Q16) | mean(Q22, Q23, Q24, Q25) | category dummies |
+| `sensitivity` | mean(Q15, Q16, Q17) | mean(Q22, Q23, Q24, Q25) | category dummies |
 
-## Key Improvements
+The outcome is Q21, willingness to pay a premium, on a 1–5 ordered scale. Q18
+and Q19 are the two single-item exploratory mediators. The primary specification
+is fixed before fitting; it is not selected because it produces a smaller
+p-value or a higher score. The legacy specification remains so that the old
+project can be traced, and the sensitivity specification shows the effect of
+including Q17.
 
-| Issue | Solution | Impact |
-|-------|----------|--------|
-| Multicollinearity (VIF=22.3) | Selective control strategy | Core variables remain significant |
-| Heterogeneous effects | LR test by demographic groups | Identified key segments |
-| Non-linear relationships | ML + SHAP validation | Robust results confirmed |
+The two-item technology measure is a proxy for importance and safety
+recognition. The four-item measure is a proxy for recognition of the value of
+specific assisted-driving functions. They are not presented as validated,
+complete psychological scales. The audit records item missingness, item
+correlations, and Cronbach's alpha as descriptive diagnostics.
 
-## Data Sources
+## Analyses
 
-| Source | Description |
-|--------|-------------|
-| Survey data | 622 consumers in China (2024–2025) |
-| Variables | 39 items: tech trust, perceived value, driving enjoyment, travel efficiency, demographics |
-| Location | `data/raw/data.csv` |
+### Ordered logit
 
-## Project Structure
+The main analysis fits Q21 on the two core proxies, then adds the fixed six
+background controls. It reports coefficients, odds ratios, confidence intervals,
+fit statistics, convergence information, and an auxiliary VIF calculation with
+an intercept. The results are conditional associations in cross-sectional
+survey data.
 
-```
-ev-purchase-intention/
-├── src/
-│   ├── ordered_logit.py      # Ordered logit regression + VIF
-│   ├── mediation.py          # Bootstrap mediation analysis
-│   ├── heterogeneity.py      # Group comparison + LR test
-│   └── ml_shap.py           # ML prediction + SHAP
-├── notebooks/
-│   └── 01_ev_purchase_intention.ipynb
-├── figures/                  # Output visualizations
-├── data/raw/                 # Raw survey data
-├── main.py                   # CLI entry point
-├── requirements.txt
-├── LICENSE
-└── README.md
-```
+### Exploratory indirect paths
 
-## Quick Start
+Five predeclared paths are retained:
 
-**Option A — Run locally:**
+- technology proxy → driving pleasure → willingness to pay
+- technology proxy → travel efficiency → willingness to pay
+- function-value proxy → driving pleasure → willingness to pay
+- function-value proxy → travel efficiency → willingness to pay
+- technology proxy → function-value proxy → willingness to pay
+
+Each path uses respondent-level OLS equations with the fixed controls and 5,000
+bootstrap resamples. The output reports the path coefficients and a bootstrap
+interval. These are exploratory indirect associations; they are not multiplied
+with ordered-logit coefficients and are not interpreted as causal mediation or
+as a percentage of a causal effect.
+
+### Heterogeneity
+
+Demographic differences are a supplementary analysis. For each fixed grouping,
+the restricted and unrestricted ordered-logit models are genuinely nested. The
+unrestricted model adds technology and value proxy interactions with group
+dummies. The likelihood-ratio degrees of freedom are based on the actual design
+rank, and raw p-values are accompanied by Holm-adjusted values.
+
+### Machine learning and SHAP
+
+The pipeline uses the same five stratified folds for a majority-class baseline,
+ordered logit, and random forest. It compares controls only, controls plus the
+two core proxies, and the extended set that also includes Q18 and Q19. It
+reports accuracy, macro-F1, quadratic weighted kappa, ordinal MAE, fold-level
+metrics, out-of-fold predictions, and confusion matrices.
+
+SHAP is computed on held-out folds for the extended random forest. When the
+installed SHAP version supports it, the explanation target is the probability
+of a high willingness-to-pay response (`Y >= 4`). Any fallback to raw-output
+SHAP is recorded in `ml_run_metadata.json`. SHAP is a predictive explanation;
+it is not a causal effect or an independent confirmation of the ordered-logit
+model.
+
+## Run locally
+
+Use the project virtual environment for dependencies:
+
 ```bash
-git clone https://github.com/Yemyu/ev-purchase-intention.git
-cd ev-purchase-intention
-pip install -r requirements.txt
-
-# Download data and place in data/raw/
-jupyter notebook notebooks/01_ev_purchase_intention.ipynb
+python3 -m venv .venv
+uv pip install --offline --python .venv/bin/python -r requirements.txt
 ```
 
-**Option B — Run on Google Colab:**
+If the local package cache is unavailable, install `requirements.txt` through
+your normal package mirror inside `.venv`.
 
-Upload `notebooks/01_ev_purchase_intention.ipynb` to [Google Colab](https://colab.research.google.com/), then upload `data/raw/data.csv` via the file panel on the left. No local setup needed.
+Run an audit first:
 
-## Methodology
+```bash
+.venv/bin/python main.py --analysis audit
+```
 
-### 1. Ordered Logit Regression
+Run one stage:
 
-Custom proportional odds model handling the ordinal nature of purchase intention (1–5 Likert scale). Addresses multicollinearity through selective control variable strategy, reducing VIF from 22.3 to acceptable levels.
+```bash
+.venv/bin/python main.py --analysis econometrics
+.venv/bin/python main.py --analysis mediation
+.venv/bin/python main.py --analysis heterogeneity
+.venv/bin/python main.py --analysis ml
+```
 
-### 2. Mediation Analysis (Bootstrap)
+Run the complete pipeline:
 
-Five mediation paths tested using 5,000 bootstrap samples:
+```bash
+.venv/bin/python main.py --analysis all
+```
 
-- Tech Trust → Driving Enjoyment → Purchase Intention
-- Tech Trust → Travel Efficiency → Purchase Intention
-- Perceived Value → Driving Enjoyment → Purchase Intention
-- Perceived Value → Travel Efficiency → Purchase Intention
-- Tech Trust → Perceived Value → Purchase Intention
+For a quick functional run of the mediation code, reduce the bootstrap count
+explicitly, for example `--analysis mediation --bootstrap-iterations 50`.
+The complete run uses 5,000 iterations. Every run records the data SHA256,
+mapping manifest, random seed, Python environment, Git state, sample counts,
+and output files.
 
-### 3. Heterogeneity Analysis
+## Project structure
 
-LR test for group differences across:
+```text
+src/config.py             fixed questionnaire mapping and model specifications
+src/data_schema.py        data audit, composites, and control encoding
+src/ordered_logit.py      ordered-logit associations and VIF
+src/mediation.py          five exploratory bootstrap paths
+src/heterogeneity.py      nested interaction LR tests
+src/ml_shap.py            out-of-fold prediction and SHAP
+main.py                   command-line runner and run metadata
+data/raw/data.csv         survey data used by the local project
+figures/                  historical project outputs
+figures/runs/             ignored timestamped outputs from the new pipeline
+IMPLEMENTATION_PLAN.md    fixed design decisions and acceptance rules
+```
 
-- Age groups (Youth / Middle-aged / Senior)
-- Income levels (Low / Middle / High)
-- Driving experience (Novice / Experienced / Expert)
-
-### 4. ML + SHAP
-
-Random Forest classifier with SHAP values for model validation and feature interpretability.
-
-## Limitations & Future Work
-
-- **Cross-sectional data**: Causal inference limited; longitudinal tracking of attitude changes would strengthen conclusions
-- **Sample scope**: Single country, urban respondents; cross-cultural comparison could extend generalizability
-- **Future directions**:
-  - Field experiment with EV test drives
-  - Integration of revealed preference data
-  - Policy variable analysis (subsidies, regulations)
-
-## Tech Stack
-
-Python · pandas · numpy · scipy · statsmodels · scikit-learn · shap · matplotlib · seaborn
-
-## License
-
-[MIT](LICENSE)
+The GitHub repository is private at
+https://github.com/Yemyu/ev-purchase-intention.
