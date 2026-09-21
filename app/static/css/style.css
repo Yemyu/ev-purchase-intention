@@ -186,5 +186,13 @@ body.lang-zh [data-lang="zh"], body.lang-en [data-lang="en"] { display: initial;
 .metric-value,.book-result b,.book-facts b,.audit-card strong { font-family:var(--serif); font-variant-numeric:lining-nums tabular-nums; }
 .book-list li { display:block; padding-left:18px; position:relative; }
 .book-list li::before { position:absolute; left:0; }
-.book-cover::before { background:linear-gradient(90deg,rgba(0,0,0,.16),transparent 10%,transparent 96%,rgba(0,0,0,.12)); opacity:1; }
+.book-cover::before {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.16), transparent 10%, transparent 96%, rgba(0,0,0,.12)),
+    radial-gradient(circle, rgba(213,236,235,.44) 0 1.7px, transparent 2px),
+    radial-gradient(circle, rgba(247,223,180,.24) 0 1px, transparent 1.7px);
+  background-size: auto, 24px 24px, 17px 17px;
+  background-position: 0 0, 2px 3px, 8px 11px;
+  opacity: 1;
+}
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
