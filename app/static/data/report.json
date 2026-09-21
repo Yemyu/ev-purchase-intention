@@ -483,6 +483,91 @@
       "feature": "control_driving_freq_3",
       "label": "control_driving_freq_3",
       "importance": 0.0046989080593331
+    },
+    {
+      "feature": "control_driving_freq_5",
+      "label": "control_driving_freq_5",
+      "importance": 0.0043406482038924
+    },
+    {
+      "feature": "control_driving_freq_2",
+      "label": "control_driving_freq_2",
+      "importance": 0.0037935412141634
+    },
+    {
+      "feature": "control_education_4",
+      "label": "control_education_4",
+      "importance": 0.0037131066561428
+    },
+    {
+      "feature": "control_driving_exp_5",
+      "label": "control_driving_exp_5",
+      "importance": 0.0036498316084514
+    },
+    {
+      "feature": "control_age_5",
+      "label": "control_age_5",
+      "importance": 0.0034693198600817
+    },
+    {
+      "feature": "control_education_2",
+      "label": "control_education_2",
+      "importance": 0.0030093610848847
+    },
+    {
+      "feature": "control_driving_exp_4",
+      "label": "control_driving_exp_4",
+      "importance": 0.0026687237948351
+    },
+    {
+      "feature": "control_age_2",
+      "label": "control_age_2",
+      "importance": 0.002581619507198
+    },
+    {
+      "feature": "control_driving_exp_2",
+      "label": "control_driving_exp_2",
+      "importance": 0.0025681127025303
+    },
+    {
+      "feature": "control_driving_exp_3",
+      "label": "control_driving_exp_3",
+      "importance": 0.0024522815517541
+    },
+    {
+      "feature": "control_education_3",
+      "label": "control_education_3",
+      "importance": 0.0024439279440572
+    },
+    {
+      "feature": "control_income_2",
+      "label": "control_income_2",
+      "importance": 0.0023736703418511
+    },
+    {
+      "feature": "control_income_4",
+      "label": "control_income_4",
+      "importance": 0.0023362255236653
+    },
+    {
+      "feature": "control_income_3",
+      "label": "control_income_3",
+      "importance": 0.0023200066451423
+    },
+    {
+      "feature": "control_age_4",
+      "label": "control_age_4",
+      "importance": 0.0022095239224308
+    },
+    {
+      "feature": "control_age_3",
+      "label": "control_age_3",
+      "importance": 0.0021021083748028
+    },
+    {
+      "feature": "control_driving_freq_4",
+      "label": "control_driving_freq_4",
+      "importance": 0.0018640191721215
     }
   ],
   "limits": {
