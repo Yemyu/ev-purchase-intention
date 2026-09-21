@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="新能源汽车智能驾驶购买意愿研究报告：有序Logit、Bootstrap路径、异质性与机器学习补充验证。">
   <title>EV Purchase Intention · Research Report</title>
-  <link rel="stylesheet" href="static/css/style.css?v=20260921-2">
+  <link rel="stylesheet" href="static/css/style.css?v=20260921-3">
 </head>
 <body class="lang-en">
   <header class="topbar">
@@ -42,25 +42,25 @@
       <div class="book-heading">
         <span class="section-no">BOOK</span>
         <div>
-          <p class="kicker"><span data-lang="zh">研究预览 · 横向翻页</span><span data-lang="en">RESEARCH PREVIEW · HORIZONTAL PAGES</span></p>
-          <h2 id="book-title"><span data-lang="zh">把一条分析链装进几页纸</span><span data-lang="en">The analysis, arranged as a short book</span></h2>
-          <p class="book-lead"><span data-lang="zh">左右拖动看摘要，继续向下看完整结果。每一页对应一个研究环节，数据、模型和限制沿同一条线展开。</span><span data-lang="en">Drag sideways for the short version, then keep scrolling for the full report. Each page covers one part of the study, with data, models and limits kept in the same sequence.</span></p>
+          <p class="kicker"><span data-lang="zh">研究摘要</span><span data-lang="en">STUDY SUMMARY</span></p>
+          <h2 id="book-title"><span data-lang="zh">智能驾驶与支付意愿</span><span data-lang="en">Driver assistance and willingness to pay</span></h2>
+          <p class="book-lead"><span data-lang="zh">622 份问卷中的技术认知、功能价值与支付溢价意愿。</span><span data-lang="en">Technology perceptions, feature value and willingness to pay a premium in 622 survey responses.</span></p>
         </div>
-        <span class="book-hint"><span data-lang="zh">← → 横向翻页 · ↓ 继续阅读</span><span data-lang="en">← → turn pages · ↓ keep reading</span></span>
       </div>
-      <div class="book-viewport" aria-label="Research summary pages">
+      <div class="book-controls"><button type="button" id="bookPrev" aria-label="上一组 / Previous spread">←</button><button type="button" id="bookNext" aria-label="下一组 / Next spread">→</button></div>
+      <div class="book-viewport" tabindex="0" aria-label="研究摘要 / Study summary">
         <div class="book-spread">
           <article class="book-page book-cover">
             <span class="book-ribbon"><span data-lang="zh">研究档案</span><span data-lang="en">RESEARCH NOTEBOOK</span></span>
             <p class="book-series">EV PURCHASE INTENTION / 2026</p>
             <h3><span data-lang="zh">智能驾驶功能<br>与购买溢价意愿</span><span data-lang="en">Driver-assistance features<br>and willingness to pay more</span></h3>
-            <p class="book-cover-note"><span data-lang="zh">一份基于 622 份问卷的结果记录</span><span data-lang="en">A results record based on 622 survey responses</span></p>
+            <p class="book-cover-note"><span data-lang="zh">消费者问卷 · 研究报告</span><span data-lang="en">Consumer survey · Results report</span></p>
             <span class="book-page-number">01</span>
           </article>
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">样本</span><span data-lang="en">SAMPLE</span></span>
-            <h3><span data-lang="zh">先把问题说清楚</span><span data-lang="en">Start with a clear question</span></h3>
-            <p><span data-lang="zh">结果变量是 Q21 的支付溢价意愿。技术认知使用 Q15、Q16，功能价值使用 Q22–Q25；同一套定义贯穿直接关联、路径和预测。</span><span data-lang="en">The outcome is willingness to pay a premium in Q21. Technology recognition uses Q15–Q16 and feature value uses Q22–Q25; the same definitions run through associations, paths and prediction.</span></p>
+            <h3><span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></h3>
+            <p><span data-lang="zh">结果变量是 Q21 的支付溢价意愿。技术认知使用 Q15、Q16，功能价值使用 Q22–Q25；三个指标均保留原问卷的 1–5 分尺度。</span><span data-lang="en">The outcome is willingness to pay a premium in Q21. Technology recognition uses Q15–Q16 and feature value uses Q22–Q25; all three measures retain the original 1–5 scale.</span></p>
             <div class="book-facts"><b>622</b><span><span data-lang="zh">份有效问卷</span><span data-lang="en">survey responses</span></span><b>5</b><span><span data-lang="zh">个分析环节</span><span data-lang="en">analysis modules</span></span></div>
             <span class="book-page-number">02</span>
           </article>
@@ -68,7 +68,7 @@
         <div class="book-spread">
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">直接关联</span><span data-lang="en">ASSOCIATIONS</span></span>
-            <h3><span data-lang="zh">技术认知和功能价值都与更高溢价意愿同向</span><span data-lang="en">Both perceptions track a higher willingness to pay</span></h3>
+            <h3><span data-lang="zh">技术认知与功能价值</span><span data-lang="en">Technology perceptions and feature value</span></h3>
             <div class="book-result"><b>2.08</b><span><span data-lang="zh">技术认知 T · OR</span><span data-lang="en">Technology recognition T · OR</span></span></div>
             <div class="book-result"><b>3.83</b><span><span data-lang="zh">功能价值 V · OR</span><span data-lang="en">Function value V · OR</span></span></div>
             <p class="book-footnote"><span data-lang="zh">主规格控制性别、年龄、学历、收入、驾龄和驾驶频率；这是横截面关联。</span><span data-lang="en">The primary specification controls for demographics and driving history; this is a cross-sectional association.</span></p>
@@ -76,8 +76,8 @@
           </article>
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">探索性路径</span><span data-lang="en">INDIRECT PATHS</span></span>
-            <h3><span data-lang="zh">路径结果放在主结果之后</span><span data-lang="en">Paths follow the main result</span></h3>
-            <p><span data-lang="zh">5 条路径使用 5,000 次 Bootstrap。区间不跨 0 时，只说明本样本里存在间接关联，不能把它写成因果中介。</span><span data-lang="en">Five paths use 5,000 bootstrap draws. An interval excluding zero supports an indirect association in this sample; it does not establish causal mediation.</span></p>
+            <h3><span data-lang="zh">驾驶乐趣与出行效率</span><span data-lang="en">Driving pleasure and travel efficiency</span></h3>
+            <p><span data-lang="zh">分析包括经驾驶乐趣、出行效率以及功能价值的五条间接路径，采用 5,000 次 Bootstrap 估计区间。横截面数据无法确定这些关系的因果顺序。</span><span data-lang="en">Five indirect paths through driving pleasure, travel efficiency and feature value are estimated with 5,000 bootstrap draws. Cross-sectional data cannot establish the causal ordering of these relationships.</span></p>
             <div class="book-stamp"><span data-lang="zh">探索性</span><span data-lang="en">EXPLORATORY</span></div>
             <span class="book-page-number">04</span>
           </article>
@@ -85,21 +85,21 @@
         <div class="book-spread">
           <article class="book-page">
             <span class="book-page-label"><span data-lang="zh">机器学习</span><span data-lang="en">MACHINE LEARNING</span></span>
-            <h3><span data-lang="zh">用折外预测补充模型比较</span><span data-lang="en">Use held-out prediction as a check</span></h3>
+            <h3><span data-lang="zh">有序 Logit 与随机森林</span><span data-lang="en">Ordered logit and random forest</span></h3>
             <div class="book-result"><b>0.685</b><span><span data-lang="zh">扩展有序 Logit · QWK</span><span data-lang="en">Extended ordered logit · QWK</span></span></div>
             <div class="book-result"><b>0.619</b><span><span data-lang="zh">随机森林 · QWK</span><span data-lang="en">Random forest · QWK</span></span></div>
             <p class="book-footnote"><span data-lang="zh">每折测试样本都没有参与该折训练。SHAP 展示特征贡献的大小，不代表因果方向。</span><span data-lang="en">Each test fold was kept outside training. SHAP shows contribution magnitude, not causal direction.</span></p>
             <span class="book-page-number">05</span>
           </article>
           <article class="book-page book-end">
-            <span class="book-page-label"><span data-lang="zh">阅读边界</span><span data-lang="en">READING LIMITS</span></span>
-            <h3><span data-lang="zh">结果可以复核，也有明确边界</span><span data-lang="en">The results are traceable, with clear limits</span></h3>
+            <span class="book-page-label"><span data-lang="zh">研究局限</span><span data-lang="en">LIMITATIONS</span></span>
+            <h3><span data-lang="zh">样本与方法的限制</span><span data-lang="en">Sample and methodological limitations</span></h3>
             <ul class="book-list">
               <li><span data-lang="zh">横截面问卷，不能确定因果。</span><span data-lang="en">Cross-sectional survey; no causal claim.</span></li>
               <li><span data-lang="zh">题项经过历史探索，当前验证不能消除这一影响。</span><span data-lang="en">Historical item exploration still matters.</span></li>
               <li><span data-lang="zh">比例优势假设尚未专项检验。</span><span data-lang="en">The proportional-odds assumption needs a dedicated check.</span></li>
             </ul>
-            <a class="book-continue" href="#audit"><span data-lang="zh">从数据审计开始 →</span><span data-lang="en">Start with the data audit →</span></a>
+            <a class="book-continue" href="#audit"><span data-lang="zh">样本详情 →</span><span data-lang="en">Sample details →</span></a>
             <span class="book-page-number">06</span>
           </article>
         </div>
@@ -121,7 +121,7 @@
     </nav>
 
     <section id="audit" class="section">
-      <div class="section-head"><span class="section-no">01</span><div><h2><span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></h2><p class="section-lead"><span data-lang="zh">样本包含 622 份问卷。结果变量为支付溢价意愿，技术认知取 Q15、Q16 的平均值，功能价值取 Q22–Q25 的平均值。所有分析使用相同的题号与变量定义。</span><span data-lang="en">The sample contains 622 survey responses. The outcome is willingness to pay a premium. Technology recognition is the mean of Q15 and Q16; feature value is the mean of Q22–Q25. All analyses use the same item definitions.</span></p></div></div>
+      <div class="section-head"><span class="section-no">01</span><div><h2><span data-lang="zh">样本与变量</span><span data-lang="en">Sample and variables</span></h2><p class="section-lead"><span data-lang="zh">样本包含 622 份问卷。结果变量为支付溢价意愿，技术认知取 Q15、Q16 的平均值，功能价值取 Q22–Q25 的平均值。</span><span data-lang="en">The sample contains 622 survey responses. The outcome is willingness to pay a premium. Technology recognition is the mean of Q15 and Q16; feature value is the mean of Q22–Q25. </span></p></div></div>
       <div class="audit-grid">
         <div class="audit-card"><label><span data-lang="zh">样本</span><span data-lang="en">Rows</span></label><strong id="auditRows">622</strong><small><span data-lang="zh">原始问卷记录</span><span data-lang="en">survey records</span></small></div>
         <div class="audit-card"><label><span data-lang="zh">重复行</span><span data-lang="en">Duplicate rows</span></label><strong>0</strong><small><span data-lang="zh">审计未发现</span><span data-lang="en">none in audit</span></small></div>
@@ -140,13 +140,13 @@
       <div class="section-head"><span class="section-no">02</span><div><h2><span data-lang="zh">技术认知、功能价值与支付意愿</span><span data-lang="en">Technology perceptions, feature value and willingness to pay</span></h2><p class="section-lead"><span data-lang="zh">主模型使用有序 Logit，并控制性别、年龄、学历、收入、驾龄和驾驶频率。OR 大于 1 表示更高的 T/V 与更高购买溢价意愿的排序相关。</span><span data-lang="en">The primary ordered-logit model controls for gender, age, education, income, driving experience, and driving frequency. An OR above 1 indicates an association with a higher willingness-to-pay category.</span></p></div></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">主规格优势比</span><span data-lang="en">Primary odds ratios</span></h3><div id="directChart" class="chart" role="img" aria-label="Primary ordered logit odds ratios"></div><p class="chart-caption"><span data-lang="zh">点估计来自 primary / controlled；虚线为 OR=1。置信区间见下表。</span><span data-lang="en">Estimates are from primary / controlled; the dashed line is OR=1. Confidence intervals are shown below.</span></p></article>
-        <article class="panel"><h3><span data-lang="zh">当前主结果</span><span data-lang="en">Current main result</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">变量</span><span data-lang="en">Variable</span></th><th>OR</th><th>95% CI</th><th>p</th><th>N</th></tr></thead><tbody id="directTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">这些是横截面条件关联，不能直接写成因果影响。</span><span data-lang="en">These are cross-sectional conditional associations, not causal effects.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">主模型估计</span><span data-lang="en">Primary model estimates</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">变量</span><span data-lang="en">Variable</span></th><th>OR</th><th>95% CI</th><th>p</th><th>N</th></tr></thead><tbody id="directTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">优势比表示控制其他变量后的关联，因果方向无法由本次问卷确定。</span><span data-lang="en">The odds ratios describe adjusted associations. The survey does not establish their causal direction.</span></p></article>
       </div>
       <div class="panel" style="margin-top:18px"><h3><span data-lang="zh">三套变量定义的结果比较</span><span data-lang="en">Results under three variable definitions</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">规格</span><span data-lang="en">Specification</span></th><th>T OR</th><th>V OR</th><th><span data-lang="zh">收敛</span><span data-lang="en">Converged</span></th></tr></thead><tbody id="specTable"></tbody></table></div></div>
     </section>
 
     <section id="mediation" class="section">
-      <div class="section-head"><span class="section-no">03</span><div><h2><span data-lang="zh">间接路径分析</span><span data-lang="en">Indirect associations</span></h2><p class="section-lead"><span data-lang="zh">所有路径使用 5,000 次 Bootstrap。区间不跨 0 可以支持当前样本中的间接关联，但不构成因果中介、完全中介或部分中介结论。</span><span data-lang="en">All paths use 5,000 bootstrap draws. An interval excluding zero supports an indirect association in this sample, not causal, full, or partial mediation.</span></p></div></div>
+      <div class="section-head"><span class="section-no">03</span><div><h2><span data-lang="zh">间接路径分析</span><span data-lang="en">Indirect associations</span></h2><p class="section-lead"><span data-lang="zh">五条间接路径均使用 5,000 次 Bootstrap 估计 95% 置信区间。结果反映本样本中的间接关联；因果中介关系需要额外的研究设计和假设支持。</span><span data-lang="en">The five indirect paths use 5,000 bootstrap draws to estimate 95% confidence intervals. The estimates describe indirect associations; causal mediation would require additional design and identification assumptions.</span></p></div></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">间接关联与区间</span><span data-lang="en">Indirect associations and intervals</span></h3><div id="mediationChart" class="chart-tall" role="img" aria-label="Bootstrap indirect paths"></div><p class="chart-caption"><span data-lang="zh">点为间接关联估计，横线为 95% Bootstrap 区间；每条完整路径均以 Y 为终点。</span><span data-lang="en">Points show indirect estimates; horizontal lines show 95% bootstrap intervals. Every full path ends at Y.</span></p></article>
         <article class="panel"><h3><span data-lang="zh">Bootstrap 路径表</span><span data-lang="en">Bootstrap path table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">路径</span><span data-lang="en">Path</span></th><th>ab</th><th>95% CI</th><th><span data-lang="zh">有效/总数</span><span data-lang="en">Valid / total</span></th></tr></thead><tbody id="mediationTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">中介方程是探索性的 OLS 近似，不能与有序 Logit 系数直接相乘。</span><span data-lang="en">Mediator equations are exploratory OLS approximations and are not multiplied by ordered-logit coefficients.</span></p></article>
@@ -154,10 +154,10 @@
     </section>
 
     <section id="heterogeneity" class="section">
-      <div class="section-head"><span class="section-no">04</span><div><h2><span data-lang="zh">不同人群的结果比较</span><span data-lang="en">Comparisons across demographic groups</span></h2><p class="section-lead"><span data-lang="zh">性别、年龄、收入、驾龄和驾驶频率分别进行嵌套有序 Logit LR 检验。页面展示 Holm 校正后的 p 值，避免把一次原始显著当成稳定差异。</span><span data-lang="en">Gender, age, income, driving experience, and driving frequency are tested with nested ordered-logit LR comparisons. Holm-adjusted p-values are shown to avoid treating one raw p-value as stable evidence.</span></p></div></div>
+      <div class="section-head"><span class="section-no">04</span><div><h2><span data-lang="zh">不同人群的结果比较</span><span data-lang="en">Comparisons across demographic groups</span></h2><p class="section-lead"><span data-lang="zh">性别、年龄、收入、驾龄和驾驶频率分别进行嵌套有序 Logit LR 检验。五项检验的 p 值使用 Holm 方法进行多重比较校正。</span><span data-lang="en">Gender, age, income, driving experience, and driving frequency are tested with nested ordered-logit LR comparisons. The five p-values are adjusted for multiple comparisons using the Holm method.</span></p></div></div>
       <div class="grid-2">
         <article class="panel chart-panel"><h3><span data-lang="zh">Holm 校正后的 p 值</span><span data-lang="en">Holm-adjusted p-values</span></h3><div id="heteroChart" class="chart" role="img" aria-label="Holm adjusted heterogeneity p values"></div><p class="chart-caption"><span data-lang="zh">虚线为 0.05 判断线。本次五项比较校正后均未低于该线。</span><span data-lang="en">The dashed line marks 0.05. None of the five adjusted comparisons falls below it.</span></p></article>
-        <article class="panel"><h3><span data-lang="zh">异质性检验表</span><span data-lang="en">Heterogeneity table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">分组</span><span data-lang="en">Grouping</span></th><th>k</th><th>LR</th><th>p</th><th>Holm p</th></tr></thead><tbody id="heteroTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">结论：当前样本没有经过多重比较校正后仍然稳健的显著异质性证据。</span><span data-lang="en">Conclusion: the sample does not provide robust adjusted evidence of heterogeneity after multiplicity control.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">异质性检验表</span><span data-lang="en">Heterogeneity table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">分组</span><span data-lang="en">Grouping</span></th><th>k</th><th>LR</th><th>p</th><th>Holm p</th></tr></thead><tbody id="heteroTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">五项检验经 Holm 校正后均未达到 0.05 显著性水平。</span><span data-lang="en">None of the five tests meets the 0.05 significance threshold after Holm adjustment.</span></p></article>
       </div>
     </section>
 
@@ -172,10 +172,10 @@
     </section>
 
     <section class="section">
-      <div class="section-head"><span class="section-no">06</span><div><h2><span data-lang="zh">分析方法与结果来源</span><span data-lang="en">Methods and source files</span></h2><p class="section-lead"><span data-lang="zh">网页只发布汇总结果，不发布逐行预测、逐行 SHAP 或其他中间个人记录。完整代码和双语 Notebook 保留在仓库中。</span><span data-lang="en">The page publishes aggregate results only. Row-level predictions, row-level SHAP values, and other respondent records stay out of the public report. Full code and bilingual notebooks remain in the repository.</span></p></div></div>
+      <div class="section-head"><span class="section-no">06</span><div><h2><span data-lang="zh">方法与数据来源</span><span data-lang="en">Methods and data sources</span></h2><p class="section-lead"><span data-lang="zh">数据来自 622 份消费者问卷。完整分析代码、双语 Notebook 和运行记录见项目仓库。</span><span data-lang="en">The study uses 622 consumer survey responses. Analysis code, bilingual notebooks and run records are available in the repository.</span></p></div></div>
       <div class="method-list">
-        <article class="method"><span class="method-no">01</span><h3><span data-lang="zh">固定映射</span><span data-lang="en">Fixed mapping</span></h3><p><span data-lang="zh">所有题号、组合变量、控制变量和缺失规则集中在统一 schema。</span><span data-lang="en">Question numbers, composites, controls, and missing rules live in one shared schema.</span></p></article>
-        <article class="method"><span class="method-no">02</span><h3><span data-lang="zh">主规格</span><span data-lang="en">Primary model</span></h3><p><span data-lang="zh">当前代码固定三套规格以便复现；这是已有数据上的探索性修订，未进行独立预注册。</span><span data-lang="en">Three specifications are fixed in code for reproducibility. This revision is exploratory and was not independently preregistered.</span></p></article>
+        <article class="method"><span class="method-no">01</span><h3><span data-lang="zh">变量定义</span><span data-lang="en">Variable definitions</span></h3><p><span data-lang="zh">题项、组合变量、控制变量和缺失值处理规则见 src/data_schema.py 与 src/config.py。</span><span data-lang="en">Item mappings, composites, controls and missing-value rules are defined in src/data_schema.py and src/config.py.</span></p></article>
+        <article class="method"><span class="method-no">02</span><h3><span data-lang="zh">主规格</span><span data-lang="en">Primary model</span></h3><p><span data-lang="zh">比较主规格、敏感性规格和历史规格。题项选择经过探索，未进行独立预注册。</span><span data-lang="en">The analysis compares primary, sensitivity and legacy specifications. Item selection was exploratory and was not independently preregistered.</span></p></article>
         <article class="method"><span class="method-no">03</span><h3><span data-lang="zh">折外验证</span><span data-lang="en">Held-out checks</span></h3><p><span data-lang="zh">有序 Logit、随机森林和多数类基线使用同一组分层折。</span><span data-lang="en">Ordered logit, random forest, and the majority baseline share the same stratified folds.</span></p></article>
         <article class="method"><span class="method-no">04</span><h3><span data-lang="zh">研究范围</span><span data-lang="en">Study scope</span></h3><p><span data-lang="zh">结果反映这份横截面问卷中的关联和预测表现，不能确定因果关系。</span><span data-lang="en">Results describe associations and predictive performance in this cross-sectional survey. They do not establish causality.</span></p></article>
       </div>
@@ -187,7 +187,7 @@
     <footer class="footer"><span><span data-lang="zh">EV Purchase Intention · Research Notebook</span><span data-lang="en">EV Purchase Intention · Research Notebook</span></span><span class="footer-links"><a href="https://github.com/Yemyu/ev-purchase-intention" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_zh.ipynb" target="_blank" rel="noreferrer"><span data-lang="zh">中文 Notebook</span><span data-lang="en">Chinese Notebook</span></a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_en.ipynb" target="_blank" rel="noreferrer">English Notebook</a></span></footer>
   </main>
   <script src="static/js/lib/echarts.min.js"></script>
-  <script src="static/js/theme.js"></script>
-  <script src="static/js/report.js"></script>
+  <script src="static/js/theme.js?v=20260921-3"></script>
+  <script src="static/js/report.js?v=20260921-3"></script>
 </body>
 </html>
