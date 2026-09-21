@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="新能源汽车智能驾驶购买意愿研究报告：有序Logit、Bootstrap路径、异质性与机器学习补充验证。">
+  <title>智能驾驶购买意愿 · 研究报告</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260921-1">
+</head>
+<body class="lang-zh">
+  <header class="topbar">
+    <div class="brand"><span class="brand-name"><span data-lang="zh">EV Purchase Intention</span><span data-lang="en">EV Purchase Intention</span></span><span class="brand-sub"><span data-lang="zh">研究档案</span><span data-lang="en">RESEARCH NOTEBOOK</span></span></div>
+    <div class="top-actions">
+      <nav class="nav-links" aria-label="Report navigation">
+        <a href="#audit"><span data-lang="zh">数据</span><span data-lang="en">Data</span></a>
+        <a href="#direct"><span data-lang="zh">直接关联</span><span data-lang="en">Associations</span></a>
+        <a href="#mediation"><span data-lang="zh">路径</span><span data-lang="en">Paths</span></a>
+        <a href="#ml"><span data-lang="zh">机器学习</span><span data-lang="en">ML</span></a>
+      </nav>
+      <button id="langSwitch" class="lang-btn" type="button">English</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="kicker"><span data-lang="zh">问卷研究 · 统计分析 · 计算补充</span><span data-lang="en">SURVEY RESEARCH · ECONOMETRICS · COMPUTATIONAL COMPLEMENT</span></p>
+        <h1 id="hero-title"><span data-lang="zh">智能驾驶功能，如何进入新能源汽车的购买意愿？</span><span data-lang="en">How do intelligent-driving features enter EV purchase intention?</span></h1>
+        <p class="hero-lead"><span data-lang="zh">一份以有序响应模型为主、机器学习为补充的研究报告。它把题号映射、量表构造、间接路径和折外预测放在同一条可追溯的分析链上。</span><span data-lang="en">A research report led by ordered-response modeling and complemented by out-of-fold machine learning. Question mapping, measurement, indirect paths, and held-out prediction are kept in one traceable analysis chain.</span></p>
+        <div class="hero-meta"><span><span data-lang="zh">主规格 primary</span><span data-lang="en">PRIMARY SPECIFICATION</span></span><span><span data-lang="zh">横截面问卷</span><span data-lang="en">CROSS-SECTIONAL SURVEY</span></span><span><span data-lang="zh">结果版本 2026-09</span><span data-lang="en">RESULTS · 2026-09</span></span></div>
+      </div>
+      <div class="hero-metrics" aria-label="Key results">
+        <div class="metric"><span class="metric-label"><span data-lang="zh">有效样本</span><span data-lang="en">Respondents</span></span><strong id="metric-n" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">问卷记录</span><span data-lang="en">survey records</span></span></div>
+        <div class="metric"><span class="metric-label"><span data-lang="zh">技术认知 OR</span><span data-lang="en">Technology OR</span></span><strong id="metric-t" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">主规格 · 控制后</span><span data-lang="en">primary · controlled</span></span></div>
+        <div class="metric"><span class="metric-label"><span data-lang="zh">功能价值 OR</span><span data-lang="en">Function-value OR</span></span><strong id="metric-v" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">主规格 · 控制后</span><span data-lang="en">primary · controlled</span></span></div>
+        <div class="metric"><span class="metric-label"><span data-lang="zh">扩展 QWK</span><span data-lang="en">Extended QWK</span></span><strong id="metric-qwk" class="metric-value">—</strong><span class="metric-note"><span data-lang="zh">5 折折外预测</span><span data-lang="en">5-fold held-out prediction</span></span></div>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="Report sections">
+      <a href="#audit"><b>01</b><span data-lang="zh">数据审计</span><span data-lang="en">Data audit</span></a>
+      <a href="#direct"><b>02</b><span data-lang="zh">直接关联</span><span data-lang="en">Associations</span></a>
+      <a href="#mediation"><b>03</b><span data-lang="zh">探索性路径</span><span data-lang="en">Indirect paths</span></a>
+      <a href="#heterogeneity"><b>04</b><span data-lang="zh">异质性</span><span data-lang="en">Heterogeneity</span></a>
+      <a href="#ml"><b>05</b><span data-lang="zh">机器学习</span><span data-lang="en">Machine learning</span></a>
+    </nav>
+
+    <section id="audit" class="section">
+      <div class="section-head"><span class="section-no">01</span><div><h2><span data-lang="zh">先看数据，再看结论。</span><span data-lang="en">The evidence starts with the data.</span></h2><p class="section-lead"><span data-lang="zh">原始问卷包含历史处理列。当前流程只按明确题号读取原始题项，固定组合变量和控制变量，避免不同模块各自重新定义数据。</span><span data-lang="en">The raw survey includes historical processing columns. The current pipeline resolves explicit question numbers, fixed composites, and fixed controls so that modules do not redefine the data independently.</span></p></div></div>
+      <div class="audit-grid">
+        <div class="audit-card"><label><span data-lang="zh">样本</span><span data-lang="en">Rows</span></label><strong id="auditRows">622</strong><small><span data-lang="zh">原始问卷记录</span><span data-lang="en">survey records</span></small></div>
+        <div class="audit-card"><label><span data-lang="zh">重复行</span><span data-lang="en">Duplicate rows</span></label><strong>0</strong><small><span data-lang="zh">审计未发现</span><span data-lang="en">none in audit</span></small></div>
+        <div class="audit-card"><label><span data-lang="zh">T 题项 alpha</span><span data-lang="en">T-item alpha</span></label><strong id="auditAlphaT">—</strong><small><span data-lang="zh">Q15、Q16</span><span data-lang="en">Q15 and Q16</span></small></div>
+        <div class="audit-card"><label><span data-lang="zh">V 题项 alpha</span><span data-lang="en">V-item alpha</span></label><strong id="auditAlphaV">—</strong><small><span data-lang="zh">Q22–Q25</span><span data-lang="en">Q22–Q25</span></small></div>
+      </div>
+      <div class="note"><strong><span data-lang="zh">审计边界：</span><span data-lang="en">Audit boundary:</span></strong> <span id="auditQ3Note"><span data-lang="zh">Q3 区域题是 8 类分类变量，通用 1–5 审计会标记 6–8；Q3 不进入当前主模型。</span><span data-lang="en">Q3 is an eight-category region item; the generic 1–5 audit flags codes 6–8, and Q3 is not used in the current main model.</span></span></div>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="panel"><h3><span data-lang="zh">Y · 结果变量</span><span data-lang="en">Y · Outcome</span></h3><p><span data-lang="zh">Q21：愿意为智能驾驶功能支付溢价，保留 1–5 的有序等级。</span><span data-lang="en">Q21: willingness to pay a premium for intelligent-driving functions, retained as an ordered 1–5 outcome.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">T · 技术认知</span><span data-lang="en">T · Technology proxy</span></h3><p><span data-lang="zh">主规格为 Q15、Q16 的完整回答均值，代表重要性和安全性认知。</span><span data-lang="en">The primary proxy is the complete-row mean of Q15 and Q16, representing importance and safety recognition.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">V · 功能价值</span><span data-lang="en">V · Function-value proxy</span></h3><p><span data-lang="zh">主规格为 Q22–Q25 的完整回答均值，代表具体辅助驾驶功能的价值认知。</span><span data-lang="en">The primary proxy is the complete-row mean of Q22–Q25, representing value recognition for concrete assisted-driving functions.</span></p></article>
+      </div>
+    </section>
+
+    <section id="direct" class="section">
+      <div class="section-head"><span class="section-no">02</span><div><h2><span data-lang="zh">核心关联方向稳定，大小取决于测量口径。</span><span data-lang="en">The direction is stable; magnitude depends on measurement.</span></h2><p class="section-lead"><span data-lang="zh">主模型使用有序 Logit，并控制性别、年龄、学历、收入、驾龄和驾驶频率。OR 大于 1 表示更高的 T/V 与更高购买溢价意愿的排序相关。</span><span data-lang="en">The primary ordered-logit model controls for gender, age, education, income, driving experience, and driving frequency. An OR above 1 indicates an association with a higher willingness-to-pay category.</span></p></div></div>
+      <div class="grid-2">
+        <article class="panel chart-panel"><h3><span data-lang="zh">主规格优势比</span><span data-lang="en">Primary odds ratios</span></h3><div id="directChart" class="chart" role="img" aria-label="Primary ordered logit odds ratios"></div><p class="chart-caption"><span data-lang="zh">点估计来自 primary / controlled；虚线为 OR=1。置信区间见下表。</span><span data-lang="en">Estimates are from primary / controlled; the dashed line is OR=1. Confidence intervals are shown below.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">当前主结果</span><span data-lang="en">Current main result</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">变量</span><span data-lang="en">Variable</span></th><th>OR</th><th>95% CI</th><th>p</th><th>N</th></tr></thead><tbody id="directTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">这些是横截面条件关联，不能直接写成因果影响。</span><span data-lang="en">These are cross-sectional conditional associations, not causal effects.</span></p></article>
+      </div>
+      <div class="panel" style="margin-top:18px"><h3><span data-lang="zh">三套规格的方向检查</span><span data-lang="en">Specification direction check</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">规格</span><span data-lang="en">Specification</span></th><th>T OR</th><th>V OR</th><th><span data-lang="zh">收敛</span><span data-lang="en">Converged</span></th></tr></thead><tbody id="specTable"></tbody></table></div></div>
+    </section>
+
+    <section id="mediation" class="section">
+      <div class="section-head"><span class="section-no">03</span><div><h2><span data-lang="zh">五条路径提供探索性线索。</span><span data-lang="en">Five paths provide exploratory clues.</span></h2><p class="section-lead"><span data-lang="zh">所有路径使用 5,000 次 Bootstrap。区间不跨 0 可以支持当前样本中的间接关联，但不构成因果中介、完全中介或部分中介结论。</span><span data-lang="en">All paths use 5,000 bootstrap draws. An interval excluding zero supports an indirect association in this sample, not causal, full, or partial mediation.</span></p></div></div>
+      <div class="grid-2">
+        <article class="panel chart-panel"><h3><span data-lang="zh">间接关联与区间</span><span data-lang="en">Indirect associations and intervals</span></h3><div id="mediationChart" class="chart-tall" role="img" aria-label="Bootstrap indirect paths"></div><p class="chart-caption"><span data-lang="zh">点表示间接效应估计；当前图表用于比较路径方向和相对大小。</span><span data-lang="en">Points show indirect estimates; the chart compares direction and relative magnitude.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">Bootstrap 路径表</span><span data-lang="en">Bootstrap path table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">路径</span><span data-lang="en">Path</span></th><th>ab</th><th>95% CI</th><th><span data-lang="zh">有效/总数</span><span data-lang="en">Valid / total</span></th></tr></thead><tbody id="mediationTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">中介方程是探索性的 OLS 近似，不能与有序 Logit 系数直接相乘。</span><span data-lang="en">Mediator equations are exploratory OLS approximations and are not multiplied by ordered-logit coefficients.</span></p></article>
+      </div>
+    </section>
+
+    <section id="heterogeneity" class="section">
+      <div class="section-head"><span class="section-no">04</span><div><h2><span data-lang="zh">分组差异需要校正后再判断。</span><span data-lang="en">Subgroup differences need multiplicity control.</span></h2><p class="section-lead"><span data-lang="zh">性别、年龄、收入、驾龄和驾驶频率分别进行嵌套有序 Logit LR 检验。页面展示 Holm 校正后的 p 值，避免把一次原始显著当成稳定差异。</span><span data-lang="en">Gender, age, income, driving experience, and driving frequency are tested with nested ordered-logit LR comparisons. Holm-adjusted p-values are shown to avoid treating one raw p-value as stable evidence.</span></p></div></div>
+      <div class="grid-2">
+        <article class="panel chart-panel"><h3><span data-lang="zh">Holm 校正后的 p 值</span><span data-lang="en">Holm-adjusted p-values</span></h3><div id="heteroChart" class="chart" role="img" aria-label="Holm adjusted heterogeneity p values"></div><p class="chart-caption"><span data-lang="zh">虚线为 0.05 判断线。本次五项比较校正后均未低于该线。</span><span data-lang="en">The dashed line marks 0.05. None of the five adjusted comparisons falls below it.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">异质性检验表</span><span data-lang="en">Heterogeneity table</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">分组</span><span data-lang="en">Grouping</span></th><th>k</th><th>LR</th><th>p</th><th>Holm p</th></tr></thead><tbody id="heteroTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">结论：当前样本没有经过多重比较校正后仍然稳健的显著异质性证据。</span><span data-lang="en">Conclusion: the sample does not provide robust adjusted evidence of heterogeneity after multiplicity control.</span></p></article>
+      </div>
+    </section>
+
+    <section id="ml" class="section">
+      <div class="section-head"><span class="section-no">05</span><div><h2><span data-lang="zh">机器学习是补充，不是替代。</span><span data-lang="en">Machine learning is a complement, not a replacement.</span></h2><p class="section-lead"><span data-lang="zh">五折折外评估显示，加入 T、V、M1、M2 后模型明显超过多数类基线；在本次运行中，有序 Logit 的 QWK 高于随机森林。</span><span data-lang="en">Five-fold held-out evaluation shows a clear improvement over the majority baseline after adding T, V, M1, and M2. In this run, ordered logit has a higher QWK than the random forest.</span></p></div></div>
+      <div class="grid-2">
+        <article class="panel chart-panel"><h3><span data-lang="zh">折外 QWK</span><span data-lang="en">Held-out QWK</span></h3><div id="mlChart" class="chart" role="img" aria-label="Out of fold QWK comparison"></div><p class="chart-caption"><span data-lang="zh">多数类基线 QWK 为 0；扩展有序 Logit 约为 0.685。</span><span data-lang="en">The majority baseline has QWK 0; extended ordered logit is about 0.685.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">模型比较</span><span data-lang="en">Model comparison</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">特征集</span><span data-lang="en">Feature set</span></th><th><span data-lang="zh">模型</span><span data-lang="en">Model</span></th><th>Acc.</th><th>F1</th><th>QWK</th><th>MAE</th></tr></thead><tbody id="mlTable"></tbody></table></div></article>
+      </div>
+      <div class="grid-2" style="margin-top:18px">
+        <article class="panel"><h3><span data-lang="zh">SHAP 前四项</span><span data-lang="en">Top four SHAP features</span></h3><div class="table-wrap"><table><thead><tr><th><span data-lang="zh">特征</span><span data-lang="en">Feature</span></th><th><span data-lang="zh">平均绝对 SHAP</span><span data-lang="en">Mean |SHAP|</span></th></tr></thead><tbody id="shapTable"></tbody></table></div><p class="panel-note"><span data-lang="zh">SHAP 是折外随机森林的预测归因，不是因果重要性。</span><span data-lang="en">SHAP is out-of-fold forest attribution, not causal importance.</span></p></article>
+        <article class="panel"><h3><span data-lang="zh">如何读这个结果</span><span data-lang="en">How to read this result</span></h3><p><span data-lang="zh">统计模型负责回答研究问题，机器学习负责检查变量组合在未见折中的排序预测能力。两者结果方向一致，但机器学习没有替代有序 Logit 的解释角色。</span><span data-lang="en">The statistical model answers the research question; machine learning checks ordinal prediction on held-out folds. The directions are compatible, but ML does not replace the interpretation of ordered logit.</span></p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-no">06</span><div><h2><span data-lang="zh">从问卷到报告，路径保持可追溯。</span><span data-lang="en">A traceable path from questionnaire to report.</span></h2><p class="section-lead"><span data-lang="zh">网页只发布汇总结果，不发布逐行预测、逐行 SHAP 或其他中间个人记录。完整代码和双语 Notebook 保留在仓库中。</span><span data-lang="en">The page publishes aggregate results only. Row-level predictions, row-level SHAP values, and other respondent records stay out of the public report. Full code and bilingual notebooks remain in the repository.</span></p></div></div>
+      <div class="method-list">
+        <article class="method"><span class="method-no">01</span><h3><span data-lang="zh">固定映射</span><span data-lang="en">Fixed mapping</span></h3><p><span data-lang="zh">所有题号、组合变量、控制变量和缺失规则集中在统一 schema。</span><span data-lang="en">Question numbers, composites, controls, and missing rules live in one shared schema.</span></p></article>
+        <article class="method"><span class="method-no">02</span><h3><span data-lang="zh">主规格</span><span data-lang="en">Primary model</span></h3><p><span data-lang="zh">主规格在拟合前固定，并保留 legacy 与 sensitivity 追踪口径变化。</span><span data-lang="en">The primary specification is fixed before fitting; legacy and sensitivity variants remain for traceability.</span></p></article>
+        <article class="method"><span class="method-no">03</span><h3><span data-lang="zh">折外验证</span><span data-lang="en">Held-out checks</span></h3><p><span data-lang="zh">有序 Logit、随机森林和多数类基线使用同一组分层折。</span><span data-lang="en">Ordered logit, random forest, and the majority baseline share the same stratified folds.</span></p></article>
+        <article class="method"><span class="method-no">04</span><h3><span data-lang="zh">解释边界</span><span data-lang="en">Boundaries</span></h3><p><span data-lang="zh">网页不把关联写成因果，也不把预测归因写成机制证明。</span><span data-lang="en">The report does not turn associations into causality or predictive attribution into mechanism proof.</span></p></article>
+      </div>
+      <div class="note"><strong><span data-lang="zh">数据版本：</span><span data-lang="en">Data version:</span></strong> <span data-lang="zh">本页由一次完整运行生成，随机种子 42，Bootstrap 5,000 次。原始数据不作为网页资产加载。</span><span data-lang="en">This page was generated from one complete run with seed 42 and 5,000 bootstrap draws. The raw survey is not loaded as a page asset.</span></div>
+    </section>
+
+    <footer class="footer"><span><span data-lang="zh">EV Purchase Intention · Research Notebook</span><span data-lang="en">EV Purchase Intention · Research Notebook</span></span><span class="footer-links"><a href="https://github.com/Yemyu/ev-purchase-intention" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_zh.ipynb" target="_blank" rel="noreferrer"><span data-lang="zh">中文 Notebook</span><span data-lang="en">Chinese Notebook</span></a><a href="https://github.com/Yemyu/ev-purchase-intention/blob/main/notebooks/01_ev_purchase_intention_en.ipynb" target="_blank" rel="noreferrer">English Notebook</a></span></footer>
+  </main>
+  <script src="static/js/lib/echarts.min.js"></script>
+  <script src="static/js/theme.js"></script>
+  <script src="static/js/report.js"></script>
+</body>
+</html>

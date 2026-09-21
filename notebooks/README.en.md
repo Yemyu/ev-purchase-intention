@@ -54,6 +54,6 @@ Run `main.py --analysis audit` or `main.py --analysis all` from the repository r
 
 Training is centralized in `main.py` and `src/`. The notebook is a readable results report; this prevents the old notebook from silently redefining Q22, using a single train/test split, or changing forest settings.
 
-**Why is there no dashboard?**
+**How does the report page differ from a dashboard?**
 
-This is a one-time survey study rather than a continuously refreshed operational product. Static charts plus CSV/JSON artifacts are easier to audit and sufficient for the current presentation. A dashboard can be added later as an optional presentation layer.
+This is a one-time survey study rather than a continuously refreshed operational product. The repository now provides a read-only [GitHub Pages report](https://yemyu.github.io/ev-purchase-intention/) with aggregate audit, model, and prediction metrics. It does not load row-level responses or require continuous refresh, so an operational dashboard is still outside the current acceptance scope.

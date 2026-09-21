@@ -1,0 +1,495 @@
+{
+  "meta": {
+    "run_id": "run-20260921-190434",
+    "created_at_utc": "2026-09-21T11:04:34.341985+00:00",
+    "data_sha256": "8d15c4765ba63be6140f6f3d61508a26e59e1199df048f6889bce4311067075a",
+    "random_seed": 42,
+    "bootstrap_iterations": 5000,
+    "git_commit": "af66b95e14ffa51a0f09f48f4dcb107d5a9361db",
+    "git_dirty": false
+  },
+  "hero": {
+    "n": 622,
+    "primary_t_or": 2.0820601108145116,
+    "primary_v_or": 3.828540889922162,
+    "extended_qwk": 0.6851791236757641,
+    "paths": 5
+  },
+  "audit": {
+    "n_rows": 622,
+    "n_columns": 67,
+    "duplicate_rows": 0,
+    "historical_processing_columns": 38,
+    "main_missing": {
+      "1": 0,
+      "2": 0,
+      "4": 0,
+      "6": 0,
+      "9": 0,
+      "12": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0
+    },
+    "main_out_of_range": {
+      "1": 0,
+      "2": 0,
+      "4": 0,
+      "6": 0,
+      "9": 0,
+      "12": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0
+    },
+    "q3_missing": 110,
+    "q3_out_of_range": 94,
+    "composites": {
+      "Y": {
+        "questions": [
+          21
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.572347266881029,
+        "std": 1.08736290563514,
+        "cronbach_alpha": null
+      },
+      "T_primary": {
+        "questions": [
+          15,
+          16
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.803054662379421,
+        "std": 1.0549509044765277,
+        "cronbach_alpha": 0.8581246943182301
+      },
+      "T_sensitivity": {
+        "questions": [
+          15,
+          16,
+          17
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.7282958199356915,
+        "std": 1.0098581841025798,
+        "cronbach_alpha": 0.8757620435530826
+      },
+      "V_primary": {
+        "questions": [
+          22,
+          23,
+          24,
+          25
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.607717041800643,
+        "std": 0.921022114952105,
+        "cronbach_alpha": 0.8707034854325176
+      },
+      "M1": {
+        "questions": [
+          18
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.6093247588424435,
+        "std": 1.0887108572778967,
+        "cronbach_alpha": null
+      },
+      "M2": {
+        "questions": [
+          19
+        ],
+        "complete_rows": 622,
+        "missing_rows": 0,
+        "mean": 3.622186495176849,
+        "std": 1.100588209271467,
+        "cronbach_alpha": null
+      }
+    }
+  },
+  "direct": [
+    {
+      "specification": "primary",
+      "term": "T",
+      "label": "技术认知 T",
+      "coefficient": 0.7333578414448321,
+      "odds_ratio": 2.0820601108145116,
+      "ci_low": 1.618571668031442,
+      "ci_high": 2.678271460365588,
+      "p_value": 1.1430616228020872e-08,
+      "n_obs": 622,
+      "converged": true
+    },
+    {
+      "specification": "primary",
+      "term": "V",
+      "label": "功能价值 V",
+      "coefficient": 1.342483761916817,
+      "odds_ratio": 3.828540889922162,
+      "ci_low": 2.8388607977008236,
+      "ci_high": 5.163242015134094,
+      "p_value": 1.3966693670139472e-18,
+      "n_obs": 622,
+      "converged": true
+    },
+    {
+      "specification": "sensitivity",
+      "term": "T",
+      "label": "技术认知 T",
+      "coefficient": 0.9396847181045632,
+      "odds_ratio": 2.559174429756546,
+      "ci_low": 1.9357011023685666,
+      "ci_high": 3.3834633631740894,
+      "p_value": 4.2193816372325746e-11,
+      "n_obs": 622,
+      "converged": true
+    },
+    {
+      "specification": "sensitivity",
+      "term": "V",
+      "label": "功能价值 V",
+      "coefficient": 1.1870345317824744,
+      "odds_ratio": 3.2773479115567943,
+      "ci_low": 2.402115043226164,
+      "ci_high": 4.471479983306692,
+      "p_value": 6.969773702955837e-14,
+      "n_obs": 622,
+      "converged": true
+    },
+    {
+      "specification": "legacy",
+      "term": "T",
+      "label": "技术认知 T",
+      "coefficient": 1.024016702353839,
+      "odds_ratio": 2.784356263103763,
+      "ci_low": 2.2187146042221135,
+      "ci_high": 3.4942032585589096,
+      "p_value": 9.73471402255313e-19,
+      "n_obs": 622,
+      "converged": true
+    },
+    {
+      "specification": "legacy",
+      "term": "V",
+      "label": "功能价值 V",
+      "coefficient": 0.7918534742593021,
+      "odds_ratio": 2.2074841518919266,
+      "ci_low": 1.7785744495943525,
+      "ci_high": 2.7398269900736643,
+      "p_value": 6.778444168896279e-13,
+      "n_obs": 622,
+      "converged": true
+    }
+  ],
+  "diagnostics": {
+    "primary": {
+      "converged": true,
+      "aic": 1380.8953500356008,
+      "bic": 1491.7188523540804,
+      "prsquared": 0.24611065378264663
+    },
+    "sensitivity": {
+      "converged": true,
+      "aic": 1369.0249601497098,
+      "bic": 1479.8484624681894,
+      "prsquared": 0.2528346689128971
+    },
+    "legacy": {
+      "converged": true,
+      "aic": 1399.2537775471187,
+      "bic": 1452.4490586599889,
+      "prsquared": 0.22098370002554346
+    }
+  },
+  "mediation": [
+    {
+      "x": "技术认知",
+      "mediator": "驾驶乐趣",
+      "indirect": 0.2556126592231008,
+      "ci_low": 0.1796378985846784,
+      "ci_high": 0.3298015920414816,
+      "n_obs": 622,
+      "bootstrap_iterations": 5000,
+      "bootstrap_valid": 5000,
+      "bootstrap_failures": 0
+    },
+    {
+      "x": "技术认知",
+      "mediator": "出行效率",
+      "indirect": 0.1799920501786336,
+      "ci_low": 0.1002055566744586,
+      "ci_high": 0.2555464849444035,
+      "n_obs": 622,
+      "bootstrap_iterations": 5000,
+      "bootstrap_valid": 5000,
+      "bootstrap_failures": 0
+    },
+    {
+      "x": "功能价值",
+      "mediator": "驾驶乐趣",
+      "indirect": 0.2565759577194746,
+      "ci_low": 0.1825615305909612,
+      "ci_high": 0.3324440272027558,
+      "n_obs": 622,
+      "bootstrap_iterations": 5000,
+      "bootstrap_valid": 5000,
+      "bootstrap_failures": 0
+    },
+    {
+      "x": "功能价值",
+      "mediator": "出行效率",
+      "indirect": 0.1625656931157545,
+      "ci_low": 0.0788800274818813,
+      "ci_high": 0.2480259994169229,
+      "n_obs": 622,
+      "bootstrap_iterations": 5000,
+      "bootstrap_valid": 5000,
+      "bootstrap_failures": 0
+    },
+    {
+      "x": "技术认知",
+      "mediator": "功能价值",
+      "indirect": 0.3508544330199138,
+      "ci_low": 0.2578045551507307,
+      "ci_high": 0.4375947596131785,
+      "n_obs": 622,
+      "bootstrap_iterations": 5000,
+      "bootstrap_valid": 5000,
+      "bootstrap_failures": 0
+    }
+  ],
+  "heterogeneity": [
+    {
+      "group_var": "gender_gp",
+      "label": "性别",
+      "n_obs": 622,
+      "n_groups": 2,
+      "lr_stat": 8.755659792383767,
+      "df_diff": 2,
+      "p_raw": 0.0125525694640141,
+      "p_holm": 0.0627628473200708,
+      "status": "ok"
+    },
+    {
+      "group_var": "age_gp",
+      "label": "年龄",
+      "n_obs": 622,
+      "n_groups": 5,
+      "lr_stat": 15.99359542005982,
+      "df_diff": 8,
+      "p_raw": 0.0424718729949796,
+      "p_holm": 0.1698874919799184,
+      "status": "ok"
+    },
+    {
+      "group_var": "income_gp",
+      "label": "月收入",
+      "n_obs": 622,
+      "n_groups": 4,
+      "lr_stat": 3.73452769420328,
+      "df_diff": 6,
+      "p_raw": 0.7125496869505153,
+      "p_holm": 0.7125496869505153,
+      "status": "ok"
+    },
+    {
+      "group_var": "exp_gp",
+      "label": "驾龄",
+      "n_obs": 622,
+      "n_groups": 5,
+      "lr_stat": 15.147767655473215,
+      "df_diff": 8,
+      "p_raw": 0.0563350999741278,
+      "p_holm": 0.1698874919799184,
+      "status": "ok"
+    },
+    {
+      "group_var": "freq_gp",
+      "label": "驾驶频率",
+      "n_obs": 622,
+      "n_groups": 5,
+      "lr_stat": 11.489909352477524,
+      "df_diff": 8,
+      "p_raw": 0.1754546086914622,
+      "p_holm": 0.3509092173829244,
+      "status": "ok"
+    }
+  ],
+  "ml": [
+    {
+      "feature_set": "controls",
+      "feature_label": "控制变量",
+      "model": "majority",
+      "model_label": "多数类基线",
+      "accuracy": 0.4244516129032257,
+      "accuracy_std": 0.0049511663137896,
+      "macro_f1": 0.1191874563575192,
+      "qwk": 0.0,
+      "qwk_std": 0.0,
+      "mae": 0.8038322580645161
+    },
+    {
+      "feature_set": "controls",
+      "feature_label": "控制变量",
+      "model": "ordered_logit",
+      "model_label": "有序 Logit",
+      "accuracy": 0.4228516129032257,
+      "accuracy_std": 0.008433297070524,
+      "macro_f1": 0.1188664496805803,
+      "qwk": 0.0009825774462083,
+      "qwk_std": 0.0021971099628801,
+      "mae": 0.8054322580645161
+    },
+    {
+      "feature_set": "controls",
+      "feature_label": "控制变量",
+      "model": "random_forest",
+      "model_label": "随机森林",
+      "accuracy": 0.4083483870967742,
+      "accuracy_std": 0.0187623064019126,
+      "macro_f1": 0.1356479645507635,
+      "qwk": -0.0058653381259702,
+      "qwk_std": 0.0262776725372208,
+      "mae": 0.8295612903225805
+    },
+    {
+      "feature_set": "core",
+      "feature_label": "控制变量 + T/V",
+      "model": "majority",
+      "model_label": "多数类基线",
+      "accuracy": 0.4244516129032257,
+      "accuracy_std": 0.0049511663137896,
+      "macro_f1": 0.1191874563575192,
+      "qwk": 0.0,
+      "qwk_std": 0.0,
+      "mae": 0.8038322580645161
+    },
+    {
+      "feature_set": "core",
+      "feature_label": "控制变量 + T/V",
+      "model": "ordered_logit",
+      "model_label": "有序 Logit",
+      "accuracy": 0.5080387096774194,
+      "accuracy_std": 0.0331372009905802,
+      "macro_f1": 0.4039585528682563,
+      "qwk": 0.6501582724091168,
+      "qwk_std": 0.0498395897025587,
+      "mae": 0.5707741935483871
+    },
+    {
+      "feature_set": "core",
+      "feature_label": "控制变量 + T/V",
+      "model": "random_forest",
+      "model_label": "随机森林",
+      "accuracy": 0.5016645161290322,
+      "accuracy_std": 0.0325310513634215,
+      "macro_f1": 0.3663553446511037,
+      "qwk": 0.5329453783253362,
+      "qwk_std": 0.0076043565386032,
+      "mae": 0.6124774193548388
+    },
+    {
+      "feature_set": "extended",
+      "feature_label": "扩展变量 + M1/M2",
+      "model": "majority",
+      "model_label": "多数类基线",
+      "accuracy": 0.4244516129032257,
+      "accuracy_std": 0.0049511663137896,
+      "macro_f1": 0.1191874563575192,
+      "qwk": 0.0,
+      "qwk_std": 0.0,
+      "mae": 0.8038322580645161
+    },
+    {
+      "feature_set": "extended",
+      "feature_label": "扩展变量 + M1/M2",
+      "model": "ordered_logit",
+      "model_label": "有序 Logit",
+      "accuracy": 0.5450451612903227,
+      "accuracy_std": 0.034820855640162,
+      "macro_f1": 0.4602776991228586,
+      "qwk": 0.6851791236757641,
+      "qwk_std": 0.0652159031369034,
+      "mae": 0.5225290322580645
+    },
+    {
+      "feature_set": "extended",
+      "feature_label": "扩展变量 + M1/M2",
+      "model": "random_forest",
+      "model_label": "随机森林",
+      "accuracy": 0.5354322580645161,
+      "accuracy_std": 0.0227321369877347,
+      "macro_f1": 0.4253407698359426,
+      "qwk": 0.6185418622397257,
+      "qwk_std": 0.0320851884963213,
+      "mae": 0.5690967741935484
+    }
+  ],
+  "ml_meta": {
+    "folds": 5,
+    "shap": {
+      "status": "ok",
+      "errors": [],
+      "target": "P(Y>=4) when supported; raw-output fallback is flagged"
+    }
+  },
+  "shap": [
+    {
+      "feature": "V",
+      "label": "功能价值 V",
+      "importance": 0.0798303870216474
+    },
+    {
+      "feature": "T",
+      "label": "技术认知 T",
+      "importance": 0.0780982892873408
+    },
+    {
+      "feature": "M1",
+      "label": "驾驶乐趣 M1",
+      "importance": 0.0743244325735282
+    },
+    {
+      "feature": "M2",
+      "label": "出行效率 M2",
+      "importance": 0.0401427462095225
+    },
+    {
+      "feature": "control_gender_2",
+      "label": "control_gender_2",
+      "importance": 0.0051087487336879
+    },
+    {
+      "feature": "control_driving_freq_3",
+      "label": "control_driving_freq_3",
+      "importance": 0.0046989080593331
+    }
+  ],
+  "limits": {
+    "association": "有序 Logit 结果是横截面条件关联，不是因果效果。",
+    "mediation": "Bootstrap 路径是探索性间接关联，不能解释为因果中介。",
+    "heterogeneity": "五组比较经过 Holm 校正后，没有形成稳定的显著异质性证据。",
+    "ml": "机器学习用于折外预测和特征归因；SHAP 不是因果重要性。",
+    "q3": "Q3 区域题是 8 类分类变量，通用 1–5 审计会标记 6–8；Q3 不进入当前主模型。"
+  }
+}
