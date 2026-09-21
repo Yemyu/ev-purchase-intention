@@ -1,14 +1,20 @@
-# EV Purchase Intention
+<p align="center">
+  <a href="README.md">中文</a> · <a href="README.en.md">English</a>
+</p>
 
-<div align="center">
+<h1 align="center">Driver-assistance features and willingness to pay more for an EV</h1>
 
-**Intelligent-driving features and willingness to pay a premium for EVs: survey econometrics with a machine-learning complement**
+<p align="center">Econometric analysis and machine learning using 622 consumer survey responses</p>
 
-[中文](README.md) · [English](README.en.md) · [Data documentation](data/README.en.md) · [Notebook guide](notebooks/README.md) · [Report page](https://yemyu.github.io/ev-purchase-intention/)
+<p align="center">
+  <a href="notebooks/01_ev_purchase_intention_en.ipynb">Analysis Notebook</a> ·
+  <a href="https://yemyu.github.io/ev-purchase-intention/en.html">Research report</a> ·
+  <a href="https://yemyu.github.io/ev-purchase-intention/en.html#ml">Results dashboard</a>
+</p>
 
-</div>
+---
 
-> This is a research-oriented analysis project. Ordered-response modeling is the primary analysis; out-of-fold machine learning and SHAP provide predictive, computational context. Predictive explanations are not presented as causal effects, and the thesis document is not modified by this repository.
+This project examines how consumers’ ratings of driving safety and feature value relate to willingness to pay a premium, and compares predictions from ordered logit and random forest models.
 
 ## Research question
 

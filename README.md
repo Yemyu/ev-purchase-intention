@@ -1,14 +1,20 @@
-# EV Purchase Intention
+<p align="center">
+  <a href="README.md">中文</a> · <a href="README.en.md">English</a>
+</p>
 
-<div align="center">
+<h1 align="center">智能驾驶功能与新能源汽车购买溢价意愿</h1>
 
-**新能源汽车智能驾驶功能与购买溢价意愿：问卷经济分析与机器学习补充验证**
+<p align="center">基于 622 份消费者问卷的经济分析与机器学习研究</p>
 
-[中文](README.md) · [English](README.en.md) · [数据字典 / Data documentation](data/README.md) · [Notebook 导航 / Notebook guide](notebooks/README.md) · [研究报告页 / Report page](https://yemyu.github.io/ev-purchase-intention/)
+<p align="center">
+  <a href="notebooks/01_ev_purchase_intention_zh.ipynb">分析 Notebook</a> ·
+  <a href="https://yemyu.github.io/ev-purchase-intention/">报告页</a> ·
+  <a href="https://yemyu.github.io/ev-purchase-intention/#ml">结果看板</a>
+</p>
 
-</div>
+---
 
-> 本仓库是一个研究型分析项目。它把有序响应模型作为主分析，再用折外机器学习和 SHAP 做预测层面的补充解释。项目不把预测解释写成因果结论，也不修改论文原文。
+本项目分析消费者对智能驾驶安全性、功能价值的评价与支付溢价意愿的关系，并比较有序 Logit 和随机森林的预测表现。
 
 ## 项目在回答什么问题
 
