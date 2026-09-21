@@ -158,6 +158,23 @@
     qs('#provenance').textContent = d.meta.run_id + ' · ' + d.meta.created_at_utc + '\nGit: ' + d.meta.git_commit + '\nSHA256: ' + d.meta.data_sha256;
     renderMetricCards(d); renderAudit(d); renderDirect(d); renderMediation(d); renderHeterogeneity(d); renderMl(d); }
   function init() {
+    var book = qs('.book-viewport');
+    if (book) {
+      var previous = qs('#bookPrev'), next = qs('#bookNext');
+      function updateBook() {
+        previous.disabled = book.scrollLeft < 2;
+        next.disabled = book.scrollLeft + book.clientWidth >= book.scrollWidth - 2;
+      }
+      function turn(direction) {
+        var spread = book.querySelector('.book-spread');
+        book.scrollBy({left: direction * (spread.getBoundingClientRect().width + 20), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+      }
+      previous.addEventListener('click', function () { turn(-1); });
+      next.addEventListener('click', function () { turn(1); });
+      book.addEventListener('scroll', updateBook);
+      window.addEventListener('resize', updateBook);
+      updateBook();
+    }
     qs('#langSwitch').addEventListener('click', function () { setLang(state.lang === 'zh' ? 'en' : 'zh'); });
     fetch('static/data/report.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (d) { state.data = d; setLang(state.lang); }).catch(function (error) { qs('#loadStatus').hidden = false; console.error(error); });
     window.addEventListener('resize', function () { charts.forEach(function (chart) { chart.resize(); }); });
