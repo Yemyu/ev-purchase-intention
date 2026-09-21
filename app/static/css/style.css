@@ -209,10 +209,7 @@ body.lang-zh [data-lang="zh"], body.lang-en [data-lang="en"] { display: initial;
 .analysis-explanation { margin-top:28px; display:grid; gap:24px; max-width:940px; }
 .analysis-explanation article { padding-top:20px; border-top:1px solid var(--line); }
 .analysis-explanation h3 { margin:0 0 10px; font-family:var(--serif); font-size:23px; font-weight:500; }
-.analysis-explanation p, .definition-record > p { margin:0; color:var(--muted); font-size:15px; line-height:1.95; }
-.definition-record { margin-top:28px; padding:20px 0; border-top:1px solid var(--line); }
-.definition-record summary { color:var(--primary); cursor:pointer; font-size:15px; }
-.definition-record > p { margin-top:18px; }
+.analysis-explanation p { margin:0; color:var(--muted); font-size:15px; line-height:1.95; }
 .book-detail { display:inline-block; margin:16px 0 22px; color:var(--primary); font-size:12px; text-underline-offset:4px; }
 .book-cover .book-detail { color:#f5fbfb; }
 html { scroll-padding-top:var(--nav-offset,110px); }

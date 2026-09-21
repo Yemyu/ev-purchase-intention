@@ -66,18 +66,11 @@
       return '<tr class="primary"><td><strong>' + tr(row.label) + '</strong><br><span class="badge">primary / controlled</span></td>' +
         '<td>' + fmt(row.odds_ratio) + '</td><td>[' + fmt(row.ci_low) + ', ' + fmt(row.ci_high) + ']</td><td>' + pval(row.p_value) + '</td><td>' + row.n_obs + '</td></tr>';
     }).join('');
-    var all = d.direct.filter(function (x) { return x.term === 'T' || x.term === 'V'; });
     makeChart('directChart', Object.assign(baseOption(), {
       yAxis: { type: 'category', data: ['primary / V', 'primary / T'], axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted } },
       xAxis: { type: 'value', min: 0, max: 5, name: 'OR', nameTextStyle: { color: T.muted }, splitLine: { lineStyle: { color: T.grid } }, axisLabel: { color: T.muted } },
       series: [{ type: 'bar', data: [rows[1].odds_ratio, rows[0].odds_ratio], barWidth: 24, itemStyle: { color: T.primary, borderRadius: [0, 4, 4, 0] }, label: { show: true, position: 'right', color: T.ink, formatter: function (p) { return fmt(p.value); } }, markLine: { symbol: 'none', lineStyle: { color: T.earth, type: 'dashed' }, data: [{ xAxis: 1 }] } }]
     }));
-    var specRows = ['primary', 'sensitivity', 'legacy'];
-    qs('#specTable').innerHTML = specRows.map(function (spec) {
-      var t = all.find(function (x) { return x.specification === spec && x.term === 'T'; });
-      var v = all.find(function (x) { return x.specification === spec && x.term === 'V'; });
-      return '<tr><td><span class="badge">' + spec + '</span></td><td>' + fmt(t.odds_ratio) + '</td><td>' + fmt(v.odds_ratio) + '</td><td>' + tr(t.converged && v.converged ? '是' : '否') + '</td></tr>';
-    }).join('');
   }
   function intervalSeries(rows) {
     return {
@@ -155,7 +148,6 @@
     qs('#auditAlphaV').textContent = v.cronbach_alpha == null ? '—' : fmt(v.cronbach_alpha, 3);
   }
   function render(d) {
-    qs('#provenance').textContent = d.meta.run_id + ' · ' + d.meta.created_at_utc + '\nGit: ' + d.meta.git_commit + '\nSHA256: ' + d.meta.data_sha256;
     renderMetricCards(d); renderAudit(d); renderDirect(d); renderMediation(d); renderHeterogeneity(d); renderMl(d); }
   function initSectionNavigation() {
     var sections = Array.from(document.querySelectorAll('section.section[id]'));
