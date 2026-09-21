@@ -1,113 +1,124 @@
 # EV Purchase Intention
 
-This project studies how recognition of intelligent-driving functions relates
-to consumers' willingness to pay a premium for new-energy vehicles. It keeps a
-two-part design: an ordered-logit analysis for the economic research question,
-followed by out-of-fold machine-learning prediction and SHAP explanation as a
-computational complement.
+<div align="center">
 
-The current implementation is a reproducible project revision. It does not
-change the thesis document, and it keeps the old analysis outputs in `figures/`
-for traceability. New runs are written to a timestamped directory under
-`figures/runs/` and are ignored by Git.
+**新能源汽车智能驾驶功能与购买溢价意愿：问卷经济分析与机器学习补充验证**
 
-## Data and fixed measurements
+[中文](README.md) · [English](README.en.md) · [数据字典 / Data documentation](data/README.md) · [Notebook 导航 / Notebook guide](notebooks/README.md)
 
-The raw survey contains 622 respondents and 67 columns. The CSV includes both
-original questionnaire columns and historical dummy or exception-handling
-columns. Only the explicit raw questionnaire columns are used by the new
-pipeline.
+</div>
 
-The shared schema in `src/config.py` and `src/data_schema.py` defines three
-fixed specifications:
+> 本仓库是一个研究型分析项目。它把有序响应模型作为主分析，再用折外机器学习和 SHAP 做预测层面的补充解释。项目不把预测解释写成因果结论，也不修改论文原文。
 
-| Specification | Technology proxy | Function-value proxy | Controls |
-|---|---|---|---|
-| `legacy` | mean(Q15, Q16) | Q22 | original ordinal codes |
-| `primary` | mean(Q15, Q16) | mean(Q22, Q23, Q24, Q25) | category dummies |
-| `sensitivity` | mean(Q15, Q16, Q17) | mean(Q22, Q23, Q24, Q25) | category dummies |
+## 项目在回答什么问题
 
-The outcome is Q21, willingness to pay a premium, on a 1–5 ordered scale. Q18
-and Q19 are the two single-item exploratory mediators. The primary specification
-is fixed before fitting; it is not selected because it produces a smaller
-p-value or a higher score. The legacy specification remains so that the old
-project can be traced, and the sensitivity specification shows the effect of
-including Q17.
+本项目使用 622 份问卷，研究受访者对智能驾驶功能的认知是否与新能源汽车购买溢价意愿相关，并进一步检查：
 
-The two-item technology measure is a proxy for importance and safety
-recognition. The four-item measure is a proxy for recognition of the value of
-specific assisted-driving functions. They are not presented as validated,
-complete psychological scales. The audit records item missingness, item
-correlations, and Cronbach's alpha as descriptive diagnostics.
+1. 技术重要性与安全性认知（T）是否与购买溢价意愿（Y）正相关；
+2. 对具体辅助驾驶功能的功能价值认知（V）是否与 Y 正相关；
+3. 驾驶乐趣（M1）和出行效率（M2）是否提供探索性的间接路径；
+4. 这些关联是否随人口统计分组而变化；
+5. 机器学习能否在折外样本中复现购买意愿的排序信息，以及哪些变量对预测最有贡献。
 
-## Analyses
+研究结论的适用范围是**横截面问卷中的条件关联和预测表现**。项目不声称识别因果效应，也不把 SHAP 重要性当作因果贡献。
 
-### Ordered logit
+## 研究设计一览
 
-The main analysis fits Q21 on the two core proxies, then adds the fixed six
-background controls. It reports coefficients, odds ratios, confidence intervals,
-fit statistics, convergence information, and an auxiliary VIF calculation with
-an intercept. The results are conditional associations in cross-sectional
-survey data.
+```text
+原始问卷 CSV
+    │
+    ├─ 显式题号映射、缺失/范围/重复审计
+    │
+    ├─ 有序 Logit：Y ~ T + V + 固定控制变量       ← 主结果
+    │
+    ├─ Bootstrap 间接路径：T/V → M1/M2 → Y       ← 探索性
+    │
+    ├─ 嵌套模型 LR + Holm 校正                   ← 异质性
+    │
+    └─ 5 折折外预测 + SHAP                       ← 计算补充
+```
 
-### Exploratory indirect paths
+主分析不从 p 值或模型得分反向挑选题目。所有题号、变量定义、控制变量和缺失规则都集中写在 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py) 中。
 
-Five predeclared paths are retained:
+## 数据与变量
 
-- technology proxy → driving pleasure → willingness to pay
-- technology proxy → travel efficiency → willingness to pay
-- function-value proxy → driving pleasure → willingness to pay
-- function-value proxy → travel efficiency → willingness to pay
-- technology proxy → function-value proxy → willingness to pay
+原始 CSV 在当前私有仓库中用于本地复现，包含 622 行、67 列。其中同时存在原始问卷题项和历史处理列；新流程只读取明确的原始题号列，不会把历史哑变量或异常处理列误传入模型。
 
-Each path uses respondent-level OLS equations with the fixed controls and 5,000
-bootstrap resamples. The output reports the path coefficients and a bootstrap
-interval. These are exploratory indirect associations; they are not multiplied
-with ordered-logit coefficients and are not interpreted as causal mediation or
-as a percentage of a causal effect.
+| 符号 | 含义 | 当前主规格 |
+|---|---|---|
+| `Y` | 愿意为智能驾驶功能支付溢价 | Q21，1–5 有序变量 |
+| `T` | 技术重要性与安全性认知代理变量 | `mean(Q15, Q16)` |
+| `V` | 具体辅助驾驶功能的功能价值代理变量 | `mean(Q22, Q23, Q24, Q25)` |
+| `M1` | 驾驶乐趣认知 | Q18 |
+| `M2` | 出行效率认知 | Q19 |
 
-### Heterogeneity
+项目保留三套固定规格，便于追踪旧版本和检查测量口径的影响：
 
-Demographic differences are a supplementary analysis. For each fixed grouping,
-the restricted and unrestricted ordered-logit models are genuinely nested. The
-unrestricted model adds technology and value proxy interactions with group
-dummies. The likelihood-ratio degrees of freedom are based on the actual design
-rank, and raw p-values are accompanied by Holm-adjusted values.
+| 规格 | T | V | 控制变量处理 | 用途 |
+|---|---|---|---|---|
+| `primary` | Q15、Q16 均值 | Q22–Q25 均值 | 分类哑变量 | 当前主规格 |
+| `sensitivity` | Q15–Q17 均值 | Q22–Q25 均值 | 分类哑变量 | 加入“减轻驾驶疲劳”后的敏感性检查 |
+| `legacy` | Q15、Q16 均值 | Q22 单题 | 原始有序编码 | 追踪旧项目口径，不作为当前首选 |
 
-### Machine learning and SHAP
+T 和 V 是项目内定义的**代理变量**，不是经过外部量表验证的完整心理构念。审计会记录题项缺失、取值范围、题项相关和 Cronbach's alpha，但不会因为 alpha 或显著性而事后删题。
 
-The pipeline uses the same five stratified folds for a majority-class baseline,
-ordered logit, and random forest. It compares controls only, controls plus the
-two core proxies, and the extended set that also includes Q18 and Q19. It
-reports accuracy, macro-F1, quadratic weighted kappa, ordinal MAE, fold-level
-metrics, out-of-fold predictions, and confusion matrices.
+完整变量说明、原始题目和隐私处理见 [`data/README.md`](data/README.md)。
 
-SHAP is computed on held-out folds for the extended random forest. When the
-installed SHAP version supports it, the explanation target is the probability
-of a high willingness-to-pay response (`Y >= 4`). Any fallback to raw-output
-SHAP is recorded in `ml_run_metadata.json`. SHAP is a predictive explanation;
-it is not a causal effect or an independent confirmation of the ordered-logit
-model.
+## 分析模块与结果解释
 
-## Run locally
+### 1. 数据审计
 
-Use the project virtual environment for dependencies:
+`main.py --analysis audit` 会记录样本量、重复行、题号解析、1–5 范围检查、每题缺失、控制变量类别、历史处理列数量和组合题项诊断。审计是数据质量记录，不会静默修正原始 CSV。
+
+### 2. 有序 Logit 直接关联
+
+主模型把 Q21 作为有序结果，加入 T、V 和六项固定背景控制变量。输出包括系数、优势比（OR）、置信区间、p 值、样本量、收敛状态和辅助 VIF。结果应写成“在控制其他变量后，较高的 T/V 与较高的 Y 发生概率相关”，不能写成“提高了购买意愿”或“产生了因果影响”。
+
+### 3. Bootstrap 间接路径
+
+固定五条路径：
+
+- `T → M1 → Y`
+- `T → M2 → Y`
+- `V → M1 → Y`
+- `V → M2 → Y`
+- `T → V → Y`
+
+每条路径使用 5,000 次 bootstrap，并记录有效次数、失败次数和区间。由于中间方程采用探索性的 respondent-level OLS 近似，这部分只作为间接关联证据，不标注因果中介、完全/部分中介或因果效应占比。
+
+### 4. 异质性
+
+对性别、年龄、收入、驾龄和驾驶频率分别比较受限模型与加入 `T/V × 分组` 交互项的嵌套有序 Logit。自由度按实际设计矩阵秩差计算，同时报告原始 p 值和 Holm 校正后的 p 值。多重比较校正后未形成稳定的 0.05 水平群体差异，因此该模块应写成探索性结果。
+
+### 5. 机器学习与 SHAP
+
+使用相同的 5 个分层折比较：
+
+- 多数类基线；
+- 有序 Logit；
+- 随机森林；
+- `controls`、`core`（控制变量 + T/V）和 `extended`（再加入 M1/M2）三组特征。
+
+报告准确率、macro-F1、二次加权 Kappa（QWK）、有序 MAE、每折结果、折外预测和混淆矩阵。SHAP 在折外随机森林上计算；若当前 SHAP 版本不支持高购买意愿概率输出，会在 `ml_run_metadata.json` 中记录 raw-output fallback。SHAP 仅说明预测模型的特征归因，不是独立的因果验证。
+
+## 快速开始
+
+请始终在项目虚拟环境中安装和运行依赖：
 
 ```bash
 python3 -m venv .venv
 uv pip install --offline --python .venv/bin/python -r requirements.txt
 ```
 
-If the local package cache is unavailable, install `requirements.txt` through
-your normal package mirror inside `.venv`.
+如果本地没有离线缓存，也请在 `.venv` 内通过常用镜像安装，不要污染系统 Python。
 
-Run an audit first:
+先做低成本审计：
 
 ```bash
 .venv/bin/python main.py --analysis audit
 ```
 
-Run one stage:
+按模块运行：
 
 ```bash
 .venv/bin/python main.py --analysis econometrics
@@ -116,33 +127,62 @@ Run one stage:
 .venv/bin/python main.py --analysis ml
 ```
 
-Run the complete pipeline:
+运行完整流程：
 
 ```bash
 .venv/bin/python main.py --analysis all
 ```
 
-For a quick functional run of the mediation code, reduce the bootstrap count
-explicitly, for example `--analysis mediation --bootstrap-iterations 50`.
-The complete run uses 5,000 iterations. Every run records the data SHA256,
-mapping manifest, random seed, Python environment, Git state, sample counts,
-and output files.
+完整流程默认使用 5,000 次 bootstrap。调试时可以显式降低次数，例如：
 
-## Project structure
-
-```text
-src/config.py             fixed questionnaire mapping and model specifications
-src/data_schema.py        data audit, composites, and control encoding
-src/ordered_logit.py      ordered-logit associations and VIF
-src/mediation.py          five exploratory bootstrap paths
-src/heterogeneity.py      nested interaction LR tests
-src/ml_shap.py            out-of-fold prediction and SHAP
-main.py                   command-line runner and run metadata
-data/raw/data.csv         survey data used by the local project
-figures/                  historical project outputs
-figures/runs/             ignored timestamped outputs from the new pipeline
-IMPLEMENTATION_PLAN.md    fixed design decisions and acceptance rules
+```bash
+.venv/bin/python main.py --analysis mediation --bootstrap-iterations 50
 ```
 
-The GitHub repository is private at
-https://github.com/Yemyu/ev-purchase-intention.
+每次运行都会在 `figures/runs/run-YYYYMMDD-HHMMSS/` 创建独立目录，保存数据 SHA256、题号映射、随机种子、Python 环境、Git 状态和模块输出。运行目录默认被 `.gitignore` 忽略；如果要给审阅者展示结果，应另行提交脱敏的汇总文件。
+
+## Notebook
+
+Notebook 现在按语言和分析职责分开：
+
+- [`01_ev_purchase_intention_zh.ipynb`](notebooks/01_ev_purchase_intention_zh.ipynb)：中文研究说明与结果解读；
+- [`01_ev_purchase_intention_en.ipynb`](notebooks/01_ev_purchase_intention_en.ipynb)：英文研究说明与结果解读；
+- [`notebooks/README.md`](notebooks/README.md)：运行顺序、结果目录选择和常见问题。
+
+两个 Notebook 都调用 `src.data_schema` 的统一题号映射，并读取 `figures/runs/` 的结果文件，不再复制旧版 Q22 单题定义、单次 train/test split 或旧版随机森林流程。Notebook 默认不自动启动高成本完整运行；需要重新计算时先执行命令行入口，再打开 Notebook 查看结果。
+
+## 为什么当前不做看板
+
+本项目的交付物是可复现的研究分析，不是面向运营人员的持续监控产品。样本是一次性问卷，主要输出是模型表、置信区间和方法说明；做看板会增加前端依赖和维护成本，却不会提高当前研究结论的可信度。因此当前版本保留静态图表和 CSV/JSON 结果，不额外制作看板。
+
+如果以后需要向非技术评审展示，可以在不改变分析代码的前提下增加一个只读结果页，展示样本审计、OR、Bootstrap 区间和 ML 指标；那是展示层扩展，不是当前项目的必要组成部分。
+
+## 项目结构
+
+```text
+src/config.py             固定题号、变量规格、控制变量和运行参数
+src/data_schema.py        原始数据读取、审计、组合变量和控制变量编码
+src/ordered_logit.py      有序 Logit 直接关联与 VIF
+src/mediation.py          五条探索性 Bootstrap 间接路径
+src/heterogeneity.py      嵌套交互模型与 LR/Holm 检验
+src/ml_shap.py            折外预测、指标和 SHAP
+main.py                   命令行入口与运行元数据
+notebooks/                中英文 Notebook 与导航
+data/README.md            中英文数据字典和隐私说明
+figures/                  历史图表及本地运行结果
+IMPLEMENTATION_PLAN.md    已锁定的设计、边界与验收规则
+```
+
+## 研究边界与数据隐私
+
+- 数据来自一次性在线问卷，存在横截面、便利样本、自报和共同方法偏差。
+- T/V 是代理变量，不能替代经过验证的成熟量表。
+- 结果适合项目展示和方法演示，不应被表述为普遍人口的因果估计。
+- 当前仓库为私有仓库，原始问卷 CSV 仅用于本地复现。公开仓库前必须移除或脱敏原始数据，并提供合成小样本、数据字典或合规的数据获取说明。
+- 本项目不修改论文文档；如果论文仍使用旧的 Q22 单题 V 定义，应在论文与代码之间明确区分版本。
+
+## License and citation
+
+代码按仓库中的 [`LICENSE`](LICENSE) 发布。若使用问卷数据或分析框架，请同时说明数据采集、变量构造、样本限制和本仓库的版本信息。
+
+GitHub 仓库：<https://github.com/Yemyu/ev-purchase-intention>

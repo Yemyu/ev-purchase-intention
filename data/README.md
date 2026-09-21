@@ -1,92 +1,135 @@
-# Data Documentation
+# 数据字典与使用说明 / Data Documentation
 
-## Data Overview
+[中文](README.md) · [English](README.en.md) · [返回项目主页 / Project README](../README.md)
 
-| Property | Description |
-|----------|-------------|
-| Sample Size | 622 respondents |
-| Survey Method | Online questionnaire |
-| Target Population | Chinese consumers considering EV purchase |
+## 1. 数据概况
 
----
+| 项目 | 说明 |
+|---|---|
+| 样本量 | 622 名受访者 |
+| 数据形式 | 在线问卷导出的 CSV |
+| 研究对象 | 考虑购买新能源汽车的中国消费者 |
+| 主要结果变量 | Q21：是否愿意为智能驾驶功能支付溢价 |
+| 量表范围 | 题项通常为 1–5 的有序回答 |
+| 原始列数 | 67 列，包括原始题项和历史处理列 |
 
-## Data Files
+当前私有仓库的 `data/raw/data.csv` 用于本地复现。它含有问卷原始回答，公开仓库或对外发送前必须根据数据合规要求移除、脱敏或替换为合成数据。
 
-| File | Description |
-|------|-------------|
-| `data.csv` | Main survey dataset (Chinese questionnaire) |
-| `data.xlsx` | Excel backup with additional sheets |
+## 2. 文件与读取规则
 
----
+| 路径 | 用途 |
+|---|---|
+| `data/raw/data.csv` | 当前本地运行使用的原始问卷 CSV |
+| `src/config.py` | 固定题号、原始列名、控制变量类别和模型规格 |
+| `src/data_schema.py` | 题号解析、组合变量、控制变量编码和审计 |
+| `figures/runs/<run-id>/audit.json` | 某次运行的数据质量审计 |
+| `figures/runs/<run-id>/run_metadata.json` | 数据 SHA256、随机种子、Git 状态和映射清单 |
 
-## Variable Definitions
+CSV 可能同时包含历史哑变量、异常值处理等列。新流程按照题号和完整原始列名显式解析 Q1–Q29，只使用需要的原始题项，不按列位置读取，也不把历史处理列传入模型。
 
-### Dependent Variable
+## 3. 变量定义
 
-| Variable | Description | Scale |
-|----------|-------------|-------|
-| `支付意愿` | Willingness to pay premium for intelligent driving features | 1-5 (Ordinal) |
+### 3.1 结果、核心解释变量与探索性中间变量
 
-### Independent Variables
+| 符号 | 中文含义 | 原始题项 | 构造方式 | 角色 |
+|---|---|---|---|---|
+| `Y` | 智能驾驶功能溢价支付意愿 | Q21 | 单题，保留 1–5 有序等级 | 结果变量 |
+| `T` | 技术重要性与安全性认知 | Q15、Q16 | 完整回答行的算术均值 | 核心解释变量 |
+| `V` | 具体辅助驾驶功能的功能价值认知 | Q22–Q25 | 完整回答行的算术均值 | 核心解释变量 |
+| `M1` | 驾驶乐趣认知 | Q18 | 单题，1–5 | 探索性中间变量 |
+| `M2` | 出行效率认知 | Q19 | 单题，1–5 | 探索性中间变量 |
 
-| Variable | Description | Survey Questions |
-|----------|-------------|-----------------|
-| `技术信任` (Tech Trust) | Trust in intelligent driving technology | Q15, Q16 (averaged) |
-| `感知价值` (Perceived Value) | Perceived value of adaptive cruise control | Q22 |
+这里的 T 和 V 是本项目的**代理变量**，不是经过外部验证的成熟量表。`data_schema.py` 会报告组合题项的完整行数、均值、标准差和 Cronbach's alpha；这些诊断用于说明数据质量，不用于事后选题。
 
-### Mediation Variables
+### 3.2 三套固定模型规格
 
-| Variable | Description | Survey Question |
-|----------|-------------|-----------------|
-| `驾驶乐趣` (Driving Pleasure) | Perceived enhancement of driving enjoyment | Q18 |
-| `出行效率` (Travel Efficiency) | Perceived improvement in travel efficiency | Q19 |
+| 规格 | T | V | 控制变量编码 | 使用目的 |
+|---|---|---|---|---|
+| `primary` | `mean(Q15, Q16)` | `mean(Q22, Q23, Q24, Q25)` | 分类哑变量 | 当前主分析 |
+| `sensitivity` | `mean(Q15, Q16, Q17)` | `mean(Q22, Q23, Q24, Q25)` | 分类哑变量 | 检查加入 Q17 后方向是否改变 |
+| `legacy` | `mean(Q15, Q16)` | `Q22` | 原始有序编码 | 追踪旧项目结果，不作为当前首选 |
 
-### Control Variables
+主规格在拟合前固定，不根据显著性、VIF 或机器学习得分选择。保留 `legacy` 是为了让旧结果可追踪，不代表旧的单题 V 定义是当前推荐测量。
 
-| Variable | Description | Scale |
-|----------|-------------|-------|
-| Gender | 1=Male, 2=Female | 1-2 |
-| Age | 1-5 (Under 25 to Over 56) | 1-5 |
-| Education | 1-4 (High school to Graduate) | 1-4 |
-| Income | Monthly income range | 1-5 |
-| Driving Experience | Years of driving license | 1-5 |
-| Driving Frequency | Times per week | 1-5 |
+### 3.3 固定控制变量
 
----
+| 名称 | 题号 | 原始类别编码 | 进入主/敏感性模型的方式 |
+|---|---:|---|---|
+| `gender` 性别 | Q1 | 1–2 | 分类哑变量，第一类为参考 |
+| `age` 年龄 | Q2 | 1–5 | 分类哑变量，第一类为参考 |
+| `education` 学历 | Q4 | 1–4 | 分类哑变量，第一类为参考 |
+| `income` 月收入范围 | Q6 | 1–5 | 分类哑变量，第一类为参考 |
+| `driving_exp` 驾龄 | Q9 | 1–5 | 分类哑变量，第一类为参考 |
+| `driving_freq` 每周驾驶频率 | Q12 | 1–5 | 分类哑变量，第一类为参考 |
 
-## Survey Questions Mapping
+类别代码表示问卷选项，不会被代码擅自转换成具体年龄、收入金额或驾龄年数。缺失控制变量不会被静默当成参考类别；相应模型会按其完整案例规则处理。
 
-| Variable | Original Chinese Question |
-|----------|--------------------------|
-| `技术信任` | Q15: 您认为智能驾驶功能对新能源汽车很重要? |
-| | Q16: 您认为智能驾驶功能可以提高驾驶安全性? |
-| `感知价值` | Q22: 您愿意为智能驾驶的自适应巡航功能影响购买意愿? |
-| `驾驶乐趣` | Q18: 您认为智能驾驶功能可以提升驾驶乐趣? |
-| `出行效率` | Q19: 您认为智能驾驶功能可以提高出行效率? |
-| `支付意愿` | Q21: 您愿意为智能驾驶功能支付溢价? |
+## 4. 原始题目映射
 
----
+| 题号 | 原始问题 |
+|---:|---|
+| Q1 | 您的性别是? |
+| Q2 | 您的年龄是? |
+| Q3 | 您所在的区域是? |
+| Q4 | 您的最高学历是? |
+| Q5 | 您的职业是? |
+| Q6 | 您的月收入范围是? |
+| Q7 | 您的家庭常住人口数是? |
+| Q8 | 您未来购买汽车的意向是? |
+| Q9 | 您的驾龄是? |
+| Q10 | 您驾驶的主要目的是? |
+| Q11 | 您每天的日常通勤距离大约是? |
+| Q12 | 您每周驾驶的频率是? |
+| Q13 | 您通常的驾驶时间段是? |
+| Q14 | 您通常驾驶的车辆类型是? |
+| Q15 | 您认为智能驾驶功能对新能源汽车很重要? |
+| Q16 | 您认为智能驾驶功能可以提高驾驶安全性? |
+| Q17 | 您认为智能驾驶功能可以减轻驾驶疲劳? |
+| Q18 | 您认为智能驾驶功能可以提升驾驶乐趣? |
+| Q19 | 您认为智能驾驶功能可以提高出行效率? |
+| Q20 | 智能驾驶功能会影响您购买新能源汽车的决策? |
+| Q21 | 您愿意为智能驾驶功能支付溢价? |
+| Q22 | 您愿意为智能驾驶的自适应巡航功能影响购买意愿? |
+| Q23 | 您愿意为智能驾驶的车道保持辅助功能影响购买意愿? |
+| Q24 | 您愿意为智能驾驶的自动泊车功能影响购买意愿? |
+| Q25 | 您愿意为智能驾驶的交通拥堵辅助功能影响购买意愿? |
+| Q26 | 您愿意为智能驾驶未来技术更加成熟影响购买意愿? |
+| Q27 | 您愿意为智能驾驶未来安全性更高影响购买意愿? |
+| Q28 | 您愿意为智能驾驶未来成本更低影响购买意愿? |
+| Q29 | 您愿意为智能驾驶未来应用场景更丰富影响购买意愿? |
 
-## Data Quality Notes
+Q8、Q20 和 Q26–Q29 默认不进入当前主特征集合，因为它们会改变研究问题、与结果变量产生明显概念重叠，或属于未来情景判断。它们仍保留在原始数据中，审计不会删除这些列。
 
-- **Missing Values**: Handled via listwise deletion
-- **Outliers**: No extreme values detected after inspection
-- **Multicollinearity**: VIF=22.3 between tech trust and perceived value
-  - **Solution**: Selective control variable strategy (Angrist & Pischke, 2009)
+## 5. 数据质量与缺失规则
 
----
+- 原始题项按数值转换；无法转换的值记为缺失并进入审计。
+- 合并题项使用完整案例均值：只要组合中的一个题项缺失，该行的组合变量就保持缺失。
+- 题项有效范围默认是 1–5；越界值不会被代码自动截断。
+- 模型模块使用各自声明的完整案例样本，并在输出中记录 `n_obs`。
+- 审计记录重复行、每道题缺失数、越界数、控制变量类别和历史处理列数量。
+- 数据质量检查不根据 p 值或模型表现反向修改题目。
 
-## Data Access
+## 6. 分析输出如何使用
 
-The raw data file (`data.csv`) is not included in the repository due to privacy concerns.
+一次完整运行会在 `figures/runs/run-YYYYMMDD-HHMMSS/` 保存：
 
-**To obtain the data:**
-1. Collect survey responses using the original questionnaire
-2. Anonymize all personal identifiers
-3. Place the cleaned `data.csv` in `data/raw/`
+- `audit.json`：数据与变量审计；
+- `run_metadata.json`：数据 SHA256、随机种子、Python 版本、Git 状态和 mapping manifest；
+- `ordered_logit_coefficients.csv`：三套规格的有序 Logit 系数与 OR；
+- `mediation_paths.csv`：五条探索性路径与 Bootstrap 区间；
+- `heterogeneity_results.csv`：LR、原始 p 值和 Holm 校正 p 值；
+- `ml_summary.csv`、`ml_oof_predictions.csv`：折外预测指标与预测记录；
+- `shap_importance.csv`、`shap_importance.png`：折外随机森林的预测特征归因。
 
----
+Notebook 只读取已经保存的运行结果，不在展示层重新定义题目或重新调参。结果解释应保留“横截面条件关联”“探索性间接关联”和“折外预测解释”三个边界。
 
-## Citation
+## 7. 隐私与公开发布
 
-If you use this dataset in your research, please cite the original survey design and acknowledge the data collection effort.
+当前仓库为私有仓库，原始 CSV 用于本地复现。若要公开仓库或将项目发送给评审者：
+
+1. 检查是否含有可识别个人信息或组合识别风险；
+2. 移除原始问卷，或使用经过审批的脱敏/合成样本；
+3. 保留本数据字典、mapping manifest 和运行元数据，方便解释变量构造；
+4. 在 README 中明确数据不可公开获取的原因和合规获取方式。
+
+本项目不改变论文文件。如果论文仍使用 `legacy` 的 Q22 单题 V 定义，应在论文与代码中注明这是两个不同版本，避免读者把两组数字当成同一规格。
