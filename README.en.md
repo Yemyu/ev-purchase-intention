@@ -4,7 +4,7 @@
 
 **Intelligent-driving features and willingness to pay a premium for EVs: survey econometrics with a machine-learning complement**
 
-[中文](README.md) · [English](README.en.md) · [Data documentation](data/README.en.md) · [Notebook guide](notebooks/README.md)
+[中文](README.md) · [English](README.en.md) · [Data documentation](data/README.en.md) · [Notebook guide](notebooks/README.md) · [Report page](https://yemyu.github.io/ev-purchase-intention/)
 
 </div>
 
@@ -38,7 +38,7 @@ Question numbers, variable definitions, controls, and missing-data rules are cen
 
 ## Data and measurements
 
-The current private repository contains the 622-row, 67-column survey CSV for local reproduction. The file includes raw questionnaire items as well as historical processing columns. The new pipeline resolves only the explicit raw question headers and never passes historical dummy or exception-handling columns into a model.
+The repository is currently public and keeps the 622-row, 67-column raw survey CSV for project reproduction, as authorized by the project owner. The report page loads aggregate JSON only; the analysis resolves explicit raw question headers and never passes historical dummy or exception-handling columns into a model.
 
 | Symbol | Meaning | Primary specification |
 |---|---|---|
@@ -138,11 +138,11 @@ The notebooks are now separated by language:
 
 Both notebooks call the shared schema and read the saved run outputs. They no longer reproduce the old single-item Q22 definition, single train/test split, or legacy random-forest workflow. They do not start the expensive full pipeline by default; run the CLI first when fresh results are required.
 
-## Why there is no dashboard
+## Why there is a report page instead of an operational dashboard
 
-This repository delivers a reproducible research analysis rather than a continuously monitored operational product. The data are a one-time survey and the meaningful outputs are model tables, intervals, and methodological notes. A dashboard would add front-end maintenance without improving the current evidence, so the project keeps static charts and CSV/JSON artifacts.
+This repository delivers a reproducible research analysis rather than a continuously monitored operational product. The data are a one-time survey and the meaningful outputs are model tables, intervals, and methodological notes. The current version therefore provides a read-only static report page for the audit, odds ratios, bootstrap intervals, and ML metrics instead of an operational dashboard that would require continuously refreshed data.
 
-A read-only results page can be added later for non-technical reviewers without changing the analysis code. It is an optional presentation layer, not a requirement for this project.
+The report page is available at <https://yemyu.github.io/ev-purchase-intention/>. It is published from `app/` by the GitHub Pages workflow; the notebooks and complete analysis code remain in the repository.
 
 ## Repository layout
 
@@ -165,7 +165,7 @@ IMPLEMENTATION_PLAN.md    locked design, boundaries, and acceptance rules
 - The survey is cross-sectional, self-reported, and subject to convenience-sampling and common-method limitations.
 - T and V are proxies and should not be described as validated scales.
 - Results are suitable for a research portfolio and methodological demonstration, not a population-level causal estimate.
-- The repository is currently private and includes the raw survey CSV for local reproduction. Before making it public, remove or de-identify the raw data and provide a synthetic sample, data dictionary, or compliant access instructions.
+- The repository is public and retains the raw survey CSV for this project's reproduction, as authorized by the project owner. The web page does not load row-level data. Do not reuse or redistribute raw responses outside the project without the project owner's authorization.
 - The thesis document is not changed here. If it still uses the legacy single-item V definition, document that version boundary explicitly.
 
 ## License and citation

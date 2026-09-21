@@ -13,7 +13,7 @@
 | Response scale | Mostly ordinal 1–5 responses |
 | Raw columns | 67, including questionnaire items and historical processing columns |
 
-The current private repository contains `data/raw/data.csv` for local reproduction. It contains raw survey responses and must be removed, de-identified, or replaced with synthetic data before public release or external sharing.
+The public repository keeps `data/raw/data.csv` for this project's reproduction, as decided by the project owner. It contains raw survey responses; the web report reads aggregate JSON only. Do not reuse or redistribute the raw responses outside the project without the project owner's authorization.
 
 ## 2. Files and loading rules
 
@@ -125,11 +125,6 @@ The notebooks read saved artifacts rather than redefining questions or retuning 
 
 ## 7. Privacy and public release
 
-The repository is currently private and includes the raw CSV for local reproduction. Before making it public or sending it to reviewers:
-
-1. check for direct and combination-identification risks;
-2. remove the raw survey or use an approved de-identified/synthetic sample;
-3. retain the data dictionary, mapping manifest, and run metadata so the construction is auditable; and
-4. document why the raw data cannot be published and how compliant access could be requested.
+The repository is public and keeps the raw CSV for this project's reproduction, as decided by the project owner. For external review, prefer the aggregate-only `app/static/data/report.json`; any reuse, redistribution, or linkage with another dataset requires separate authorization and must follow the survey consent and institutional/platform requirements.
 
 This repository does not modify the thesis. If the thesis still uses the legacy single-item V definition, document that version boundary so readers do not treat the two sets of numbers as one specification.
