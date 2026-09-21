@@ -157,7 +157,32 @@
   function render(d) {
     qs('#provenance').textContent = d.meta.run_id + ' · ' + d.meta.created_at_utc + '\nGit: ' + d.meta.git_commit + '\nSHA256: ' + d.meta.data_sha256;
     renderMetricCards(d); renderAudit(d); renderDirect(d); renderMediation(d); renderHeterogeneity(d); renderMl(d); }
+  function initSectionNavigation() {
+    var sections = Array.from(document.querySelectorAll('section.section[id]'));
+    var links = document.querySelectorAll('.nav-links a, .toc a, .book-index a');
+    var header = qs('.topbar');
+    var pending = false;
+    function update() {
+      pending = false;
+      var offset = header.getBoundingClientRect().height + 20;
+      document.documentElement.style.setProperty('--nav-offset', offset + 'px');
+      var current = null;
+      sections.forEach(function (section) {
+        if (section.getBoundingClientRect().top <= offset + 24) current = section.id;
+      });
+      links.forEach(function (link) {
+        if (link.getAttribute('href') === '#' + current) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+    function schedule() { if (!pending) { pending = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    if (window.ResizeObserver) new ResizeObserver(schedule).observe(header);
+    update();
+  }
   function init() {
+    initSectionNavigation();
     var book = qs('.book-viewport');
     if (book) {
       var previous = qs('#bookPrev'), next = qs('#bookNext');

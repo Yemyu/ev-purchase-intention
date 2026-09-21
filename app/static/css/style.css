@@ -196,3 +196,39 @@ body.lang-zh [data-lang="zh"], body.lang-en [data-lang="en"] { display: initial;
   opacity: 1;
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+/* Match navigation labels and section numbers throughout the report. */
+.topbar { flex-wrap:wrap; gap:10px 22px; }
+.top-actions { flex:1; justify-content:flex-end; }
+.nav-links { gap:14px; }
+.nav-links a { white-space:nowrap; padding:7px 0; border-bottom:2px solid transparent; }
+.nav-links b { font-family:var(--mono); font-size:10px; }
+.nav-links a[aria-current="location"] { color:var(--primary); border-bottom-color:var(--primary); }
+.toc { grid-template-columns:repeat(6,minmax(0,1fr)); }
+.toc a[aria-current="location"], .book-index a[aria-current="location"] { background:var(--primary-soft); color:var(--primary); }
+.analysis-explanation { margin-top:28px; display:grid; gap:24px; max-width:940px; }
+.analysis-explanation article { padding-top:20px; border-top:1px solid var(--line); }
+.analysis-explanation h3 { margin:0 0 10px; font-family:var(--serif); font-size:23px; font-weight:500; }
+.analysis-explanation p, .definition-record > p { margin:0; color:var(--muted); font-size:15px; line-height:1.95; }
+.definition-record { margin-top:28px; padding:20px 0; border-top:1px solid var(--line); }
+.definition-record summary { color:var(--primary); cursor:pointer; font-size:15px; }
+.definition-record > p { margin-top:18px; }
+.book-detail { display:inline-block; margin:16px 0 22px; color:var(--primary); font-size:12px; text-underline-offset:4px; }
+.book-cover .book-detail { color:#f5fbfb; }
+html { scroll-padding-top:var(--nav-offset,110px); }
+.section, .book-intro { scroll-margin-top:0; }
+@media(max-width:1100px) {
+  .top-actions { flex-basis:100%; }
+  .nav-links { flex:1; overflow-x:auto; }
+  .toc { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media(max-width:620px) {
+  .nav-links { display:flex; gap:16px; }
+  .topbar { padding:10px 14px; }
+  .top-actions { min-width:0; gap:10px; }
+  .toc { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .analysis-explanation p { font-size:14px; }
+}
+
+.analysis-method { margin: 8px 0 28px; }
+.analysis-method article { border-top: 0; padding-top: 0; }
