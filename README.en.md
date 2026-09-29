@@ -144,12 +144,6 @@ The notebooks are now separated by language:
 
 Both notebooks call the shared schema and read the saved run outputs. They no longer reproduce the old single-item Q22 definition, single train/test split, or legacy random-forest workflow. They do not start the expensive full pipeline by default; run the CLI first when fresh results are required.
 
-## Why there is a report page instead of an operational dashboard
-
-This repository delivers a reproducible research analysis rather than a continuously monitored operational product. The data are a one-time survey and the meaningful outputs are model tables, intervals, and methodological notes. The current version therefore provides a read-only static report page for the audit, odds ratios, bootstrap intervals, and ML metrics instead of an operational dashboard that would require continuously refreshed data.
-
-The report page is available at <https://yemyu.github.io/ev-purchase-intention/>. It is published from `app/` by the GitHub Pages workflow; the notebooks and complete analysis code remain in the repository.
-
 ## Repository layout
 
 ```text
@@ -174,8 +168,8 @@ IMPLEMENTATION_PLAN.md    locked design, boundaries, and acceptance rules
 - The repository is public and retains the raw survey CSV for this project's reproduction, as authorized by the project owner. The web page does not load row-level data. Do not reuse or redistribute raw responses outside the project without the project owner's authorization.
 - The thesis document is not changed here. If it still uses the legacy single-item V definition, document that version boundary explicitly.
 
-## License and citation
+## License
 
-Code is released under [`LICENSE`](LICENSE). If you use the survey or analysis design, acknowledge the data collection, variable construction, sample limitations, and repository version.
+The code is released under the [MIT License](LICENSE).
 
 GitHub repository: <https://github.com/Yemyu/ev-purchase-intention>

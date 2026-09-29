@@ -157,14 +157,6 @@ Notebook 现在按语言和分析职责分开：
 
 两个 Notebook 都调用 `src.data_schema` 的统一题号映射，并读取 `figures/runs/` 的结果文件，不再复制旧版 Q22 单题定义、单次 train/test split 或旧版随机森林流程。Notebook 默认不自动启动高成本完整运行；需要重新计算时先执行命令行入口，再打开 Notebook 查看结果。
 
-## 为什么保留报告页而不做运营看板
-
-本项目的交付物是可复现的研究分析，不是面向运营人员的持续监控产品。样本是一次性问卷，主要输出是模型表、置信区间和方法说明，因此当前版本提供一个只读静态报告页，集中展示审计、OR、Bootstrap 区间和 ML 指标；不额外制作需要持续刷新数据的运营看板。
-
-报告页地址：<https://yemyu.github.io/ev-purchase-intention/>。当前入口在报告开头提供横向书页摘要，向下仍是完整的纵向研究报告；机器学习部分用完整 SHAP 排序图展示 23 个输入特征，交叉验证说明放在图下方。它由 `app/` 目录和 GitHub Pages 工作流发布，Notebook 与完整分析代码仍保留在仓库中。
-
-为了便于比较，`app/classic.html` 保留了书页预览前的传统报告布局；`report-dashboard-v1` Git 标签也固定了这一版的回退点。
-
 ## 项目结构
 
 ```text
@@ -189,8 +181,8 @@ IMPLEMENTATION_PLAN.md    已锁定的设计、边界与验收规则
 - 当前仓库为公开仓库，原始问卷 CSV 按项目所有者的发布决定保留，用于本项目复现；网页不加载逐行数据。未经项目所有者授权，不应将问卷原始回答用于其他用途或再次分发。
 - 本项目不修改论文文档；如果论文仍使用旧的 Q22 单题 V 定义，应在论文与代码之间明确区分版本。
 
-## License and citation
+## 许可证
 
-代码按仓库中的 [`LICENSE`](LICENSE) 发布。若使用问卷数据或分析框架，请同时说明数据采集、变量构造、样本限制和本仓库的版本信息。
+代码采用 [MIT License](LICENSE)。
 
 GitHub 仓库：<https://github.com/Yemyu/ev-purchase-intention>
