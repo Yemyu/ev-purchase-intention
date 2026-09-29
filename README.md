@@ -109,43 +109,59 @@ T 和 V 是项目内定义的**代理变量**，不是经过外部量表验证�
 
 ## 快速开始
 
-请始终在项目虚拟环境中安装和运行依赖：
+### 1. 克隆项目
+
+```bash
+git clone https://github.com/Yemyu/ev-purchase-intention.git
+cd ev-purchase-intention
+```
+
+### 2. 安装依赖
+
+macOS / Linux：
 
 ```bash
 python3 -m venv .venv
-uv pip install --offline --python .venv/bin/python -r requirements.txt
+source .venv/bin/activate
 ```
 
-如果本地没有离线缓存，也请在 `.venv` 内通过常用镜像安装，不要污染系统 Python。
+Windows（PowerShell）：
 
-先做低成本审计：
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+激活环境后安装依赖：
 
 ```bash
-.venv/bin/python main.py --analysis audit
+python -m pip install -r requirements.txt
 ```
 
-按模块运行：
+### 3. 运行分析
+
+检查数据：
 
 ```bash
-.venv/bin/python main.py --analysis econometrics
-.venv/bin/python main.py --analysis mediation
-.venv/bin/python main.py --analysis heterogeneity
-.venv/bin/python main.py --analysis ml
+python main.py --analysis audit
 ```
 
-运行完整流程：
+运行全部分析：
 
 ```bash
-.venv/bin/python main.py --analysis all
+python main.py --analysis all
 ```
 
-完整流程默认使用 5,000 次 bootstrap。调试时可以显式降低次数，例如：
+也可以单独运行各模块：
 
 ```bash
-.venv/bin/python main.py --analysis mediation --bootstrap-iterations 50
+python main.py --analysis econometrics
+python main.py --analysis mediation
+python main.py --analysis heterogeneity
+python main.py --analysis ml
 ```
 
-每次运行都会在 `figures/runs/run-YYYYMMDD-HHMMSS/` 创建独立目录，保存数据 SHA256、题号映射、随机种子、Python 环境、Git 状态和模块输出。运行目录默认被 `.gitignore` 忽略；如果要给审阅者展示结果，应另行提交脱敏的汇总文件。
+结果保存在 `figures/runs/run-YYYYMMDD-HHMMSS/`。中介分析默认使用 5,000 次 Bootstrap，可通过 `--bootstrap-iterations` 指定次数。
 
 ## Notebook
 

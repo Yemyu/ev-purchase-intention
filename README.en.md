@@ -100,39 +100,59 @@ SHAP is computed on held-out folds for the extended forest. If the installed SHA
 
 ## Quick start
 
-Install and run dependencies inside the project virtual environment:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Yemyu/ev-purchase-intention.git
+cd ev-purchase-intention
+```
+
+### 2. Install dependencies
+
+macOS / Linux:
 
 ```bash
 python3 -m venv .venv
-uv pip install --offline --python .venv/bin/python -r requirements.txt
+source .venv/bin/activate
 ```
 
-If the local cache is unavailable, use your normal package mirror inside `.venv`; do not modify the system Python environment.
+Windows (PowerShell):
 
-Run the low-cost audit first:
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+With the environment activated, install the dependencies:
 
 ```bash
-.venv/bin/python main.py --analysis audit
+python -m pip install -r requirements.txt
 ```
 
-Run individual modules:
+### 3. Run the analysis
+
+Check the data:
 
 ```bash
-.venv/bin/python main.py --analysis econometrics
-.venv/bin/python main.py --analysis mediation
-.venv/bin/python main.py --analysis heterogeneity
-.venv/bin/python main.py --analysis ml
+python main.py --analysis audit
 ```
 
-Run the complete pipeline:
+Run the full analysis:
 
 ```bash
-.venv/bin/python main.py --analysis all
+python main.py --analysis all
 ```
 
-The complete run uses 5,000 bootstrap iterations. For a quick functional check, reduce it explicitly, for example `--analysis mediation --bootstrap-iterations 50`.
+Or run individual modules:
 
-Every run creates `figures/runs/run-YYYYMMDD-HHMMSS/` and records the data SHA256, mapping manifest, seed, Python environment, Git state, and module outputs. Run directories are ignored by default; submit a separate de-identified summary if reviewers need to inspect results.
+```bash
+python main.py --analysis econometrics
+python main.py --analysis mediation
+python main.py --analysis heterogeneity
+python main.py --analysis ml
+```
+
+Results are saved to `figures/runs/run-YYYYMMDD-HHMMSS/`. Mediation analysis uses 5,000 bootstrap iterations by default; set `--bootstrap-iterations` to specify a different count.
 
 ## Notebooks
 
