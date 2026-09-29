@@ -8,8 +8,7 @@
 
 <p align="center">
   <a href="notebooks/01_ev_purchase_intention_en.ipynb">Analysis Notebook</a> ·
-  <a href="https://yemyu.github.io/ev-purchase-intention/en.html">Research report</a> ·
-  <a href="https://yemyu.github.io/ev-purchase-intention/en.html#ml">Results dashboard</a>
+  <a href="https://yemyu.github.io/ev-purchase-intention/en.html">Research report</a>
 </p>
 
 ---
@@ -40,7 +39,7 @@ Raw questionnaire CSV
     └─ five-fold out-of-fold prediction + SHAP          ← computational complement
 ```
 
-Question numbers, variable definitions, controls, and missing-data rules are centralized in [`src/config.py`](src/config.py) and [`src/data_schema.py`](src/data_schema.py). The current code does not automatically select items by p-values or scores. Item selection has a history of exploration on these data; fixed code specifications do not constitute preregistration or remove prior selection effects.
+Question numbers, variable definitions, controls, and missing-data rules are documented in [`src/config.py`](src/config.py) and [`src/data_schema.py`](src/data_schema.py).
 
 ## Data and measurements
 
@@ -53,14 +52,6 @@ The repository is currently public and keeps the 622-row, 67-column raw survey C
 | `V` | Value recognition for concrete assisted-driving functions | `mean(Q22, Q23, Q24, Q25)` |
 | `M1` | Recognition of improved driving pleasure | Q18 |
 | `M2` | Recognition of improved travel efficiency | Q19 |
-
-Three fixed specifications are retained for traceability:
-
-| Specification | T | V | Control encoding | Purpose |
-|---|---|---|---|---|
-| `primary` | mean(Q15, Q16) | mean(Q22–Q25) | categorical dummies | current main specification |
-| `sensitivity` | mean(Q15–Q17) | mean(Q22–Q25) | categorical dummies | adds fatigue-relief recognition |
-| `legacy` | mean(Q15, Q16) | Q22 | original ordinal codes | traceability to the original project |
 
 T and V are project-defined **proxies**, not externally validated psychological scales. The audit records missingness, response ranges, item correlations, and Cronbach's alpha as descriptive diagnostics; it does not delete items after inspecting reliability or significance.
 
@@ -162,7 +153,7 @@ The notebooks are now separated by language:
 - [`01_ev_purchase_intention_en.ipynb`](notebooks/01_ev_purchase_intention_en.ipynb): English research notes and interpretation;
 - [`notebooks/README.md`](notebooks/README.md): execution order, run-directory selection, and troubleshooting.
 
-Both notebooks call the shared schema and read the saved run outputs. They no longer reproduce the old single-item Q22 definition, single train/test split, or legacy random-forest workflow. They do not start the expensive full pipeline by default; run the CLI first when fresh results are required.
+Both notebooks use the shared question mapping and read saved analysis results. Run the command-line analysis first when fresh results are needed.
 
 ## Repository layout
 
@@ -186,7 +177,6 @@ IMPLEMENTATION_PLAN.md    locked design, boundaries, and acceptance rules
 - T and V are proxies and should not be described as validated scales.
 - Results are suitable for a research portfolio and methodological demonstration, not a population-level causal estimate.
 - The repository is public and retains the raw survey CSV for this project's reproduction, as authorized by the project owner. The web page does not load row-level data. Do not reuse or redistribute raw responses outside the project without the project owner's authorization.
-- The thesis document is not changed here. If it still uses the legacy single-item V definition, document that version boundary explicitly.
 
 ## License
 

@@ -8,8 +8,7 @@
 
 <p align="center">
   <a href="notebooks/01_ev_purchase_intention_zh.ipynb">分析 Notebook</a> ·
-  <a href="https://yemyu.github.io/ev-purchase-intention/">报告页</a> ·
-  <a href="https://yemyu.github.io/ev-purchase-intention/#ml">结果看板</a>
+  <a href="https://yemyu.github.io/ev-purchase-intention/">报告页</a>
 </p>
 
 ---
@@ -44,7 +43,7 @@
     └─ 5 折折外预测 + SHAP                       ← 计算补充
 ```
 
-当前代码不自动按 p 值或得分筛题。题项选择有历史探索背景，本版本属于探索性修订；固定代码规格不等于预注册，也不能消除已有数据上的选择影响。所有题号、变量定义、控制变量和缺失规则都集中写在 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py) 中。
+题号、变量定义、控制变量和缺失规则见 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py)。
 
 ## 数据与变量
 
@@ -57,14 +56,6 @@
 | `V` | 具体辅助驾驶功能的功能价值代理变量 | `mean(Q22, Q23, Q24, Q25)` |
 | `M1` | 驾驶乐趣认知 | Q18 |
 | `M2` | 出行效率认知 | Q19 |
-
-项目保留三套固定规格，便于追踪旧版本和检查测量口径的影响：
-
-| 规格 | T | V | 控制变量处理 | 用途 |
-|---|---|---|---|---|
-| `primary` | Q15、Q16 均值 | Q22–Q25 均值 | 分类哑变量 | 当前主规格 |
-| `sensitivity` | Q15–Q17 均值 | Q22–Q25 均值 | 分类哑变量 | 加入“减轻驾驶疲劳”后的敏感性检查 |
-| `legacy` | Q15、Q16 均值 | Q22 单题 | 原始有序编码 | 追踪旧项目口径，不作为当前首选 |
 
 T 和 V 是项目内定义的**代理变量**，不是经过外部量表验证的完整心理构念。审计会记录题项缺失、取值范围、题项相关和 Cronbach's alpha，但不会因为 alpha 或显著性而事后删题。
 
@@ -171,7 +162,7 @@ Notebook 现在按语言和分析职责分开：
 - [`01_ev_purchase_intention_en.ipynb`](notebooks/01_ev_purchase_intention_en.ipynb)：英文研究说明与结果解读；
 - [`notebooks/README.md`](notebooks/README.md)：运行顺序、结果目录选择和常见问题。
 
-两个 Notebook 都调用 `src.data_schema` 的统一题号映射，并读取 `figures/runs/` 的结果文件，不再复制旧版 Q22 单题定义、单次 train/test split 或旧版随机森林流程。Notebook 默认不自动启动高成本完整运行；需要重新计算时先执行命令行入口，再打开 Notebook 查看结果。
+两个 Notebook 使用统一的题号映射，读取已保存的分析结果。需要重新计算时，先运行命令行入口。
 
 ## 项目结构
 
@@ -195,7 +186,6 @@ IMPLEMENTATION_PLAN.md    已锁定的设计、边界与验收规则
 - T/V 是代理变量，不能替代经过验证的成熟量表。
 - 结果适合项目展示和方法演示，不应被表述为普遍人口的因果估计。
 - 当前仓库为公开仓库，原始问卷 CSV 按项目所有者的发布决定保留，用于本项目复现；网页不加载逐行数据。未经项目所有者授权，不应将问卷原始回答用于其他用途或再次分发。
-- 本项目不修改论文文档；如果论文仍使用旧的 Q22 单题 V 定义，应在论文与代码之间明确区分版本。
 
 ## 许可证
 
