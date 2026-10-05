@@ -1,19 +1,10 @@
-"""Supplementary heterogeneity analysis for the EV purchase-intention project.
+"""Group interaction tests for the EV purchase-intention survey.
 
-The old implementation compared a pooled likelihood with a sum of separate
- group likelihoods. Those likelihoods were not nested (and the reported
- degrees of freedom did not match the fitted models), so the resulting LR test
- was not interpretable. This module uses one common sample and two genuinely
- nested ordered-logit models for each demographic variable:
-
- * restricted: core variables, fixed controls, and group main effects;
- * unrestricted: the restricted model plus ``tech_trust`` and
-   ``perceived_value`` by group interaction terms.
-
-The public ``load_data`` and ``analyze_heterogeneity`` functions retain the
-interfaces used by ``main.py`` and by the original notebook. Group labels are
-kept as generic category labels; no unverified conversion of an age or income
-code into a real-world range is made here.
+Each grouping uses two nested ordered-logit models fitted to the same sample:
+the restricted model contains core variables, background controls and group
+main effects; the expanded model adds group interactions with ``tech_trust``
+and ``perceived_value``. Likelihood-ratio p-values are adjusted using Holm's
+method. Group labels retain the questionnaire category codes.
 """
 
 from __future__ import annotations
@@ -45,7 +36,7 @@ Q_COLS = {
     "driving_exp": "9.您的驾龄是?",
     "driving_freq": "12.您每周驾驶的频率是?",
 }
-# Names retained by the original module for callers that import ``Q_COLS``.
+# Single-item alias available to callers that import ``Q_COLS``.
 Q_COLS["perceived_value"] = Q_COLS["value_q1"]
 
 CORE_VARS = ["tech_trust", "perceived_value"]
@@ -77,16 +68,12 @@ def _generic_group_labels(series: pd.Series, name: str) -> pd.Series:
 def load_data(data_path: str = DATA_PATH) -> pd.DataFrame:
     """Load raw survey data and construct the primary analysis variables.
 
-    ``tech_trust`` is the pre-specified two-item proxy (Q15/Q16), while
-    ``perceived_value`` is the four-item function-appeal proxy (Q22--Q25).
-    Legacy/sensitivity definitions are retained as separate columns for
-    traceability and are never silently substituted into the analysis.
+    ``tech_trust`` averages Q15/Q16; ``perceived_value`` averages Q22--Q25.
+    Legacy and sensitivity composites are also available as separate columns.
     """
 
-    # Prefer the shared schema when this module is imported as part of the
-    # project.  It is the single source of truth for questionnaire headers and
-    # the primary T/V composites.  The local fallback below keeps direct use of
-    # this file possible in an older checkout that predates ``data_schema``.
+    # Use the shared schema for package imports; fall back to local mappings
+    # when running this file directly.
     try:
         from .data_schema import add_derived_variables, load_raw_data
 
@@ -100,8 +87,7 @@ def load_data(data_path: str = DATA_PATH) -> pd.DataFrame:
         df["tech_trust_legacy"] = df["T_legacy"]
         df["tech_trust_sensitivity"] = df["T_sensitivity"]
         df["perceived_value_legacy"] = df["V_legacy"]
-        # Canonical aliases are already supplied by data_schema, but assign
-        # them explicitly to make this module's contract obvious.
+        # Use the primary T/V composites for the group comparisons.
         df["tech_trust"] = df["T"]
         df["perceived_value"] = df["V"]
     except (ImportError, ModuleNotFoundError):
@@ -113,9 +99,7 @@ def load_data(data_path: str = DATA_PATH) -> pd.DataFrame:
         for key, column in Q_COLS.items():
             df[key] = _number(df[column])
 
-        # A composite is formed only when every pre-specified item is present;
-        # partial-item averages would otherwise hide the number of excluded
-        # rows.
+        # Require complete responses for every composite item.
         df["tech_trust"] = df[["tech_trust_q1", "tech_trust_q2"]].mean(axis=1, skipna=False)
         df["tech_trust_sensitivity"] = df[["tech_trust_q1", "tech_trust_q2", "tech_trust_q3"]].mean(axis=1, skipna=False)
         df["tech_trust_legacy"] = df["tech_trust"]
@@ -123,8 +107,7 @@ def load_data(data_path: str = DATA_PATH) -> pd.DataFrame:
         df["perceived_value"] = df[value_items].mean(axis=1, skipna=False)
         df["perceived_value_legacy"] = df["value_q1"]
 
-    # Group labels do not infer real-world age, income, or year ranges.  The
-    # raw category codes remain available in the frame for auditing.
+    # Retain raw category codes alongside the group labels.
     for variable, label in [
         ("gender", "gender"),
         ("age", "age"),
@@ -386,9 +369,8 @@ def analyze_group(
 
     x_vars = list(CORE_VARS if x_vars is None else x_vars)
     if control_vars is None:
-        # New schema frames contain all six fixed controls.  The fallback keeps
-        # the old notebook usable when it passes a small hand-built frame with
-        # only the three controls used by the former implementation.
+        # Use all six controls when present; otherwise use the available
+        # controls from the three-variable fallback set.
         control_vars = (
             list(CONTROL_VARS)
             if all(variable in df.columns for variable in CONTROL_VARS)

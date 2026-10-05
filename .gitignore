@@ -94,3 +94,13 @@ model_save/
 # Reproducible run outputs and local working files
 figures/runs/
 .work/
+
+# Local working notes
+/IMPLEMENTATION_PLAN.md
+/HANDOFF*.md
+/docs/internal/
+/docs/working-notes/
+/docs/REVIEW.md
+/docs/HANDOFF*.md
+/docs/WORK_LOG*.md
+/docs/PUSH_LOG*.md

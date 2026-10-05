@@ -1,9 +1,8 @@
 """Primary ordered-logit associations for the EV purchase-intention project.
 
-The outcome is the five-level willingness-to-pay item (Q21). The model is fit
-with and without the fixed background controls. Results are conditional
-associations; this module does not turn an observational coefficient into a
-causal claim.
+The outcome is the five-level willingness-to-pay item (Q21). Models are fitted
+with and without background controls. Coefficients and odds ratios describe
+associations in the cross-sectional survey.
 """
 
 from __future__ import annotations

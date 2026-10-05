@@ -1,15 +1,8 @@
 """Questionnaire mapping and feature construction for the EV survey.
 
-The CSV in ``data/raw`` contains both the original questionnaire columns and
-historical dummy/exception-handling columns.  Analysis modules should call this
-module instead of selecting columns by position or by a partial string match.
-All mappings are fixed in :mod:`src.config`; this module only applies those
-definitions and records what happened to the data.
-
-The public functions intentionally do not inspect p-values or model scores.  A
-specification is selected explicitly (``legacy``, ``primary`` or
-``sensitivity``), and missing observations are left as missing until an
-analysis module applies its declared complete-case rule.
+Reads raw questionnaire columns using the mappings in :mod:`src.config`,
+constructs item composites and category indicators, and summarizes data quality.
+Missing responses are retained until each analysis selects complete records.
 """
 
 from __future__ import annotations
@@ -128,8 +121,7 @@ def load_raw_data(data_path: str | Path) -> pd.DataFrame:
     path = Path(data_path)
     if not path.exists():
         raise FileNotFoundError(f"Survey data not found: {path}")
-    # utf-8-sig accepts both ordinary UTF-8 and the BOM present in some Excel
-    # exports.  Do not drop or rename any source columns here.
+    # utf-8-sig accepts ordinary UTF-8 and Excel exports with a BOM.
     return pd.read_csv(path, encoding="utf-8-sig")
 
 
@@ -254,16 +246,14 @@ def add_derived_variables(
 ) -> pd.DataFrame:
     """Add Q columns and all fixed derived variables to a copy of ``frame``.
 
-    ``specification`` determines which T/V aliases are exposed as ``T`` and
-    ``V``.  Named legacy, primary and sensitivity composites are retained in
-    every output by default so that sensitivity comparisons use the same raw
-    rows and cannot silently change the item mapping.
+    ``specification`` determines the composites exposed as ``T`` and ``V``.
+    By default, the output also contains named legacy, primary and sensitivity
+    composites calculated from the same raw records.
     """
 
     required_set = set(_required_questions_for_spec(specification))
     if include_all_specifications:
-        # The audit-friendly output keeps every named legacy/primary/sensitivity
-        # composite, so resolve all of their source items before constructing it.
+        # Resolve source items for every requested composite.
         for composite in COMPOSITES.values():
             required_set.update(composite.questions)
     required = tuple(sorted(required_set))
@@ -290,8 +280,7 @@ def add_derived_variables(
     model = MODEL_SPECS[specification]
     out["T"] = out[technology_name]
     out["V"] = out[value_name]
-    # Compatibility aliases make the shared schema usable by the existing
-    # modules while the descriptive T/V names remain the canonical columns.
+    # Aliases used by the group-comparison module.
     out["tech_trust"] = out["T"]
     out["perceived_value"] = out["V"]
 
@@ -312,12 +301,10 @@ def build_analysis_frame(
 ) -> pd.DataFrame:
     """Return the compact feature frame used by an analysis module.
 
-    The primary and sensitivity specifications encode controls categorically by
-    default.  The legacy specification preserves ordinal control codes by
-    default so its output remains traceable to the original project.  Pass
-    ``encode_categories`` explicitly to override this behavior.  Rows with
-    missing values are retained; each model decides whether its declared
-    complete-case sample is appropriate.
+    Primary and sensitivity specifications use category indicators for controls;
+    legacy uses ordinal control codes. ``encode_categories`` overrides the
+    default. Rows with missing values are retained for each model to select its
+    complete-case sample.
     """
 
     derived = add_derived_variables(
@@ -327,9 +314,8 @@ def build_analysis_frame(
     )
     if encode_categories is None:
         encode_categories = MODEL_SPECS[specification]["controls_encoding"] == "categorical"
-    # Select only schema-derived features and fixed controls.  In particular,
-    # historical one-hot and exception-handling columns from the source CSV are
-    # never passed through to an analysis model.
+    # Select derived features and controls, excluding existing processed CSV
+    # columns from model inputs.
     canonical = [
         "Y",
         "T",

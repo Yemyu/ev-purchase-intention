@@ -179,13 +179,8 @@ def build(run_dir: Path) -> dict:
     extended_rf = next(x for x in ml_rows if x["feature_set"] == "extended" and x["model"] == "random_forest")
     return json_safe({
         "meta": {
-            "run_id": run_dir.name,
-            "created_at_utc": metadata.get("created_at_utc"),
-            "data_sha256": metadata.get("data_sha256"),
             "random_seed": metadata.get("random_seed"),
             "bootstrap_iterations": metadata.get("bootstrap_iterations"),
-            "git_commit": metadata.get("git", {}).get("commit"),
-            "git_dirty": metadata.get("git", {}).get("dirty"),
         },
         "hero": {
             "n": audit.get("n_rows"),
@@ -201,8 +196,6 @@ def build(run_dir: Path) -> dict:
             "historical_processing_columns": audit.get("historical_processing_columns"),
             "main_missing": main_missing,
             "main_out_of_range": main_out_of_range,
-            "q3_missing": audit.get("missing_by_question", {}).get("3", 0),
-            "q3_out_of_range": audit.get("out_of_range_by_question", {}).get("3", 0),
             "composites": composites,
         },
         "direct": direct,
@@ -225,7 +218,6 @@ def build(run_dir: Path) -> dict:
             "mediation": "Bootstrap 路径是探索性间接关联，不能解释为因果中介。",
             "heterogeneity": "五组比较经过 Holm 校正后，没有形成稳定的显著异质性证据。",
             "ml": "机器学习用于折外预测和特征归因；SHAP 不是因果重要性。",
-            "q3": "Q3 区域题是 8 类分类变量，通用 1–5 审计会标记 6–8；Q3 不进入当前主模型。",
         },
     })
 

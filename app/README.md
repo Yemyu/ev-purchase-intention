@@ -24,7 +24,7 @@ python app/build_report_data.py --run-dir figures/runs/run-YYYYMMDD-HHMMSS
 
 构建脚本更新网页汇总 JSON。页面只加载汇总结果；原始回答、逐行预测和逐行 SHAP 不作为网页资源。
 
-发布前核对表格、图表和中英文说明中的数值。运行来源信息保存在 JSON 元数据中。
+发布前核对表格、图表和中英文说明中的数值。完整运行记录保存在本地结果目录。
 
 ## 发布
 
