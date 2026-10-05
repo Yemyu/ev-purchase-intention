@@ -5,7 +5,9 @@
 | Directory | Content |
 |---|---|
 | `figures/` | Figures and workbooks from earlier analyses |
-| `report-v1/` | Earlier report layout, scripts and aggregate data |
+| `report-v1/` | Classic report layout, scripts and original aggregate data |
+
+The classic layout is retained, with wording aligned to the current project documentation and aggregate data unchanged.
 
 Current results are available in the [research report](https://yemyu.github.io/ev-purchase-intention/en.html) and bilingual notebooks. GitHub Pages does not publish this directory.
 

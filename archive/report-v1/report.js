@@ -5,24 +5,28 @@
   var T = window.EV_REPORT_THEME;
   var charts = [];
   var EN = {
-    '技术认知 T': 'Technology recognition T', '功能价值 V': 'Function value V',
-    '技术认知': 'Technology recognition', '功能价值': 'Function value',
+    '技术认知 T': 'Technology perceptions T', '功能价值 V': 'Perceived feature value V',
+    '技术认知': 'Technology perceptions', '功能价值': 'Perceived feature value',
     '驾驶乐趣 M1': 'Driving pleasure M1', '出行效率 M2': 'Travel efficiency M2', '控制变量': 'Controls',
     '驾驶乐趣': 'Driving pleasure', '出行效率': 'Travel efficiency',
     '间接关联': 'Indirect association',
     '性别': 'Gender', '年龄': 'Age', '月收入': 'Monthly income', '驾龄': 'Driving experience', '驾驶频率': 'Driving frequency',
-    '控制变量 + T/V': 'Controls + T/V', '扩展变量 + M1/M2': 'Extended + M1/M2',
+    '控制变量 + T/V': 'Controls + T/V', '扩展变量 + M1/M2': 'Controls + T/V/M1/M2',
     '多数类基线': 'Majority baseline', '有序 Logit': 'Ordered logit', '随机森林': 'Random forest',
     '是': 'Yes', '否': 'No'
   };
+  var ZH = { '扩展变量 + M1/M2': '控制变量 + T/V/M1/M2' };
   function qs(sel) { return document.querySelector(sel); }
-  function tr(value) { return state.lang === 'en' ? (EN[value] || value) : value; }
+  function tr(value) { return state.lang === 'en' ? (EN[value] || value) : (ZH[value] || value); }
   function fmt(value, digits) { return Number(value).toFixed(digits == null ? 2 : digits); }
   function pct(value, digits) { return (Number(value) * 100).toFixed(digits == null ? 1 : digits) + '%'; }
   function pval(value) { return Number(value) < .001 ? '<0.001' : Number(value).toFixed(3); }
   function setLang(lang) {
     state.lang = lang; localStorage.setItem('ev-report-lang', lang);
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.title = lang === 'zh' ? '智能驾驶支付溢价意愿 · 研究报告' : 'Willingness to pay an EV premium · Research report';
+    var description = qs('meta[name="description"]');
+    if (description) description.content = lang === 'zh' ? '智能驾驶功能与新能源汽车支付溢价意愿研究：有序 Logit、间接路径、人群差异与机器学习预测。' : 'Driver-assistance features and willingness to pay an EV premium: ordered logit, indirect paths, group comparisons and machine-learning predictions.';
     document.body.classList.remove('lang-zh', 'lang-en'); document.body.classList.add('lang-' + lang);
     var button = qs('#langSwitch'); if (button) button.textContent = lang === 'zh' ? 'English' : '中文';
     charts.forEach(function (chart) { if (chart && chart.resize) chart.resize(); });
@@ -47,21 +51,14 @@
   function renderDirect(d) {
     var rows = d.direct.filter(function (x) { return x.specification === 'primary'; });
     qs('#directTable').innerHTML = rows.map(function (row) {
-      return '<tr class="primary"><td><strong>' + tr(row.label) + '</strong><br><span class="badge">primary / controlled</span></td>' +
+      return '<tr class="primary"><td><strong>' + tr(row.label) + '</strong></td>' +
         '<td>' + fmt(row.odds_ratio) + '</td><td>[' + fmt(row.ci_low) + ', ' + fmt(row.ci_high) + ']</td><td>' + pval(row.p_value) + '</td><td>' + row.n_obs + '</td></tr>';
     }).join('');
-    var all = d.direct.filter(function (x) { return x.term === 'T' || x.term === 'V'; });
     makeChart('directChart', Object.assign(baseOption(), {
-      yAxis: { type: 'category', data: ['primary / V', 'primary / T'], axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted } },
+      yAxis: { type: 'category', data: [tr('功能价值 V'), tr('技术认知 T')], axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted } },
       xAxis: { type: 'value', min: 0, max: 5, name: 'OR', nameTextStyle: { color: T.muted }, splitLine: { lineStyle: { color: T.grid } }, axisLabel: { color: T.muted } },
       series: [{ type: 'bar', data: [rows[1].odds_ratio, rows[0].odds_ratio], barWidth: 24, itemStyle: { color: T.primary, borderRadius: [0, 4, 4, 0] }, label: { show: true, position: 'right', color: T.ink, formatter: function (p) { return fmt(p.value); } }, markLine: { symbol: 'none', lineStyle: { color: T.earth, type: 'dashed' }, data: [{ xAxis: 1 }] } }]
     }));
-    var specRows = ['primary', 'sensitivity', 'legacy'];
-    qs('#specTable').innerHTML = specRows.map(function (spec) {
-      var t = all.find(function (x) { return x.specification === spec && x.term === 'T'; });
-      var v = all.find(function (x) { return x.specification === spec && x.term === 'V'; });
-      return '<tr><td><span class="badge">' + spec + '</span></td><td>' + fmt(t.odds_ratio) + '</td><td>' + fmt(v.odds_ratio) + '</td><td>' + tr(t.converged && v.converged ? '是' : '否') + '</td></tr>';
-    }).join('');
   }
   function intervalSeries(rows) {
     return {
@@ -123,7 +120,6 @@
     qs('#auditAlphaV').textContent = v.cronbach_alpha == null ? '—' : fmt(v.cronbach_alpha, 3);
   }
   function render(d) {
-    qs('#provenance').textContent = d.meta.run_id + ' · ' + d.meta.created_at_utc + '\nGit: ' + d.meta.git_commit + '\nSHA256: ' + d.meta.data_sha256;
     renderMetricCards(d); renderAudit(d); renderDirect(d); renderMediation(d); renderHeterogeneity(d); renderMl(d); }
   function init() {
     qs('#langSwitch').addEventListener('click', function () { setLang(state.lang === 'zh' ? 'en' : 'zh'); });
