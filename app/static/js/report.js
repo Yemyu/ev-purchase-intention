@@ -5,8 +5,8 @@
   var T = window.EV_REPORT_THEME;
   var charts = [];
   var EN = {
-    '技术认知 T': 'Technology recognition T', '功能价值 V': 'Function value V',
-    '技术认知': 'Technology recognition', '功能价值': 'Function value',
+    '技术认知 T': 'Technology perceptions T', '功能价值 V': 'Perceived feature value V',
+    '技术认知': 'Technology perceptions', '功能价值': 'Perceived feature value',
     '驾驶乐趣 M1': 'Driving pleasure M1', '出行效率 M2': 'Travel efficiency M2', '控制变量': 'Controls',
     '驾驶乐趣': 'Driving pleasure', '出行效率': 'Travel efficiency',
     '性别：类别 2': 'Gender: category 2', '驾驶频率：类别 2': 'Driving frequency: category 2',
@@ -21,12 +21,13 @@
     '收入：类别 4': 'Income: category 4',
     '间接关联': 'Indirect association',
     '性别': 'Gender', '年龄': 'Age', '月收入': 'Monthly income', '驾龄': 'Driving experience', '驾驶频率': 'Driving frequency',
-    '控制变量 + T/V': 'Controls + T/V', '扩展变量 + M1/M2': 'Extended + M1/M2',
+    '控制变量 + T/V': 'Controls + T/V', '扩展变量 + M1/M2': 'Controls + T/V/M1/M2',
     '多数类基线': 'Majority baseline', '有序 Logit': 'Ordered logit', '随机森林': 'Random forest',
     '是': 'Yes', '否': 'No'
   };
+  var ZH = { '扩展变量 + M1/M2': '控制变量 + T/V/M1/M2' };
   function qs(sel) { return document.querySelector(sel); }
-  function tr(value) { return state.lang === 'en' ? (EN[value] || value) : value; }
+  function tr(value) { return state.lang === 'en' ? (EN[value] || value) : (ZH[value] || value); }
   function fmt(value, digits) { return Number(value).toFixed(digits == null ? 2 : digits); }
   function pct(value, digits) { return (Number(value) * 100).toFixed(digits == null ? 1 : digits) + '%'; }
   function pval(value) { return Number(value) < .001 ? '<0.001' : Number(value).toFixed(3); }
@@ -40,7 +41,19 @@
     state.lang = lang; localStorage.setItem('ev-report-lang', lang);
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.body.classList.remove('lang-zh', 'lang-en'); document.body.classList.add('lang-' + lang);
-    var button = qs('#langSwitch'); if (button) button.textContent = lang === 'zh' ? 'English' : '中文';
+    document.title = lang === 'zh' ? 'EV Purchase Intention · 研究报告' : 'EV Purchase Intention · Research report';
+    var description = qs('meta[name="description"]');
+    if (description) description.content = lang === 'zh'
+      ? '基于 622 份消费者问卷，分析智能驾驶技术认知、功能价值与新能源汽车支付溢价意愿的关系。'
+      : 'A study of 622 survey responses examining technology perceptions, perceived feature value and willingness to pay a premium for an EV.';
+    document.querySelectorAll('[data-aria-zh]').forEach(function (node) {
+      node.setAttribute('aria-label', node.getAttribute('data-aria-' + lang));
+    });
+    var button = qs('#langSwitch');
+    if (button) {
+      button.textContent = lang === 'zh' ? 'English' : '中文';
+      button.setAttribute('aria-label', lang === 'zh' ? '切换到英文' : 'Switch to Chinese');
+    }
     charts.forEach(function (chart) { if (chart && chart.resize) chart.resize(); });
     if (state.data) {
       charts.forEach(function (chart) { if (chart && chart.dispose) chart.dispose(); });
@@ -63,11 +76,11 @@
   function renderDirect(d) {
     var rows = d.direct.filter(function (x) { return x.specification === 'primary'; });
     qs('#directTable').innerHTML = rows.map(function (row) {
-      return '<tr class="primary"><td><strong>' + tr(row.label) + '</strong><br><span class="badge">primary / controlled</span></td>' +
+      return '<tr class="primary"><td><strong>' + tr(row.label) + '</strong></td>' +
         '<td>' + fmt(row.odds_ratio) + '</td><td>[' + fmt(row.ci_low) + ', ' + fmt(row.ci_high) + ']</td><td>' + pval(row.p_value) + '</td><td>' + row.n_obs + '</td></tr>';
     }).join('');
     makeChart('directChart', Object.assign(baseOption(), {
-      yAxis: { type: 'category', data: ['primary / V', 'primary / T'], axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted } },
+      yAxis: { type: 'category', data: [tr('功能价值 V'), tr('技术认知 T')], axisLine: { lineStyle: { color: T.line } }, axisLabel: { color: T.muted } },
       xAxis: { type: 'value', min: 0, max: 5, name: 'OR', nameTextStyle: { color: T.muted }, splitLine: { lineStyle: { color: T.grid } }, axisLabel: { color: T.muted } },
       series: [{ type: 'bar', data: [rows[1].odds_ratio, rows[0].odds_ratio], barWidth: 24, itemStyle: { color: T.primary, borderRadius: [0, 4, 4, 0] }, label: { show: true, position: 'right', color: T.ink, formatter: function (p) { return fmt(p.value); } }, markLine: { symbol: 'none', lineStyle: { color: T.earth, type: 'dashed' }, data: [{ xAxis: 1 }] } }]
     }));
@@ -193,6 +206,7 @@
       updateBook();
     }
     qs('#langSwitch').addEventListener('click', function () { setLang(state.lang === 'zh' ? 'en' : 'zh'); });
+    setLang(state.lang);
     fetch('static/data/report.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (d) { state.data = d; setLang(state.lang); }).catch(function (error) { qs('#loadStatus').hidden = false; console.error(error); });
     window.addEventListener('resize', function () { charts.forEach(function (chart) { chart.resize(); }); });
   }

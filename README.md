@@ -2,9 +2,9 @@
   <a href="README.md">中文</a> · <a href="README.en.md">English</a>
 </p>
 
-<h1 align="center">智能驾驶功能与新能源汽车购买溢价意愿</h1>
+<h1 align="center">智能驾驶功能与新能源汽车支付溢价意愿</h1>
 
-<p align="center">基于 622 份消费者问卷的经济分析与机器学习研究</p>
+<p align="center">基于 622 份消费者问卷的计量分析与机器学习研究</p>
 
 <p align="center">
   <a href="notebooks/01_ev_purchase_intention_zh.ipynb">分析 Notebook</a> ·
@@ -13,92 +13,59 @@
 
 ---
 
-本项目分析消费者对智能驾驶安全性、功能价值的评价与支付溢价意愿的关系，并比较有序 Logit 和随机森林的预测表现。
+本项目研究消费者对智能驾驶技术和具体辅助驾驶功能的评价，与支付溢价意愿之间的关系。分析包括有序 Logit、探索性间接路径、人群差异检验，以及有序 Logit 与随机森林的预测比较。
 
-## 项目在回答什么问题
+## 主要结果
 
-本项目使用 622 份问卷，研究受访者对智能驾驶功能的认知是否与新能源汽车购买溢价意愿相关，并进一步检查：
+| 分析 | 结果 |
+|---|---|
+| 有序 Logit | 加入六项背景控制变量后，技术认知 T 的 OR 为 **2.08**（95% CI：1.62–2.68），功能价值 V 的 OR 为 **3.83**（2.84–5.16）；两项 p < 0.001 |
+| 间接路径 | 五条路径的 Bootstrap 95% 区间均高于 0，间接关联估计为 0.163–0.351 |
+| 人群差异 | 性别、年龄、收入、驾龄和驾驶频率的五项交互检验，经 Holm 校正后均未达到 0.05 显著性水平 |
+| 预测比较 | 加入 T、V、驾驶乐趣和出行效率后，有序 Logit 的五折平均 QWK 为 **0.685**、准确率为 **54.5%**；随机森林分别为 **0.619**、**53.5%** |
+| SHAP | 扩展随机森林预测高溢价意愿的概率时，功能价值、技术认知、驾驶乐趣和出行效率的平均绝对 SHAP 值排在前四 |
 
-1. 技术重要性与安全性认知（T）是否与购买溢价意愿（Y）正相关；
-2. 对具体辅助驾驶功能的功能价值认知（V）是否与 Y 正相关；
-3. 驾驶乐趣（M1）和出行效率（M2）是否提供探索性的间接路径；
-4. 这些关联是否随人口统计分组而变化；
-5. 机器学习能否在折外样本中复现购买意愿的排序信息，以及哪些变量对预测最有贡献。
-
-研究结论的适用范围是**横截面问卷中的条件关联和预测表现**。项目不声称识别因果效应，也不把 SHAP 重要性当作因果贡献。
-
-## 研究设计一览
-
-```text
-原始问卷 CSV
-    │
-    ├─ 显式题号映射、缺失/范围/重复审计
-    │
-    ├─ 有序 Logit：Y ~ T + V + 固定控制变量       ← 主结果
-    │
-    ├─ Bootstrap 间接路径：T/V → M1/M2 → Y       ← 探索性
-    │
-    ├─ 嵌套模型 LR + Holm 校正                   ← 异质性
-    │
-    └─ 5 折折外预测 + SHAP                       ← 计算补充
-```
-
-题号、变量定义、控制变量和缺失规则见 [`src/config.py`](src/config.py) 与 [`src/data_schema.py`](src/data_schema.py)。
+完整表格、图和分析说明见报告页与已执行的 Notebook。
 
 ## 数据与变量
 
-仓库当前为公开仓库，原始 CSV 仍随项目版本保存，用于复现 622 行、67 列的分析。网页只加载聚合后的报告 JSON；分析流程只读取明确的原始题号列，不会把历史哑变量或异常处理列误传入模型。
+数据为 622 份在线问卷，CSV 共 67 列，其中 29 列为原始题项。分析按题号和原始列名读取所需回答。
 
-| 符号 | 含义 | 当前主规格 |
+| 符号 | 含义 | 构造 |
 |---|---|---|
-| `Y` | 愿意为智能驾驶功能支付溢价 | Q21，1–5 有序变量 |
-| `T` | 技术重要性与安全性认知代理变量 | `mean(Q15, Q16)` |
-| `V` | 具体辅助驾驶功能的功能价值代理变量 | `mean(Q22, Q23, Q24, Q25)` |
-| `M1` | 驾驶乐趣认知 | Q18 |
-| `M2` | 出行效率认知 | Q19 |
+| Y | 为智能驾驶功能支付溢价的意愿 | Q21，1–5 有序等级 |
+| T | 技术认知：重要性与安全性评价 | Q15、Q16 的均值 |
+| V | 功能价值：四项辅助驾驶功能的评价 | Q22–Q25 的均值 |
+| M1 | 驾驶乐趣评价 | Q18，单题 |
+| M2 | 出行效率评价 | Q19，单题 |
 
-T 和 V 是项目内定义的**代理变量**，不是经过外部量表验证的完整心理构念。审计会记录题项缺失、取值范围、题项相关和 Cronbach's alpha，但不会因为 alpha 或显著性而事后删题。
+控制变量为性别、年龄、学历、收入、驾龄和驾驶频率，按问卷类别编码。组合指标要求所用题项回答完整，各模型使用其所需变量的完整记录。
 
-完整变量说明、原始题目和隐私处理见 [`data/README.md`](data/README.md)。
+原始题目、类别代码和缺失值规则见[数据说明](data/README.md)。
 
-## 分析模块与结果解释
+## 四个分析模块
 
-### 1. 数据审计
+### 有序 Logit
 
-`main.py --analysis audit` 会记录样本量、重复行、题号解析、1–5 范围检查、每题缺失、控制变量类别、历史处理列数量和组合题项诊断。审计是数据质量记录，不会静默修正原始 CSV。
+以 Y 的五个有序等级为结果，同时纳入 T、V 和六项控制变量。报告系数、优势比、95% 置信区间及 p 值。优势比对应 T 或 V 增加 1 分后的调整关联；主模型样本为 622 人。
 
-### 2. 有序 Logit 直接关联
+### 探索性间接路径
 
-主模型把 Q21 作为有序结果，加入 T、V 和六项固定背景控制变量。输出包括系数、优势比（OR）、置信区间、p 值、样本量、收敛状态和辅助 VIF。结果应写成“在控制其他变量后，较高的 T/V 与较高的 Y 发生概率相关”，不能写成“提高了购买意愿”或“产生了因果影响”。
+分别估计 T→M1→Y、T→M2→Y、V→M1→Y、V→M2→Y 和 T→V→Y。每条路径使用含控制变量的 OLS 方程，并按受访者有放回抽样 5,000 次，计算系数乘积的百分位区间。
 
-### 3. Bootstrap 间接路径
+### 人群差异
 
-固定五条路径：
+对五个人口特征与驾驶经历分组，比较加入 T、V 交互项前后的嵌套有序 Logit 模型。采用似然比检验，并用 Holm 方法校正五项比较。
 
-- `T → M1 → Y`
-- `T → M2 → Y`
-- `V → M1 → Y`
-- `V → M2 → Y`
-- `T → V → Y`
+### 预测比较与 SHAP
 
-每条路径使用 5,000 次 bootstrap，并记录有效次数、失败次数和区间。由于中间方程采用探索性的 respondent-level OLS 近似，这部分只作为间接关联证据，不标注因果中介、完全/部分中介或因果效应占比。
+多数类基线、有序 Logit 和随机森林使用同一组五折分层交叉验证，随机种子为 42。比较仅背景变量、加入 T/V、再加入 M1/M2 三组输入，报告准确率、宏平均 F1、二次加权 Kappa（QWK）和等级 MAE。随机森林使用 200 棵树、最大深度 6。SHAP 在各折测试样本上解释扩展随机森林的 P(Y≥4)，汇总全部 23 个输入特征。
 
-### 4. 异质性
-
-对性别、年龄、收入、驾龄和驾驶频率分别比较受限模型与加入 `T/V × 分组` 交互项的嵌套有序 Logit。自由度按实际设计矩阵秩差计算，同时报告原始 p 值和 Holm 校正后的 p 值。多重比较校正后未形成稳定的 0.05 水平群体差异，因此该模块应写成探索性结果。
-
-### 5. 机器学习与 SHAP
-
-使用相同的 5 个分层折比较：
-
-- 多数类基线；
-- 有序 Logit；
-- 随机森林；
-- `controls`、`core`（控制变量 + T/V）和 `extended`（再加入 M1/M2）三组特征。
-
-报告准确率、macro-F1、二次加权 Kappa（QWK）、有序 MAE、每折结果、折外预测和混淆矩阵。SHAP 在折外随机森林上计算；若当前 SHAP 版本不支持高购买意愿概率输出，会在 `ml_run_metadata.json` 中记录 raw-output fallback。SHAP 仅说明预测模型的特征归因，不是独立的因果验证。
+模型方程、指标定义及研究局限见[分析方法](docs/METHODS.md)。
 
 ## 快速开始
+
+已保存的 Notebook 输出和报告页可直接阅读。重新计算使用 Python 3.12。
 
 ### 1. 克隆项目
 
@@ -112,18 +79,18 @@ cd ev-purchase-intention
 macOS / Linux：
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 ```
 
 Windows（PowerShell）：
 
 ```powershell
-py -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-激活环境后安装依赖：
+激活环境后：
 
 ```bash
 python -m pip install -r requirements.txt
@@ -131,19 +98,14 @@ python -m pip install -r requirements.txt
 
 ### 3. 运行分析
 
-检查数据：
-
 ```bash
 python main.py --analysis audit
-```
-
-运行全部分析：
-
-```bash
 python main.py --analysis all
 ```
 
-也可以单独运行各模块：
+`audit` 生成数据质量记录；`all` 生成完整分析结果，包括 5,000 次 Bootstrap。结果保存在 `figures/runs/run-YYYYMMDD-HHMMSS/`。
+
+各模块也可以分别运行：
 
 ```bash
 python main.py --analysis econometrics
@@ -152,43 +114,39 @@ python main.py --analysis heterogeneity
 python main.py --analysis ml
 ```
 
-结果保存在 `figures/runs/run-YYYYMMDD-HHMMSS/`。中介分析默认使用 5,000 次 Bootstrap，可通过 `--bootstrap-iterations` 指定次数。
+### 4. 查看 Notebook
 
-## Notebook
+```bash
+jupyter lab
+```
 
-Notebook 现在按语言和分析职责分开：
-
-- [`01_ev_purchase_intention_zh.ipynb`](notebooks/01_ev_purchase_intention_zh.ipynb)：中文研究说明与结果解读；
-- [`01_ev_purchase_intention_en.ipynb`](notebooks/01_ev_purchase_intention_en.ipynb)：英文研究说明与结果解读；
-- [`notebooks/README.md`](notebooks/README.md)：运行顺序、结果目录选择和常见问题。
-
-两个 Notebook 使用统一的题号映射，读取已保存的分析结果。需要重新计算时，先运行命令行入口。
+打开中文或英文 Notebook。重新执行时，Notebook 读取最近一个完整运行目录；指定目录的方法见 [Notebook 说明](notebooks/README.md)。
 
 ## 项目结构
 
 ```text
-src/config.py             固定题号、变量规格、控制变量和运行参数
-src/data_schema.py        原始数据读取、审计、组合变量和控制变量编码
-src/ordered_logit.py      有序 Logit 直接关联与 VIF
-src/mediation.py          五条探索性 Bootstrap 间接路径
-src/heterogeneity.py      嵌套交互模型与 LR/Holm 检验
-src/ml_shap.py            折外预测、指标和 SHAP
-main.py                   命令行入口与运行元数据
-notebooks/                中英文 Notebook 与导航
-data/README.md            中英文数据字典和隐私说明
-figures/                  历史图表及本地运行结果
-IMPLEMENTATION_PLAN.md    已锁定的设计、边界与验收规则
+main.py              命令行分析入口
+src/                 数据处理、计量模型、间接路径、分组检验与预测
+notebooks/           中英文分析 Notebook
+app/                 报告页与汇总数据
+data/raw/data.csv    问卷数据
+data/README.md       数据字典
+docs/METHODS.md      分析方法与研究局限
+figures/runs/        本地生成的分析结果
+archive/             历史图表与报告布局
+requirements.txt     Python 依赖
 ```
 
-## 研究边界与数据隐私
+报告页的本地预览和结果更新见 [app/README.md](app/README.md)。
 
-- 数据来自一次性在线问卷，存在横截面、便利样本、自报和共同方法偏差。
-- T/V 是代理变量，不能替代经过验证的成熟量表。
-- 结果适合项目展示和方法演示，不应被表述为普遍人口的因果估计。
-- 当前仓库为公开仓库，原始问卷 CSV 按项目所有者的发布决定保留，用于本项目复现；网页不加载逐行数据。未经项目所有者授权，不应将问卷原始回答用于其他用途或再次分发。
+## 研究局限
 
-## 许可证
+问卷为横截面便利样本，结论描述样本中的关联和预测表现。Y 测量支付溢价意愿，不能代替实际购买行为。T、V 为题项组合指标，未经外部量表验证；V 题目本身涉及购买意愿，与 Y 存在概念接近性。
+
+题项曾在同一数据上进行探索，当前交叉验证未覆盖此前的选题过程。有序 Logit 的比例优势假设尚未专项检验。间接路径采用评分连续化的 OLS 近似，SHAP 描述预测模型的特征归因。
+
+## 数据使用与许可证
+
+仓库包含原始问卷回答，报告页使用汇总数据。问卷数据的复用和再分发需取得相应授权。
 
 代码采用 [MIT License](LICENSE)。
-
-GitHub 仓库：<https://github.com/Yemyu/ev-purchase-intention>

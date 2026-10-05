@@ -1,61 +1,39 @@
-# Notebook 导航 / Notebook guide
+# Notebook
 
-[中文](README.md) · [English](README.en.md) · [项目中文 README](../README.md) · [Project English README](../README.en.md)
+[中文](README.md) · [English](README.en.md) · [项目说明](../README.md) · [报告页](https://yemyu.github.io/ev-purchase-intention/)
 
-## 选择哪个 Notebook
+## 查看结果
 
-| 文件 | 用途 |
+| 文件 | 内容 |
 |---|---|
-| [`01_ev_purchase_intention_zh.ipynb`](01_ev_purchase_intention_zh.ipynb) | 中文研究说明、表格和解释边界 |
-| [`01_ev_purchase_intention_en.ipynb`](01_ev_purchase_intention_en.ipynb) | English research notes, tables, and interpretation limits |
+| [中文 Notebook](01_ev_purchase_intention_zh.ipynb) | 中文说明、结果表和图表 |
+| [English Notebook](01_ev_purchase_intention_en.ipynb) | 英文说明、结果表和图表 |
 
-两个版本的代码逻辑相同，只翻译说明、标题和解释文字。它们都使用 `src.data_schema` 的统一题号映射，并从同一个 `figures/runs/run-*/` 目录读取已经完成的结果。
+两份 Notebook 均已执行并保存输出，可直接在 GitHub 查看，无需安装依赖。它们展示同一次分析，数值一致；说明、表头、图例和图中标签分别使用中文与英文。
 
-## 推荐运行顺序
+内容包括数据与变量、有序 Logit、五条探索性间接路径、人群差异检验、五折预测比较与 SHAP，以及研究局限。
 
-1. 在项目根目录的 `.venv` 中安装 `requirements.txt`。
-2. 先执行一次低成本审计：
+## 在本地重新执行
 
-   ```bash
-   .venv/bin/python main.py --analysis audit
-   ```
+从项目根目录操作。环境安装和激活方法见 [快速开始](../README.md#快速开始)。激活环境后，运行：
 
-3. 需要更新完整结果时再执行：
+```bash
+python main.py --analysis all
+jupyter notebook notebooks/01_ev_purchase_intention_zh.ipynb
+```
 
-   ```bash
-   .venv/bin/python main.py --analysis all
-   ```
+英文版的启动命令：
 
-4. 在 Jupyter 中打开对应语言的 Notebook。
-5. 第一段代码会选择一个完整的本地运行目录，并打印路径、数据文件和运行 ID。发布固定报告时，可以把 `RUN_ID = None` 改成已经验收的具体目录名。
+```bash
+jupyter notebook notebooks/01_ev_purchase_intention_en.ipynb
+```
 
-Notebook 不在展示层重新运行有序 Logit、Bootstrap、异质性或随机森林。这样可以避免 Notebook 与命令行入口分别产生两套题号映射和两套结果。
+`main.py --analysis all` 生成完整分析结果，包括 5,000 次 Bootstrap 和五折预测。Notebook 读取这些结果、生成展示，不重新估计模型。单独运行 `--analysis audit` 只生成样本检查，不能提供 Notebook 所需的全部模型结果。
 
-## 输出内容
+## 结果目录
 
-Notebook 依次展示：
+Notebook 默认使用 `RUN_ID = None`，选择 `figures/runs/` 下名称排序最新、且包含全部必需文件的 `run-*` 目录。设置具体目录名可固定读取某次分析；所有表格和图使用同一个目录。
 
-- 固定题号映射和 `primary`/`sensitivity`/`legacy` 规格；
-- 样本量、重复行、缺失、组合题项诊断、数据 SHA256 和 Git 状态；
-- 有序 Logit 的 T/V OR、置信区间、p 值和收敛状态；
-- 五条探索性 Bootstrap 间接路径及其区间；
-- 五个分组的 LR、原始 p 值和 Holm 校正 p 值；
-- 多数类、Ordered Logit、随机森林在三组特征集上的折外指标；
-- 折外 SHAP 重要性和 SHAP 运行状态；
-- 结果文件存在性、数据哈希一致性和失败折检查。
+运行目录不随 Git 提交。克隆仓库后，已保存的 Notebook 输出仍可直接阅读；重新执行代码需要先生成完整结果。Notebook 会检查结果目录、数据一致性及模型运行状态，发现不完整或不匹配的文件时停止执行。
 
-## 常见问题
-
-**没有找到 `figures/runs/run-*`。**
-
-请先从项目根目录执行 `main.py --analysis audit` 或 `main.py --analysis all`，再重新打开 Notebook。运行目录默认被 Git 忽略，不代表代码没有结果，而是为了避免把本地问卷分析产物自动提交到仓库。
-
-**为什么不在 Notebook 里直接训练模型？**
-
-模型训练统一由 `main.py` 和 `src/` 完成。Notebook 只是一个可读的结果报告，避免旧版 Notebook 重新定义 Q22、单次切分和随机森林参数。
-
-**报告页和看板有什么区别？**
-
-这是一次性问卷研究，不是持续更新的运营数据产品。仓库现在提供一个只读的 [GitHub Pages 报告页](https://yemyu.github.io/ev-purchase-intention/)，展示聚合后的审计、模型和预测指标；它不加载逐行问卷，也不需要持续刷新。运营看板仍不是当前验收条件。
-
-当前提交的中英文 Notebook 均已执行并保存表格和图片输出，固定读取 `run-20260921-190434`，可直接在 GitHub 预览。重算此运行需本地结果目录；网页汇总 JSON 已随仓库提交。
+中文图表需要支持中文的字体，如苹方、微软雅黑或 Noto Sans CJK SC。

@@ -1,130 +1,110 @@
-# Data Documentation
+# Data documentation
 
-[中文](README.md) · [English](README.en.md) · [Project README](../README.en.md)
+[中文](README.md) · [English](README.en.md) · [Project overview](../README.en.md)
 
-## 1. Dataset overview
+## Dataset
 
 | Property | Description |
 |---|---|
-| Sample size | 622 respondents |
+| Sample | 622 consumer survey responses |
 | Format | CSV exported from an online questionnaire |
-| Target population | Chinese consumers considering an EV purchase |
-| Main outcome | Q21: willingness to pay a premium for intelligent-driving functions |
-| Response scale | Mostly ordinal 1–5 responses |
-| Raw columns | 67, including questionnaire items and historical processing columns |
+| File | `data/raw/data.csv` |
+| Columns | 67: 29 original items and 38 existing processing columns |
+| Outcome | Q21: willingness to pay a premium for driver-assistance features |
 
-The public repository keeps `data/raw/data.csv` for this project's reproduction, as decided by the project owner. It contains raw survey responses; the web report reads aggregate JSON only. Do not reuse or redistribute the raw responses outside the project without the project owner's authorization.
+The research report uses aggregate JSON. Analysis reads original items from the CSV. Headers and question mappings are in [`src/config.py`](../src/config.py); processing is in [`src/data_schema.py`](../src/data_schema.py).
 
-## 2. Files and loading rules
+## Research variables
 
-| Path | Purpose |
+| Symbol | Meaning | Items | Construction and coding |
+|---|---|---|---|
+| Y | Willingness to pay a premium | Q21 | Single ordered item, 1–5 |
+| T | Technology perceptions: importance and safety | Q15, Q16 | Arithmetic mean when both items are answered |
+| V | Perceived feature value | Q22–Q25 | Arithmetic mean when all four items are answered |
+| M1 | Perceived driving pleasure | Q18 | Single item, 1–5 |
+| M2 | Perceived travel efficiency | Q19 | Single item, 1–5 |
+
+T and V are item composites. Their internal-consistency alpha values are 0.858 and 0.871. See [analysis methods](../docs/METHODS.en.md) for measurement interpretation and limitations.
+
+### Controls
+
+| Variable | Item | Configured category codes | Model encoding |
+|---|---|---|---|
+| Gender | Q1 | 1–2 | Category dummies, category 1 as reference |
+| Age | Q2 | 1–5 | As above |
+| Education | Q4 | 1–4 | As above |
+| Monthly income | Q6 | 1–5 | As above |
+| Driving experience | Q9 | 1–5 | As above |
+| Weekly driving frequency | Q12 | 1–5 | As above |
+
+Codes identify questionnaire options. Complete option labels are not available in the repository, so charts retain category codes rather than infer age bands, income amounts or years of experience. Four income categories occur in the current data.
+
+Q3 is a region category item with recorded codes 1–8 and 110 missing responses. It is not used in the reported models. Other unused items remain in the source CSV.
+
+## Original questionnaire items
+
+The original Chinese headers are preserved below. English summaries describe the topics rather than replace the source wording. A CSV header combines the question number, a period and the original text.
+
+| Item | Original Chinese wording | English topic summary |
+|---|---|---|
+| Q1 | 您的性别是? | Gender |
+| Q2 | 您的年龄是? | Age |
+| Q3 | 您所在的区域是? | Region |
+| Q4 | 您的最高学历是? | Education |
+| Q5 | 您的职业是? | Occupation |
+| Q6 | 您的月收入范围是? | Monthly income |
+| Q7 | 您的家庭常住人口数是? | Household size |
+| Q8 | 您未来购买汽车的意向是? | Future vehicle-purchase plans |
+| Q9 | 您的驾龄是? | Driving experience |
+| Q10 | 您驾驶的主要目的是? | Main driving purpose |
+| Q11 | 您每天的日常通勤距离大约是? | Daily commuting distance |
+| Q12 | 您每周驾驶的频率是? | Weekly driving frequency |
+| Q13 | 您通常的驾驶时间段是? | Usual driving time |
+| Q14 | 您通常驾驶的车辆类型是? | Usual vehicle type |
+| Q15 | 您认为智能驾驶功能对新能源汽车很重要? | Importance of driver-assistance features |
+| Q16 | 您认为智能驾驶功能可以提高驾驶安全性? | Perceived safety benefit |
+| Q17 | 您认为智能驾驶功能可以减轻驾驶疲劳? | Perceived fatigue reduction |
+| Q18 | 您认为智能驾驶功能可以提升驾驶乐趣? | Perceived driving pleasure |
+| Q19 | 您认为智能驾驶功能可以提高出行效率? | Perceived travel efficiency |
+| Q20 | 智能驾驶功能会影响您购买新能源汽车的决策? | Driver assistance and EV purchase decisions |
+| Q21 | 您愿意为智能驾驶功能支付溢价? | Willingness to pay a premium |
+| Q22 | 您愿意为智能驾驶的自适应巡航功能影响购买意愿? | Adaptive cruise control and purchase intention |
+| Q23 | 您愿意为智能驾驶的车道保持辅助功能影响购买意愿? | Lane-keeping assistance and purchase intention |
+| Q24 | 您愿意为智能驾驶的自动泊车功能影响购买意愿? | Parking assistance and purchase intention |
+| Q25 | 您愿意为智能驾驶的交通拥堵辅助功能影响购买意愿? | Traffic-jam assistance and purchase intention |
+| Q26 | 您愿意为智能驾驶未来技术更加成熟影响购买意愿? | Future technical maturity and purchase intention |
+| Q27 | 您愿意为智能驾驶未来安全性更高影响购买意愿? | Future safety and purchase intention |
+| Q28 | 您愿意为智能驾驶未来成本更低影响购买意愿? | Future cost reduction and purchase intention |
+| Q29 | 您愿意为智能驾驶未来应用场景更丰富影响购买意愿? | Future application coverage and purchase intention |
+
+## Processing
+
+- Items are resolved by original header and question number. Existing processing columns are excluded from model inputs.
+- Responses are converted to numeric; values that cannot be converted are marked missing.
+- T and V require complete item responses. A missing component produces a missing composite.
+- Q15–Q29 use ratings from 1 to 5; background items are read using their own category ranges.
+- Models use complete records for their required variables. The main items and controls have no missing responses in this dataset; the main model uses 622 records.
+- `audit.json` records duplicates, missingness, ranges and composite statistics.
+
+## Result files
+
+A full run writes to `figures/runs/run-YYYYMMDD-HHMMSS/`.
+
+| File | Content |
 |---|---|
-| `data/raw/data.csv` | Local raw survey CSV used by the current pipeline |
-| `src/config.py` | Fixed question numbers, headers, controls, and model specifications |
-| `src/data_schema.py` | Question resolution, composites, control encoding, and audit |
-| `figures/runs/<run-id>/audit.json` | Data-quality audit for one run |
-| `figures/runs/<run-id>/run_metadata.json` | Data SHA256, seed, Git state, and mapping manifest |
+| `audit.json` | Sample and item diagnostics |
+| `ordered_logit_coefficients.csv` | Coefficients, odds ratios, intervals and p-values |
+| `ordered_logit_diagnostics.json` | Fitting diagnostics |
+| `mediation_paths.csv` | Five indirect paths and bootstrap intervals |
+| `heterogeneity_results.csv` | Group LR tests and Holm adjustment |
+| `ml_summary.csv` | Five-fold mean metrics by model and input set |
+| `ml_fold_metrics.csv` | Fold metrics |
+| `ml_oof_predictions.csv` | Held-out predictions |
+| `shap_importance.csv` | Mean absolute SHAP ranking |
+| `run_metadata.json` | Data and code versions and run configuration |
 
-The CSV may contain historical dummy and exception-handling columns. The new pipeline resolves Q1–Q29 by explicit question number and unsuffixed raw headers. It does not select columns by position and does not pass historical processing columns into a model.
+Notebooks read these files to present research tables and figures. See the [notebook guide](../notebooks/README.en.md) for execution and directory selection.
 
-## 3. Variable definitions
+## Data use
 
-### 3.1 Outcome, core proxies, and exploratory mediators
-
-| Symbol | Meaning | Raw items | Construction | Role |
-|---|---|---|---|---|
-| `Y` | Willingness to pay a premium for intelligent-driving functions | Q21 | Single ordinal item, 1–5 | Outcome |
-| `T` | Technology importance and safety recognition | Q15, Q16 | Row mean when all items are present | Core predictor |
-| `V` | Value recognition for concrete assisted-driving functions | Q22–Q25 | Row mean when all items are present | Core predictor |
-| `M1` | Recognition of improved driving pleasure | Q18 | Single item, 1–5 | Exploratory mediator |
-| `M2` | Recognition of improved travel efficiency | Q19 | Single item, 1–5 | Exploratory mediator |
-
-T and V are **project-defined proxies**, not externally validated scales. `data_schema.py` reports complete rows, means, standard deviations, and Cronbach's alpha for item composites. Those diagnostics document the data and do not trigger post-hoc item selection.
-
-### 3.2 Three fixed model specifications
-
-| Specification | T | V | Control encoding | Purpose |
-|---|---|---|---|---|
-| `primary` | `mean(Q15, Q16)` | `mean(Q22, Q23, Q24, Q25)` | Categorical dummies | Current main analysis |
-| `sensitivity` | `mean(Q15, Q16, Q17)` | `mean(Q22, Q23, Q24, Q25)` | Categorical dummies | Checks inclusion of Q17 |
-| `legacy` | `mean(Q15, Q16)` | `Q22` | Original ordinal codes | Traces the earlier project |
-
-The primary specification is fixed before fitting. It is not chosen from p-values, VIF, or machine-learning scores. `legacy` is retained for traceability and is not the current recommended measurement.
-
-### 3.3 Fixed controls
-
-| Name | Question | Source codes | Main/sensitivity treatment |
-|---|---:|---|---|
-| `gender` | Q1 | 1–2 | Categorical dummies, first level reference |
-| `age` | Q2 | 1–5 | Categorical dummies, first level reference |
-| `education` | Q4 | 1–4 | Categorical dummies, first level reference |
-| `income` | Q6 | 1–5 | Categorical dummies, first level reference |
-| `driving_exp` | Q9 | 1–5 | Categorical dummies, first level reference |
-| `driving_freq` | Q12 | 1–5 | Categorical dummies, first level reference |
-
-Codes refer to questionnaire categories. The code does not infer age in years, income amounts, or driving-license years. Missing controls are not silently converted into the reference category; model modules apply their declared complete-case rule.
-
-## 4. Raw question mapping
-
-| No. | Original Chinese question |
-|---:|---|
-| Q1 | 您的性别是? |
-| Q2 | 您的年龄是? |
-| Q3 | 您所在的区域是? |
-| Q4 | 您的最高学历是? |
-| Q5 | 您的职业是? |
-| Q6 | 您的月收入范围是? |
-| Q7 | 您的家庭常住人口数是? |
-| Q8 | 您未来购买汽车的意向是? |
-| Q9 | 您的驾龄是? |
-| Q10 | 您驾驶的主要目的是? |
-| Q11 | 您每天的日常通勤距离大约是? |
-| Q12 | 您每周驾驶的频率是? |
-| Q13 | 您通常的驾驶时间段是? |
-| Q14 | 您通常驾驶的车辆类型是? |
-| Q15 | 您认为智能驾驶功能对新能源汽车很重要? |
-| Q16 | 您认为智能驾驶功能可以提高驾驶安全性? |
-| Q17 | 您认为智能驾驶功能可以减轻驾驶疲劳? |
-| Q18 | 您认为智能驾驶功能可以提升驾驶乐趣? |
-| Q19 | 您认为智能驾驶功能可以提高出行效率? |
-| Q20 | 智能驾驶功能会影响您购买新能源汽车的决策? |
-| Q21 | 您愿意为智能驾驶功能支付溢价? |
-| Q22 | 您愿意为智能驾驶的自适应巡航功能影响购买意愿? |
-| Q23 | 您愿意为智能驾驶的车道保持辅助功能影响购买意愿? |
-| Q24 | 您愿意为智能驾驶的自动泊车功能影响购买意愿? |
-| Q25 | 您愿意为智能驾驶的交通拥堵辅助功能影响购买意愿? |
-| Q26 | 您愿意为智能驾驶未来技术更加成熟影响购买意愿? |
-| Q27 | 您愿意为智能驾驶未来安全性更高影响购买意愿? |
-| Q28 | 您愿意为智能驾驶未来成本更低影响购买意愿? |
-| Q29 | 您愿意为智能驾驶未来应用场景更丰富影响购买意愿? |
-
-Q8, Q20, and Q26–Q29 are excluded from the current main feature set because they change the research question, overlap conceptually with the outcome, or describe future scenarios. They remain in the raw file and are not deleted by the audit.
-
-## 5. Quality and missing-data policy
-
-- Raw items are converted to numeric; values that cannot be converted become missing and are reported.
-- Composite means use complete item rows. If one item in a composite is missing, the composite remains missing for that respondent.
-- The default valid response range is 1–5; out-of-range values are reported, not silently clipped.
-- Each model module applies its declared complete-case rule and records `n_obs`.
-- The audit records duplicates, item missingness, out-of-range values, control categories, and historical processing columns.
-- No question is changed after inspecting p-values or model performance.
-
-## 6. Analysis artifacts
-
-A complete run creates `figures/runs/run-YYYYMMDD-HHMMSS/` with:
-
-- `audit.json`: data and variable audit;
-- `run_metadata.json`: data SHA256, seed, Python version, Git state, and mapping manifest;
-- `ordered_logit_coefficients.csv`: coefficients and odds ratios for all three specifications;
-- `mediation_paths.csv`: five exploratory paths and bootstrap intervals;
-- `heterogeneity_results.csv`: LR statistics, raw p-values, and Holm-adjusted p-values;
-- `ml_summary.csv`, `ml_oof_predictions.csv`: held-out metrics and predictions;
-- `shap_importance.csv`, `shap_importance.png`: out-of-fold forest attribution.
-
-The notebooks read saved artifacts rather than redefining questions or retuning models. Interpret results as cross-sectional conditional associations, exploratory indirect associations, and out-of-fold predictive explanations.
-
-## 7. Privacy and public release
-
-The repository is public and keeps the raw CSV for this project's reproduction, as decided by the project owner. For external review, prefer the aggregate-only `app/static/data/report.json`; any reuse, redistribution, or linkage with another dataset requires separate authorization and must follow the survey consent and institutional/platform requirements.
-
-This repository does not modify the thesis. If the thesis still uses the legacy single-item V definition, document that version boundary so readers do not treat the two sets of numbers as one specification.
+The raw CSV contains respondent answers. Reuse or redistribution requires the relevant authorization. The report page loads aggregate data only. Code is released under the [MIT License](../LICENSE).

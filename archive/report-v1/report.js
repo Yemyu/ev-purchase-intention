@@ -127,7 +127,7 @@
     renderMetricCards(d); renderAudit(d); renderDirect(d); renderMediation(d); renderHeterogeneity(d); renderMl(d); }
   function init() {
     qs('#langSwitch').addEventListener('click', function () { setLang(state.lang === 'zh' ? 'en' : 'zh'); });
-    fetch('static/data/report.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (d) { state.data = d; setLang(state.lang); }).catch(function (error) { qs('#loadStatus').hidden = false; console.error(error); });
+    fetch('report.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (d) { state.data = d; setLang(state.lang); }).catch(function (error) { qs('#loadStatus').hidden = false; console.error(error); });
     window.addEventListener('resize', function () { charts.forEach(function (chart) { chart.resize(); }); });
   }
   document.addEventListener('DOMContentLoaded', init);

@@ -2,7 +2,7 @@
   <a href="README.md">中文</a> · <a href="README.en.md">English</a>
 </p>
 
-<h1 align="center">Driver-assistance features and willingness to pay more for an EV</h1>
+<h1 align="center">Driver-assistance features and willingness to pay a premium for an EV</h1>
 
 <p align="center">Econometric analysis and machine learning using 622 consumer survey responses</p>
 
@@ -13,83 +13,59 @@
 
 ---
 
-This project examines how consumers’ ratings of driving safety and feature value relate to willingness to pay a premium, and compares predictions from ordered logit and random forest models.
+This project examines how consumers’ perceptions of driver-assistance technology and specific features relate to willingness to pay a premium. It includes ordered logit, exploratory indirect paths, group comparisons, and a prediction comparison between ordered logit and random forest.
 
-## Research question
+## Main findings
 
-Using 622 survey responses, the project studies whether recognition of intelligent-driving functions is associated with consumers' willingness to pay a premium for new-energy vehicles. It also checks:
+| Analysis | Result |
+|---|---|
+| Ordered logit | After adjustment for six background variables, the odds ratio for technology perceptions T is **2.08** (95% CI: 1.62–2.68), and for perceived feature value V it is **3.83** (2.84–5.16); both p < 0.001 |
+| Indirect paths | All five bootstrap 95% intervals are above zero; indirect estimates range from 0.163 to 0.351 |
+| Group comparisons | None of the five interaction tests for gender, age, income, driving experience and frequency meets the 0.05 threshold after Holm adjustment |
+| Prediction | With T, V, driving pleasure and travel efficiency included, ordered logit has mean five-fold QWK **0.685** and accuracy **54.5%**; random forest scores **0.619** and **53.5%**, respectively |
+| SHAP | Perceived feature value, technology perceptions, driving pleasure and travel efficiency rank first to fourth by mean absolute SHAP for the extended forest’s high-willingness probability |
 
-1. whether technology importance and safety recognition (`T`) are positively associated with willingness to pay (`Y`);
-2. whether perceived value of concrete assisted-driving functions (`V`) is positively associated with `Y`;
-3. whether driving pleasure (`M1`) and travel efficiency (`M2`) form exploratory indirect paths;
-4. whether the associations vary across demographic groups; and
-5. whether machine learning can reproduce ordinal purchase-intention information out of fold and which features contribute to predictions.
+The research report and executed notebooks include the full tables, figures and analysis notes.
 
-The estimand is a **conditional association and predictive performance in a cross-sectional survey**, not a causal effect.
+## Data and variables
 
-## Design at a glance
+The dataset contains 622 online survey responses. The CSV has 67 columns, including 29 original questionnaire items. Analysis inputs are selected by question number and original header.
 
-```text
-Raw questionnaire CSV
-    │
-    ├─ explicit question mapping, missing/range/duplicate audit
-    ├─ ordered logit: Y ~ T + V + fixed controls        ← primary result
-    ├─ bootstrap paths: T/V → M1/M2 → Y                ← exploratory
-    ├─ nested LR tests + Holm correction                ← heterogeneity
-    └─ five-fold out-of-fold prediction + SHAP          ← computational complement
-```
-
-Question numbers, variable definitions, controls, and missing-data rules are documented in [`src/config.py`](src/config.py) and [`src/data_schema.py`](src/data_schema.py).
-
-## Data and measurements
-
-The repository is currently public and keeps the 622-row, 67-column raw survey CSV for project reproduction, as authorized by the project owner. The report page loads aggregate JSON only; the analysis resolves explicit raw question headers and never passes historical dummy or exception-handling columns into a model.
-
-| Symbol | Meaning | Primary specification |
+| Symbol | Meaning | Construction |
 |---|---|---|
-| `Y` | Willingness to pay a premium for intelligent-driving functions | Q21, ordinal 1–5 |
-| `T` | Technology-importance and safety recognition proxy | `mean(Q15, Q16)` |
-| `V` | Value recognition for concrete assisted-driving functions | `mean(Q22, Q23, Q24, Q25)` |
-| `M1` | Recognition of improved driving pleasure | Q18 |
-| `M2` | Recognition of improved travel efficiency | Q19 |
+| Y | Willingness to pay a premium for driver-assistance features | Q21, ordered categories 1–5 |
+| T | Technology perceptions: importance and safety | Mean of Q15 and Q16 |
+| V | Perceived feature value: ratings of four assistance features | Mean of Q22–Q25 |
+| M1 | Perceived driving pleasure | Q18, single item |
+| M2 | Perceived travel efficiency | Q19, single item |
 
-T and V are project-defined **proxies**, not externally validated psychological scales. The audit records missingness, response ranges, item correlations, and Cronbach's alpha as descriptive diagnostics; it does not delete items after inspecting reliability or significance.
+Controls are gender, age, education, income, driving experience and driving frequency, encoded as questionnaire categories. Composites require complete item responses; each model uses complete records for its required variables.
 
-See the [bilingual data dictionary](data/README.en.md) for exact questionnaire text, coding, missing-data policy, and privacy notes.
+See the [data documentation](data/README.en.md) for questionnaire items, category codes and missing-data rules.
 
-## Analysis modules
-
-### Data audit
-
-`main.py --analysis audit` records sample size, duplicate rows, question resolution, 1–5 range checks, item missingness, control categories, historical processing columns, and composite diagnostics. The audit documents the data; it does not silently repair the source CSV.
+## Four analysis modules
 
 ### Ordered logit
 
-The primary model treats Q21 as an ordered outcome and includes T, V, and six fixed background controls. Outputs include coefficients, odds ratios, confidence intervals, p-values, sample counts, convergence status, and an auxiliary VIF calculation with an intercept. Interpret results as conditional associations in the observed survey.
+The five ordered Y categories are modeled using T, V and six controls. Outputs include coefficients, odds ratios, 95% confidence intervals and p-values. Odds ratios describe the adjusted association for a one-point increase in T or V. The main model uses 622 respondents.
 
-### Exploratory bootstrap paths
+### Exploratory indirect paths
 
-Five paths are fixed in advance:
+T→M1→Y, T→M2→Y, V→M1→Y, V→M2→Y and T→V→Y are estimated separately. Each path uses OLS equations with controls. Respondents are resampled with replacement 5,000 times to obtain percentile intervals for the coefficient product.
 
-- `T → M1 → Y`
-- `T → M2 → Y`
-- `V → M1 → Y`
-- `V → M2 → Y`
-- `T → V → Y`
+### Group comparisons
 
-Each uses 5,000 respondent-level bootstrap resamples and records valid/failing draws. The mediator equations are exploratory OLS approximations; the results are not causal mediation, not full/partial mediation labels, and not a causal-effect proportion.
+For five demographic and driving-history groupings, nested ordered-logit models are compared before and after adding T and V interaction terms. Likelihood-ratio tests are adjusted across the five comparisons using Holm’s method.
 
-### Heterogeneity
+### Prediction and SHAP
 
-Gender, age, income, driving experience, and driving frequency are tested one at a time by comparing genuinely nested ordered-logit models. The unrestricted model adds `T/V × group` interactions. Degrees of freedom use the actual design-matrix rank, and both raw and Holm-adjusted p-values are reported. This module is supplementary and exploratory.
+A majority baseline, ordered logit and random forest use the same five stratified folds with seed 42. Three inputs are compared: background controls, controls plus T/V, and controls plus T/V/M1/M2. Metrics are accuracy, macro-F1, quadratic weighted kappa (QWK) and ordinal MAE. Random forests use 200 trees and maximum depth 6. SHAP explains the extended forest’s P(Y≥4) on each held-out fold and summarizes all 23 input features.
 
-### Machine learning and SHAP
-
-The same five stratified folds compare a majority baseline, ordered logit, and random forest across `controls`, `core` (controls + T/V), and `extended` (also M1/M2). Accuracy, macro-F1, quadratic weighted kappa, ordinal MAE, fold metrics, out-of-fold predictions, and confusion matrices are saved.
-
-SHAP is computed on held-out folds for the extended forest. If the installed SHAP version cannot produce high-intention probability explanations, the raw-output fallback is recorded in `ml_run_metadata.json`. SHAP is predictive feature attribution, not causal evidence.
+See [analysis methods](docs/METHODS.en.md) for equations, metric definitions and limitations.
 
 ## Quick start
+
+The saved notebook outputs and research report can be read directly. Use Python 3.12 to recompute the analysis.
 
 ### 1. Clone the repository
 
@@ -103,18 +79,18 @@ cd ev-purchase-intention
 macOS / Linux:
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 ```
 
 Windows (PowerShell):
 
 ```powershell
-py -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-With the environment activated, install the dependencies:
+With the environment activated:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -122,19 +98,14 @@ python -m pip install -r requirements.txt
 
 ### 3. Run the analysis
 
-Check the data:
-
 ```bash
 python main.py --analysis audit
-```
-
-Run the full analysis:
-
-```bash
 python main.py --analysis all
 ```
 
-Or run individual modules:
+`audit` writes data-quality records. `all` generates the complete analysis, including 5,000 bootstrap draws. Results are saved to `figures/runs/run-YYYYMMDD-HHMMSS/`.
+
+Individual modules can also be run:
 
 ```bash
 python main.py --analysis econometrics
@@ -143,43 +114,39 @@ python main.py --analysis heterogeneity
 python main.py --analysis ml
 ```
 
-Results are saved to `figures/runs/run-YYYYMMDD-HHMMSS/`. Mediation analysis uses 5,000 bootstrap iterations by default; set `--bootstrap-iterations` to specify a different count.
+### 4. Open a notebook
 
-## Notebooks
+```bash
+jupyter lab
+```
 
-The notebooks are now separated by language:
-
-- [`01_ev_purchase_intention_zh.ipynb`](notebooks/01_ev_purchase_intention_zh.ipynb): Chinese research notes and interpretation;
-- [`01_ev_purchase_intention_en.ipynb`](notebooks/01_ev_purchase_intention_en.ipynb): English research notes and interpretation;
-- [`notebooks/README.md`](notebooks/README.md): execution order, run-directory selection, and troubleshooting.
-
-Both notebooks use the shared question mapping and read saved analysis results. Run the command-line analysis first when fresh results are needed.
+Open either language version. When executed, the notebook reads the latest complete run directory. See the [notebook guide](notebooks/README.en.md) to select a specific directory.
 
 ## Repository layout
 
 ```text
-src/config.py             fixed question map, specifications, controls, run settings
-src/data_schema.py        raw loading, audit, composites, control encoding
-src/ordered_logit.py      ordered-logit associations and VIF
-src/mediation.py          five exploratory bootstrap paths
-src/heterogeneity.py      nested interaction LR tests
-src/ml_shap.py            out-of-fold prediction and SHAP
-main.py                   CLI entry point and run metadata
-notebooks/                bilingual notebooks and navigation
-data/README.md            bilingual data dictionary and privacy notes
-figures/                  historical figures and local run outputs
-IMPLEMENTATION_PLAN.md    locked design, boundaries, and acceptance rules
+main.py              Command-line analysis entry point
+src/                 Data processing, econometrics, paths, group tests and prediction
+notebooks/           Chinese and English analysis notebooks
+app/                 Research report and aggregate data
+data/raw/data.csv    Survey data
+data/README.en.md    Data dictionary
+docs/METHODS.en.md    Analysis methods and limitations
+figures/runs/        Locally generated analysis results
+archive/             Historical figures and report layout
+requirements.txt     Python dependencies
 ```
 
-## Scope and privacy
+See [app/README.en.md](app/README.en.md) for local preview and report updates.
 
-- The survey is cross-sectional, self-reported, and subject to convenience-sampling and common-method limitations.
-- T and V are proxies and should not be described as validated scales.
-- Results are suitable for a research portfolio and methodological demonstration, not a population-level causal estimate.
-- The repository is public and retains the raw survey CSV for this project's reproduction, as authorized by the project owner. The web page does not load row-level data. Do not reuse or redistribute raw responses outside the project without the project owner's authorization.
+## Limitations
 
-## License
+The cross-sectional convenience sample supports associations and predictive results within the survey. Y measures willingness to pay a premium rather than observed purchases. T and V are item composites without external scale validation. V’s questions already refer to purchase intention and are conceptually close to Y.
+
+Items were explored on the same data; the current cross-validation does not include that earlier selection process. The ordered-logit proportional-odds assumption has not been specifically tested. Indirect paths treat ratings as continuous in OLS approximations, and SHAP describes predictive feature attribution.
+
+## Data use and license
+
+The repository contains raw survey responses; the research report uses aggregate data. Reuse or redistribution of survey responses requires the relevant authorization.
 
 The code is released under the [MIT License](LICENSE).
-
-GitHub repository: <https://github.com/Yemyu/ev-purchase-intention>
