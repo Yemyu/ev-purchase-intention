@@ -1,10 +1,7 @@
-"""Shared, explicit configuration for the EV purchase-intention analyses.
+"""Questionnaire mappings and analysis settings for the EV survey.
 
-The original project kept a copy of the questionnaire mapping in every analysis
-module.  That made it easy for a notebook and a script to silently use different
-questions.  This module is intentionally declarative: it contains the question
-numbers, the fixed variable specifications, and run-level settings.  No value in
-this file is selected from a p-value or a model score.
+Defines raw question headers, composite items, control categories, model
+specifications, and default paths, resampling counts and random seed.
 """
 
 from pathlib import Path
@@ -21,9 +18,7 @@ BOOTSTRAP_ITERATIONS = 5_000
 CV_FOLDS = 5
 
 
-# Exact raw questionnaire headers in data/raw/data.csv.  Keeping this mapping
-# explicit prevents accidental use of the historical dummy-variable columns.
-# The keys are questionnaire numbers used throughout the code and report.
+# Raw questionnaire headers in data/raw/data.csv, keyed by question number.
 QUESTION_TEXT = {
     1: "您的性别是?",
     2: "您的年龄是?",
@@ -59,10 +54,8 @@ QUESTION_TEXT = {
 QUESTION_COLUMNS = {number: f"{number}.{text}" for number, text in QUESTION_TEXT.items()}
 
 
-# Six controls are fixed for the main specifications.  Codes are kept as
-# questionnaire category codes and are encoded as dummies by data_schema.py;
-# they are deliberately not translated into unverified age, income, or year
-# amounts.
+# Six background controls, expressed as questionnaire category codes.
+# data_schema.py converts these codes to category indicators.
 CONTROL_QUESTION_NUMBERS = {
     "gender": 1,
     "age": 2,
@@ -81,10 +74,9 @@ CONTROL_LEVELS = {
 }
 
 
-# Fixed analysis specifications.  ``legacy`` is retained solely for tracing
-# the original project.  ``primary`` is the current specification; ``sensitivity``
-# adds Q17 to the T proxy.  These definitions are fixed before fitting and are
-# never chosen by significance.
+# ``primary`` uses Q15/Q16 for T and Q22--Q25 for V with category controls.
+# ``sensitivity`` adds Q17 to T; ``legacy`` uses Q22 alone for V and ordinal
+# control codes.
 MODEL_SPECS = {
     "legacy": {
         "technology_questions": (15, 16),
@@ -107,14 +99,12 @@ MODEL_SPECS = {
 }
 
 
-# Item-level composites use complete-case aggregation.  An unanswered item is
-# not silently replaced by a scale mean; the row is marked missing for that
-# composite and can be dropped by the analysis module.
+# A composite is missing when any of its constituent items is unanswered.
 COMPOSITE_MISSING_POLICY = "complete_case"
 VALID_RESPONSE_RANGE = (1, 5)
 
-# Deliberately excluded from the main feature set because they change the
-# research question or overlap with the outcome: Q8, Q20, and Q26--Q29.
+# Q8, Q20, and Q26--Q29 are outside the main feature set because they concern
+# broader purchase decisions or future conditions and overlap with the outcome.
 EXCLUDED_FROM_MAIN_FEATURES = (8, 20, 26, 27, 28, 29)
 
 
@@ -125,4 +115,3 @@ def question_column(number: int) -> str:
         return QUESTION_COLUMNS[int(number)]
     except (KeyError, TypeError, ValueError) as exc:
         raise KeyError(f"Unknown questionnaire number: {number!r}") from exc
-

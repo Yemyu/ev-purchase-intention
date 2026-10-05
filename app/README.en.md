@@ -24,7 +24,7 @@ python app/build_report_data.py --run-dir figures/runs/run-YYYYMMDD-HHMMSS
 
 The builder updates the aggregate report JSON. Raw responses, row-level predictions and row-level SHAP values are not served as report assets.
 
-Check that tables, charts and both language versions use the same values before publishing. Run provenance remains in the JSON metadata.
+Check that tables, charts and both language versions use the same values before publishing. Complete run records are stored in the local results directory.
 
 ## Deployment
 

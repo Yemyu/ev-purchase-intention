@@ -1,12 +1,7 @@
 {
   "meta": {
-    "run_id": "run-20260921-190434",
-    "created_at_utc": "2026-09-21T11:04:34.341985+00:00",
-    "data_sha256": "8d15c4765ba63be6140f6f3d61508a26e59e1199df048f6889bce4311067075a",
     "random_seed": 42,
-    "bootstrap_iterations": 5000,
-    "git_commit": "af66b95e14ffa51a0f09f48f4dcb107d5a9361db",
-    "git_dirty": false
+    "bootstrap_iterations": 5000
   },
   "hero": {
     "n": 622,
@@ -56,8 +51,6 @@
       "24": 0,
       "25": 0
     },
-    "q3_missing": 110,
-    "q3_out_of_range": 94,
     "composites": {
       "Y": {
         "questions": [
@@ -574,7 +567,6 @@
     "association": "有序 Logit 结果是横截面条件关联，不是因果效果。",
     "mediation": "Bootstrap 路径是探索性间接关联，不能解释为因果中介。",
     "heterogeneity": "五组比较经过 Holm 校正后，没有形成稳定的显著异质性证据。",
-    "ml": "机器学习用于折外预测和特征归因；SHAP 不是因果重要性。",
-    "q3": "Q3 区域题是 8 类分类变量，通用 1–5 审计会标记 6–8；Q3 不进入当前主模型。"
+    "ml": "机器学习用于折外预测和特征归因；SHAP 不是因果重要性。"
   }
 }
