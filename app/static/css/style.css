@@ -75,6 +75,9 @@ h2 { margin: 0; font-family: var(--serif); font-size: clamp(29px, 4vw, 44px); fo
 .chart-caption { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.7; }
 .table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); }
 table { width: 100%; min-width: 700px; border-collapse: collapse; }
+#direct table { min-width: 0; }
+#direct th, #direct td { padding-left: 9px; padding-right: 9px; }
+#direct td:not(:first-child) { white-space: nowrap; }
 th { padding: 12px 13px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; font-weight: 650; text-align: right; white-space: nowrap; }
 th:first-child, td:first-child { text-align: left; }
 td { padding: 14px 13px; border-bottom: 1px solid rgba(36,56,61,.10); color: var(--ink); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }

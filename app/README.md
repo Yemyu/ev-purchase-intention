@@ -1,27 +1,33 @@
-# EV Purchase Intention · Report page
+# 报告页
 
-这是项目的静态研究报告页，采用中文优先、英文可切换的纸张编辑风格。页面读取 [`static/data/report.json`](static/data/report.json) 中的汇总结果，不加载逐行问卷、逐行预测或逐行 SHAP。
+[中文](README.md) · [English](README.en.md) · [项目说明](../README.md)
+
+中英文报告展示样本、变量定义和四个分析模块。图表读取 `static/data/report.json` 的汇总结果。
 
 ## 本地预览
 
-在项目根目录执行：
+从项目根目录、已激活的 Python 环境执行：
 
 ```bash
-.venv/bin/python -m http.server 8787 --directory app
+python -m http.server 8787 --directory app
 ```
 
-然后打开 <http://127.0.0.1:8787/>。
+中文入口为 <http://127.0.0.1:8787/>，英文入口为 <http://127.0.0.1:8787/en.html>。
 
-## 更新汇总结果
+## 更新结果
 
-完整分析完成后，把运行目录传给构建脚本：
+完整分析生成运行目录后：
 
 ```bash
-.venv/bin/python app/build_report_data.py --run-dir figures/runs/run-YYYYMMDD-HHMMSS
+python app/build_report_data.py --run-dir figures/runs/run-YYYYMMDD-HHMMSS
 ```
 
-脚本只生成网页所需的聚合 JSON；它不会把原始 CSV 或逐行中间产物复制到 `app/`。提交前检查 `static/data/report.json` 中的运行时间、数据 SHA256、Git 提交号和主要指标。
+构建脚本更新网页汇总 JSON。页面只加载汇总结果；原始回答、逐行预测和逐行 SHAP 不作为网页资源。
+
+发布前核对表格、图表和中英文说明中的数值。运行来源信息保存在 JSON 元数据中。
 
 ## 发布
 
-`main` 分支的推送会触发 `.github/workflows/pages.yml`，将 `app/` 发布到 GitHub Pages。预期地址：<https://yemyu.github.io/ev-purchase-intention/>。
+`.github/workflows/pages.yml` 在 `main` 分支推送后将 `app/` 发布到 [GitHub Pages](https://yemyu.github.io/ev-purchase-intention/)。
+
+第三方图表库的许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
