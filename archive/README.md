@@ -5,7 +5,9 @@
 | 目录 | 内容 |
 |---|---|
 | `figures/` | 早期分析保存的图表与工作簿 |
-| `report-v1/` | 早期报告布局、脚本及当时的汇总数据 |
+| `report-v1/` | 经典报告布局、脚本及原有汇总数据 |
+
+经典布局保留，文字按当前项目说明整理，汇总数据保持原样。
 
 当前结果见[报告页](https://yemyu.github.io/ev-purchase-intention/)和中英文 Notebook。此目录的文件不由 GitHub Pages 发布。
 
